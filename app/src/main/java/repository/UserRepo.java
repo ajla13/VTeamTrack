@@ -15,17 +15,23 @@ import entities.User;
 
 public class UserRepo {
     private UserDao userDao;
-    private MutableLiveData<List<User>> allUsers;
+    private LiveData<List<User>> allUsers;
 
 
     @Inject
     public UserRepo(Application application) {
         UserDatabase db = UserDatabase.getInstance(application);
         userDao = db.userDao();
-        allUsers = (MutableLiveData<List<User>>) userDao.getAll();
+        allUsers=userDao.getAll();
+
     }
 
-    public MutableLiveData<List<User>> getAllUser() {
+    public LiveData<List<User>> getAllUser() {
+        if(allUsers==null) {
+            UserDatabase.executor.execute(() -> {
+                allUsers = userDao.getAll();
+            });
+        }
         return allUsers;
     }
 

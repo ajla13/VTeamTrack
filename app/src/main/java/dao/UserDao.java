@@ -17,6 +17,9 @@ public interface UserDao {
     @Query("SELECT * FROM user")
     LiveData<List<User>> getAll();
 
+    @Query("SELECT * FROM user")
+    List<User> getAllUsers();
+
     @Query("SELECT * FROM user WHERE id IN (:userIds)")
     LiveData<List<User>> loadAllByIds(int[] userIds);
 
