@@ -2,6 +2,9 @@ package com.ul.lj.si.vteamtrack;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,10 +12,19 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import entities.User;
@@ -20,30 +32,84 @@ import viewModels.UserModel;
 
 public class MainActivity extends AppCompatActivity {
     UserModel userModel;
-
-    public void renderUpdates(){
-        Observer<List<User>> liveDataObserver=new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                System.out.println("the users:");
-                System.out.println(users);
-            }
-        };
-
-        if(userModel!=null){
-
-            userModel.getUsers().observe(this,liveDataObserver);
-        }
-
-    }
+    ListView listView;
+    UsersAdapter userAdapter;
+    TabLayout tabLayout;
+    View rootView;
+    LayoutInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         userModel = new ViewModelProvider(this).get(UserModel.class);
-        this.renderUpdates();
+        ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getUsers().getValue();
+
+        System.out.println("usersBeginning " + arrayOfUsers);
+
+        inflater = getLayoutInflater();
+
+        rootView = inflater.inflate(R.layout.listview, null , false );
+        listView = (ListView) rootView.findViewById(R.id.lvUsers);
+
+        if (arrayOfUsers != null){
+            userAdapter = new UsersAdapter(getApplicationContext(), arrayOfUsers);
+            listView.setAdapter(userAdapter);
+        }else{
+            Log.d("gwyd","user list was null");
+            userAdapter = new UsersAdapter(getApplicationContext(),new ArrayList<User>());
+            listView.setAdapter(userAdapter);
+        }
+        userModel.getUsers().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(@Nullable List<User> users) {
+                if (users != null) {
+                    userAdapter.setUsers(users);
+                    userAdapter.clear();
+                    userAdapter.addAll(users);
+                } else {
+                    Log.d("gwyd", "no users found in db");
+                    userAdapter.setUsers(new ArrayList<User>());
+                }
+            }
+        });
+        TabLayout.Tab tab = tabLayout.getTabAt(0);
+        tabLayout.selectTab(tab);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment fragment=null;
+                switch (tab.getPosition()) {
+                    case 0:
+                        fragment = new PlayersListFragment();
+                        break;
+                    case 1:
+                        fragment = new GamesListFragment();
+                        break;
+                    case 2:
+                        fragment = new TrainingsListFragment();
+                        break;
+                }
+
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.simpleFrameLayout, fragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
     public void insertUser(View view) {

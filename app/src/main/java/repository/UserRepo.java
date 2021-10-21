@@ -17,7 +17,6 @@ public class UserRepo {
     private UserDao userDao;
     private LiveData<List<User>> allUsers;
 
-
     @Inject
     public UserRepo(Application application) {
         UserDatabase db = UserDatabase.getInstance(application);
@@ -34,6 +33,7 @@ public class UserRepo {
         }
         return allUsers;
     }
+
 
     public void insert(User user) {
         UserDatabase.executor.execute(() -> {

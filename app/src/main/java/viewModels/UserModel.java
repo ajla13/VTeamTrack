@@ -19,6 +19,7 @@ public class UserModel extends AndroidViewModel {
     private LiveData<List<User>> users;
     private UserRepo userRepo ;
 
+
     public UserModel(@NonNull Application application) {
         super(application);
         userRepo = new UserRepo(application);
@@ -33,6 +34,7 @@ public class UserModel extends AndroidViewModel {
         }
         return users;
     }
+
 
     public User createUser(User user) {
         userRepo.insert(user);

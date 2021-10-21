@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Denis/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/activity_main.xml" value="0.1640625" />
+        <entry key="..\:/Users/Denis/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_user.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/Denis/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/listview.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/activity_main.xml" value="0.24909420289855072" />
       </map>
     </option>
