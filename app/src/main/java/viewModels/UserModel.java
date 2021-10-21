@@ -16,23 +16,32 @@ import entities.User;
 import repository.UserRepo;
 
 public class UserModel extends AndroidViewModel {
-    private LiveData<List<User>> users;
+
     private UserRepo userRepo ;
+    public List<User> userList,temp;
+    private LiveData<List<User>> users;
 
 
     public UserModel(@NonNull Application application) {
         super(application);
         userRepo = new UserRepo(application);
-        users=userRepo.getAllUser();
-
+        users= userRepo.getAllUsers();
+        userList=getUserList();
     }
 
-    public LiveData<List<User>> getUsers() {
-        if (users == null) {
-            users = userRepo.getAllUser();
-            System.out.println(users);
+    public LiveData<List<User>> getUsers(){
+        if(users==null){
+            users= userRepo.getAllUsers();
         }
         return users;
+    }
+
+
+    public List<User> getUserList() {
+        if (userList== null) {
+            userList= userRepo.getUserList();
+        }
+        return userList;
     }
 
 

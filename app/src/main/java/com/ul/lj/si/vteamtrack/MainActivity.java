@@ -32,11 +32,8 @@ import viewModels.UserModel;
 
 public class MainActivity extends AppCompatActivity {
     UserModel userModel;
-    ListView listView;
-    UsersAdapter userAdapter;
     TabLayout tabLayout;
-    View rootView;
-    LayoutInflater inflater;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,38 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         userModel = new ViewModelProvider(this).get(UserModel.class);
-        ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getUsers().getValue();
-
-        System.out.println("usersBeginning " + arrayOfUsers);
-
-        inflater = getLayoutInflater();
-
-        rootView = inflater.inflate(R.layout.listview, null , false );
-        listView = (ListView) rootView.findViewById(R.id.lvUsers);
-
-        if (arrayOfUsers != null){
-            userAdapter = new UsersAdapter(getApplicationContext(), arrayOfUsers);
-            listView.setAdapter(userAdapter);
-        }else{
-            Log.d("gwyd","user list was null");
-            userAdapter = new UsersAdapter(getApplicationContext(),new ArrayList<User>());
-            listView.setAdapter(userAdapter);
-        }
-        userModel.getUsers().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(@Nullable List<User> users) {
-                if (users != null) {
-                    userAdapter.setUsers(users);
-                    userAdapter.clear();
-                    userAdapter.addAll(users);
-                } else {
-                    Log.d("gwyd", "no users found in db");
-                    userAdapter.setUsers(new ArrayList<User>());
-                }
-            }
-        });
-        TabLayout.Tab tab = tabLayout.getTabAt(0);
-        tabLayout.selectTab(tab);
+        
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -110,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        TabLayout.Tab tab = tabLayout.getTabAt(0);
+        Fragment fragment=new PlayersListFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.simpleFrameLayout, fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+
 
     }
     public void insertUser(View view) {
@@ -117,8 +91,6 @@ public class MainActivity extends AppCompatActivity {
         user.lastName="omelastname";
         user.firstName="somefirstname";
         userModel.createUser(user);
-        TextView displayUser = (TextView) findViewById(R.id.displayUser);
-        displayUser.setText(user.firstName + " " + user.lastName);
 
     }
 
