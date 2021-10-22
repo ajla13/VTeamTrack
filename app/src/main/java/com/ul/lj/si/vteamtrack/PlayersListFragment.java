@@ -27,20 +27,20 @@ public class PlayersListFragment extends Fragment {
 
         @Nullable
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            System.out.println("view created");
+
             View view = inflater.inflate(R.layout.listview, container, false);
 
             userModel = new ViewModelProvider(this).get(UserModel.class);
 
             ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getUsers().getValue();
-            System.out.println("array of users in frag "+arrayOfUsers);
+
 
             listView = (ListView)view.findViewById(R.id.lvUsers);
             listView.setAdapter(userAdapter);
 
 
             if (arrayOfUsers != null){
-                System.out.println("users in fragment"+ arrayOfUsers);
+
                 userAdapter = new UsersAdapter(getActivity().getApplicationContext(), arrayOfUsers);
                 listView.setAdapter(userAdapter);
             }else{
@@ -66,4 +66,8 @@ public class PlayersListFragment extends Fragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

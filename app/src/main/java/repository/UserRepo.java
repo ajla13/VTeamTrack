@@ -3,14 +3,13 @@ package repository;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dao.UserDao;
-import database.UserDatabase;
+import database.AppDatabase;
 import entities.User;
 
 public class UserRepo {
@@ -21,7 +20,7 @@ public class UserRepo {
 
     @Inject
     public UserRepo(Application application) {
-        UserDatabase db = UserDatabase.getInstance(application);
+        AppDatabase db = AppDatabase.getInstance(application);
         userDao = db.userDao();
         allUsers=userDao.getAll();
         userList=getUserList();
@@ -29,7 +28,7 @@ public class UserRepo {
 
     public LiveData<List<User>> getAllUsers() {
         if(allUsers==null) {
-            UserDatabase.executor.execute(() -> {
+            AppDatabase.executor.execute(() -> {
                 allUsers= userDao.getAll();
                 System.out.println("users in repo are null "+ allUsers);
             });
@@ -40,7 +39,7 @@ public class UserRepo {
 
     public List<User> getUserList() {
         if(userList==null) {
-            UserDatabase.executor.execute(() -> {
+            AppDatabase.executor.execute(() -> {
                 userList= userDao.getUsers();
 
             });
@@ -49,7 +48,7 @@ public class UserRepo {
     }
 
     public void insert(User user) {
-        UserDatabase.executor.execute(() -> {
+        AppDatabase.executor.execute(() -> {
             userDao.insert(user);
         });
     }

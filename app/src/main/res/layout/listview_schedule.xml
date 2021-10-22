@@ -1,23 +1,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlLayout"
+    android:id="@+id/rlLayoutGames"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ul.lj.si.vteamtrack.MainActivity" >
 
     <ListView
-        android:id="@+id/lvUsers"
+        android:id="@+id/lvSchedule"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="-3dp"
-        android:layout_marginBottom="-4dp">
+        android:layout_alignParentBottom="true"></ListView>
 
-    </ListView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right|end"
+        android:contentDescription="submit" />
 
 </RelativeLayout>

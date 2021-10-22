@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">VTeamTrack</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="location">Location</string>
+    <string name="create">Create</string>
+    <string name="players">Players</string>
+    <string name="games">Games</string>
+    <string name="trainings">Trainings</string>
 </resources>
