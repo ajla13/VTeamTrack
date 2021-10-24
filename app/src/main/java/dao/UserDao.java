@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import entities.Team;
 import entities.User;
 
 @Dao
@@ -18,6 +19,12 @@ public interface UserDao {
 
     @Query("SELECT * FROM user")
     List<User> getUsers();
+
+    @Query("SELECT * FROM user WHERE id LIKE :userId")
+    User getUser(int userId);
+
+    @Query("SELECT * FROM user WHERE email LIKE :userEmail AND teamName LIKE :teamName")
+    User checkUserCred(String userEmail, String teamName);
 
     @Query("SELECT * FROM user WHERE id IN (:userIds)")
     LiveData<List<User>> loadAllByIds(int[] userIds);

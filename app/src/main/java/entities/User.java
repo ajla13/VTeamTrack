@@ -1,6 +1,9 @@
 package entities;
 
+import android.provider.ContactsContract;
+
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.RenameTable;
 
@@ -14,4 +17,10 @@ public class User {
     public String firstName;
 
     public String lastName;
+    public String teamName;
+    public String email;
+
+    public String password;
+
+    public String userRole;
 }

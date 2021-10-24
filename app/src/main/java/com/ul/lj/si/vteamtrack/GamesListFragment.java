@@ -33,7 +33,12 @@ public class GamesListFragment extends Fragment {
     ListView listView;
     GamesAdapter gameAdapter;
     FloatingActionButton createGame;
+    public ActivityResultLauncher<Intent> launchActivity;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+    }
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,14 +51,25 @@ public class GamesListFragment extends Fragment {
         listView = (ListView)view.findViewById(R.id.lvSchedule);
         listView.setAdapter(gameAdapter);
 
+             launchActivity = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+
+                        }
+                    }
+                });
 
         if (arrayOfGames!= null){
 
-            gameAdapter = new GamesAdapter(getActivity().getApplicationContext(), arrayOfGames);
+            gameAdapter = new GamesAdapter(getActivity(),getActivity(), arrayOfGames);
             listView.setAdapter(gameAdapter);
         }else{
             Log.d("gwyd","game list was null");
-            gameAdapter = new GamesAdapter(getActivity().getApplicationContext(),new ArrayList<Game>());
+            gameAdapter = new GamesAdapter(getActivity(),getActivity(),new ArrayList<Game>());
             listView.setAdapter(gameAdapter);
         }
 
@@ -70,24 +86,18 @@ public class GamesListFragment extends Fragment {
                 }
             }
         });
-        ActivityResultLauncher<Intent> launchActivity = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == Activity.RESULT_OK) {
-                            Intent data = result.getData();
-                        }
-                    }
-                });
-        createGame= view.findViewById(R.id.fab);
+
+        createGame=view.findViewById(R.id.fab);
         createGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), CreateGameActivity.class);
-                 launchActivity.launch(intent);
+                launchActivity.launch(intent);
             }
         });
+        if(PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("player")){
+            createGame.setVisibility(View.GONE);
+        }
         return view;
 
     }

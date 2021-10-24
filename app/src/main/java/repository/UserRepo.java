@@ -16,7 +16,7 @@ public class UserRepo {
     public List<User> userList;
     private LiveData<List<User>> allUsers;
     private UserDao userDao;
-
+    private User user;
 
     @Inject
     public UserRepo(Application application) {
@@ -45,6 +45,10 @@ public class UserRepo {
             });
         }
         return userList;
+    }
+    public User checkUserCred(String email, String teamName){
+             user = userDao.checkUserCred(email, teamName);
+             return user;
     }
 
     public void insert(User user) {

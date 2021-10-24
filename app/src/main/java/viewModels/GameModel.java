@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import database.AppDatabase;
 import entities.Game;
 import entities.User;
 import repository.GameRepo;
@@ -31,9 +32,19 @@ public class GameModel extends AndroidViewModel {
         return games;
     }
 
-
+    public Game getGame(int id) {
+        return gameRepo.getGame(id);
+    }
     public Game createGame(Game game) {
         gameRepo.insert(game);
         return game;
     }
+    public void updateGame(Game game) {
+        gameRepo.update(game);
+
+    }
+    public void deleteGame(Game game) {
+        gameRepo.delete(game);
+    };
+
 }

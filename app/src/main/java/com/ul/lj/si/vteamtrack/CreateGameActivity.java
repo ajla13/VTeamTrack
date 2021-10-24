@@ -26,6 +26,12 @@ public class CreateGameActivity extends AppCompatActivity {
 
          Game game = new Game();
          int error = 0;
+        EditText gameOponent=(EditText)findViewById(R.id.game_oponent);
+        if(gameOponent.getText().toString().trim().equals("")){
+            gameOponent.setError("Game oponent is required!");
+            error=1;
+        }
+
          EditText gameDate=(EditText)findViewById(R.id.game_date);
          if(gameDate.getText().toString().trim().equals("")){
              gameDate.setError("Game date is required!");
@@ -49,6 +55,7 @@ public class CreateGameActivity extends AppCompatActivity {
              game.date=gameDate.getText().toString();
              game.time=gameTime.getText().toString();
              game.location=gameLocation.getText().toString();
+             game.oponent =gameOponent.getText().toString();
              Game result = gameModel.createGame(game);
 
              if(result!= null){

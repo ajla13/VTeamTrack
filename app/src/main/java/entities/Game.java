@@ -12,4 +12,5 @@ public class Game {
     public String date;
     public String time;
     public String location;
+    public String oponent;
 }

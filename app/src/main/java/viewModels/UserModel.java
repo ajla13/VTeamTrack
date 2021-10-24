@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import java.util.List;
 
+import database.AppDatabase;
 import entities.User;
 import repository.UserRepo;
 
@@ -39,6 +40,9 @@ public class UserModel extends AndroidViewModel {
         return userList;
     }
 
+    public User checkUserCred(String email, String teamName){
+         return userRepo.checkUserCred(email,teamName);
+    }
 
     public User createUser(User user) {
         userRepo.insert(user);

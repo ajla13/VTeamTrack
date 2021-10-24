@@ -2,7 +2,10 @@ package repository;
 
 import android.app.Application;
 
+
 import androidx.lifecycle.LiveData;
+
+
 
 import java.util.List;
 
@@ -17,7 +20,7 @@ public class GameRepo {
 
     private LiveData<List<Game>> allGames;
     private GamesDao gameDao;
-
+    private Game game;
 
     @Inject
     public GameRepo(Application application) {
@@ -36,10 +39,44 @@ public class GameRepo {
         return allGames;
     }
 
+    public Game getGame(int id) {
+        AppDatabase.executor.execute(() -> {
+
+            game = gameDao.getGame(id);
+            while (game==null) {
+                System.out.println("waiting for the game");
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e)  {
+                    Thread.currentThread().interrupt();
+                    e.printStackTrace();
+                }
+            }
+        });
+        while (game==null) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e)  {
+                Thread.currentThread().interrupt();
+                e.printStackTrace();
+            }
+        }
+        return game;
+    }
 
     public void insert(Game game) {
         AppDatabase.executor.execute(() -> {
             gameDao.insert(game);
+        });
+    }
+    public void delete(Game game) {
+        AppDatabase.executor.execute(() -> {
+            gameDao.delete(game);
+        });
+    }
+    public void update(Game game) {
+        AppDatabase.executor.execute(() -> {
+            gameDao.update(game);
         });
     }
 }
