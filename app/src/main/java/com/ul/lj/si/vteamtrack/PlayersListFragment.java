@@ -23,7 +23,7 @@ public class PlayersListFragment extends Fragment {
     UserModel userModel;
     ListView listView;
     UsersAdapter userAdapter;
-
+    User loggedInUser;
 
         @Nullable
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,7 +32,8 @@ public class PlayersListFragment extends Fragment {
 
             userModel = new ViewModelProvider(this).get(UserModel.class);
 
-            ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getUsers().getValue();
+
+            ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
 
 
             listView = (ListView)view.findViewById(R.id.lvUsers);
@@ -49,7 +50,7 @@ public class PlayersListFragment extends Fragment {
                 listView.setAdapter(userAdapter);
             }
 
-            userModel.getUsers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
+            userModel.getPlayers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
                 @Override
                 public void onChanged(@Nullable List<User> users) {
                     if (users != null) {

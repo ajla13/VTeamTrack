@@ -10,7 +10,7 @@ public class PreferenceData {
     static final String PREF_USER_LOGGEDIN_STATUS = "logged_in_status";
     static final String PREF_USER_LOGGEDIN = "logged_in_user";
     static final String PREF_USER_ROLE = "user_role";
-
+    static final String PREF_TEAM = "team";
     public static SharedPreferences getSharedPreferences(Context ctx)
     {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -34,6 +34,12 @@ public class PreferenceData {
         editor.putInt(PREF_USER_LOGGEDIN, userId);
         editor.commit();
     }
+    public static void setTeam(Context ctx, String team)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_TEAM, team);
+        editor.commit();
+    }
 
     public static String getLoggedInEmailUser(Context ctx)
     {
@@ -42,6 +48,10 @@ public class PreferenceData {
     public static String getUserRole(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_USER_ROLE, "");
+    }
+    public static String getTeam(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(PREF_TEAM, "");
     }
     public static int getLoggedInUser(Context ctx)
     {
@@ -66,6 +76,7 @@ public class PreferenceData {
         editor.remove(PREF_LOGGEDIN_USER_EMAIL);
         editor.remove(PREF_USER_ROLE);
         editor.remove(PREF_USER_LOGGEDIN_STATUS);
+        editor.remove(PREF_TEAM);
         editor.commit();
     }
 }

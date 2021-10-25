@@ -14,8 +14,11 @@ import entities.User;
 @Dao
 public interface UserDao {
 
+    @Query("SELECT * FROM user WHERE teamName LIKE :teamName AND userRole LIKE :userRole")
+    LiveData<List<User>> getPlayers(String teamName, String userRole);
+
     @Query("SELECT * FROM user")
-    LiveData<List<User>> getAll();
+    LiveData<List<User>> getAllUsers();
 
     @Query("SELECT * FROM user")
     List<User> getUsers();

@@ -4,6 +4,8 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
+import com.ul.lj.si.vteamtrack.PreferenceData;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,19 +19,21 @@ public class UserRepo {
     private LiveData<List<User>> allUsers;
     private UserDao userDao;
     private User user;
+    String teamName;
 
     @Inject
     public UserRepo(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         userDao = db.userDao();
-        allUsers=userDao.getAll();
+        teamName= PreferenceData.getTeam(application.getApplicationContext());
+        allUsers = userDao.getPlayers(teamName,"player");
         userList=getUserList();
     }
 
-    public LiveData<List<User>> getAllUsers() {
+    public LiveData<List<User>> getPlayers() {
         if(allUsers==null) {
             AppDatabase.executor.execute(() -> {
-                allUsers= userDao.getAll();
+                allUsers= userDao.getPlayers(teamName,"player");
                 System.out.println("users in repo are null "+ allUsers);
             });
         }
@@ -52,8 +56,10 @@ public class UserRepo {
     }
 
     public void insert(User user) {
-        AppDatabase.executor.execute(() -> {
-            userDao.insert(user);
-        });
+        userDao.insert(user);
+
+    }
+    public User getUser(int id) {
+        return userDao.getUser(id);
     }
 }

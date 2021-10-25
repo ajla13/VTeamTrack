@@ -16,8 +16,8 @@ import entities.Training;
 @Dao
 public interface TrainingDao {
 
-    @Query("SELECT * FROM training")
-    LiveData<List<Training>> getAll();
+    @Query("SELECT * FROM training WHERE teamName LIKE :teamName")
+    LiveData<List<Training>> getAll(String teamName);
 
     @Query("SELECT * FROM training WHERE id IN (:trainingIds)")
     LiveData<List<Training>> loadAllByIds(int[] trainingIds);

@@ -28,14 +28,7 @@ public class UpdateTrainingActivity extends AppCompatActivity {
         trainingModel = new ViewModelProvider(this).get(TrainingModel.class);
         int trainingId = getIntent().getIntExtra("training_id", 0);
         training = trainingModel.getTraining(trainingId);
-        while (training==null) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e)  {
-                Thread.currentThread().interrupt();
-                e.printStackTrace();
-            }
-        }
+
 
         trainingDate=(EditText)findViewById(R.id.training_update_date);
         trainingTime=(EditText)findViewById(R.id.training_update_time);

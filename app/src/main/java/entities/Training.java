@@ -12,5 +12,6 @@ public class Training {
     public String date;
     public String time;
     public String location;
+    public String teamName;
 
 }

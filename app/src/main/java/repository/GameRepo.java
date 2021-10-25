@@ -6,6 +6,7 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 
+import com.ul.lj.si.vteamtrack.PreferenceData;
 
 import java.util.List;
 
@@ -21,46 +22,27 @@ public class GameRepo {
     private LiveData<List<Game>> allGames;
     private GamesDao gameDao;
     private Game game;
-
+    String teamName;
     @Inject
     public GameRepo(Application application) {
         AppDatabase db = AppDatabase.getInstance(application);
         gameDao = db.gameDao();
-        allGames = gameDao.getAll();
+        teamName= PreferenceData.getTeam(application.getApplicationContext());
+        allGames = gameDao.getAll(teamName);
 
     }
 
     public LiveData<List<Game>> getAllGames() {
         if (allGames == null) {
             AppDatabase.executor.execute(() -> {
-                allGames = gameDao.getAll();
+                allGames = gameDao.getAll(teamName);
             });
         }
         return allGames;
     }
 
     public Game getGame(int id) {
-        AppDatabase.executor.execute(() -> {
-
-            game = gameDao.getGame(id);
-            while (game==null) {
-                System.out.println("waiting for the game");
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e)  {
-                    Thread.currentThread().interrupt();
-                    e.printStackTrace();
-                }
-            }
-        });
-        while (game==null) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e)  {
-                Thread.currentThread().interrupt();
-                e.printStackTrace();
-            }
-        }
+        game = gameDao.getGame(id);
         return game;
     }
 

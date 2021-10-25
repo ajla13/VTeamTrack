@@ -5,6 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.ul.lj.si.vteamtrack.PreferenceData;
+
 import java.util.List;
 
 import database.AppDatabase;
@@ -21,13 +24,13 @@ public class UserModel extends AndroidViewModel {
     public UserModel(@NonNull Application application) {
         super(application);
         userRepo = new UserRepo(application);
-        users= userRepo.getAllUsers();
+        users = userRepo.getPlayers();
         userList=getUserList();
     }
 
-    public LiveData<List<User>> getUsers(){
+    public LiveData<List<User>> getPlayers(){
         if(users==null){
-            users= userRepo.getAllUsers();
+            users= userRepo.getPlayers();
         }
         return users;
     }
@@ -47,6 +50,9 @@ public class UserModel extends AndroidViewModel {
     public User createUser(User user) {
         userRepo.insert(user);
         return user;
+    }
+    public User getUser(int id) {
+        return userRepo.getUser(id);
     }
 
 }

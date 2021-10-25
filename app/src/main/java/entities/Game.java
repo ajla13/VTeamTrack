@@ -13,4 +13,6 @@ public class Game {
     public String time;
     public String location;
     public String oponent;
+    public String teamName;
 }
+

@@ -28,14 +28,6 @@ public class UpdateGameActivity extends AppCompatActivity {
         gameModel = new ViewModelProvider(this).get(GameModel.class);
         int gameId = getIntent().getIntExtra("game_id", 0);
         game = gameModel.getGame(gameId);
-        while (game==null) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e)  {
-                Thread.currentThread().interrupt();
-                e.printStackTrace();
-            }
-        }
 
         gameDate=(EditText)findViewById(R.id.game_update_date);
         gameTime=(EditText)findViewById(R.id.game_update_time);

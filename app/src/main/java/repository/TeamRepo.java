@@ -28,12 +28,8 @@ public class TeamRepo {  public List<User> userList;
 
 
     public Team getTeam(String teamName) {
-        if(team==null) {
-            AppDatabase.executor.execute(() -> {
-                team= teamDao.getTeam(teamName);
-            });
-        }
-        return team;
+        return teamDao.getTeam(teamName);
+
     }
 
     public void insert(Team team) {

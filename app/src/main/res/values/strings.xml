@@ -15,6 +15,10 @@
     <string name="register">Register</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="passRepeat">Repeat password</string>
     <string name="team">Name of your team</string>
+    <string name="welcome">Welcome</string>
+    <string name="register_player">Player registration</string>
+    <string name="register_trainer">Trainer registration</string>
     <string name="registrationLink">Click here for member registration.</string>
 </resources>

@@ -50,6 +50,7 @@ public class CreateTrainingActivity extends AppCompatActivity {
             training.date=trainingDate.getText().toString();
             training.time=trainingTime.getText().toString();
             training.location=trainingLocation.getText().toString();
+            training.teamName=PreferenceData.getTeam(getApplicationContext());
             System.out.println("tr "+training);
             Training result = trainingModel.createTraining(training);
 
