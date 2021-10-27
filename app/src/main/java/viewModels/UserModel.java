@@ -19,13 +19,14 @@ public class UserModel extends AndroidViewModel {
     private UserRepo userRepo ;
     public List<User> userList,temp;
     private LiveData<List<User>> users;
-
+    private LiveData<List<User>> unconfirmedUsers;
 
     public UserModel(@NonNull Application application) {
         super(application);
         userRepo = new UserRepo(application);
         users = userRepo.getPlayers();
         userList=getUserList();
+        unconfirmedUsers=userRepo.getUnconfirmedUsers();
     }
 
     public LiveData<List<User>> getPlayers(){
@@ -34,7 +35,12 @@ public class UserModel extends AndroidViewModel {
         }
         return users;
     }
-
+    public LiveData<List<User>> getUnconfirmedUsers(){
+        if(unconfirmedUsers==null){
+            unconfirmedUsers= userRepo.getUnconfirmedUsers();
+        }
+        return unconfirmedUsers;
+    }
 
     public List<User> getUserList() {
         if (userList== null) {

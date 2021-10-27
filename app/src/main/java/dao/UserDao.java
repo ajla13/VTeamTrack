@@ -36,6 +36,9 @@ public interface UserDao {
             "lastname LIKE :last LIMIT 1")
     User findByName(String first, String last);
 
+    @Query("SELECT * FROM user WHERE registrationConfirmed LIKE :confirmation")
+    LiveData<List<User>>  usersByregistration(boolean confirmation);
+
     @Insert
     void insert(User user);
 

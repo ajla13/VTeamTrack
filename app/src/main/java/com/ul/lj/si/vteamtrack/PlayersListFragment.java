@@ -23,7 +23,7 @@ public class PlayersListFragment extends Fragment {
     UserModel userModel;
     ListView listView;
     UsersAdapter userAdapter;
-    User loggedInUser;
+
 
         @Nullable
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

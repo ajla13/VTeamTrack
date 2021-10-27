@@ -17,6 +17,7 @@ import entities.User;
 public class UserRepo {
     public List<User> userList;
     private LiveData<List<User>> allUsers;
+    private LiveData<List<User>> unconfirmedUsers;
     private UserDao userDao;
     private User user;
     String teamName;
@@ -27,6 +28,7 @@ public class UserRepo {
         userDao = db.userDao();
         teamName= PreferenceData.getTeam(application.getApplicationContext());
         allUsers = userDao.getPlayers(teamName,"player");
+        unconfirmedUsers = userDao.usersByregistration(false);
         userList=getUserList();
     }
 
@@ -39,6 +41,14 @@ public class UserRepo {
         }
         System.out.println("users in repo "+ allUsers);
         return allUsers;
+    }
+    public LiveData<List<User>> getUnconfirmedUsers() {
+        if(unconfirmedUsers==null) {
+            AppDatabase.executor.execute(() -> {
+                unconfirmedUsers = userDao.usersByregistration(false);
+            });
+        }
+        return unconfirmedUsers;
     }
 
     public List<User> getUserList() {

@@ -82,9 +82,12 @@ public class MainActivity extends AppCompatActivity {
                 PreferenceData.setUserLoggedInStatus(getApplicationContext(), false);
                 Intent intent = new Intent(getApplicationContext(),Login.class);
                 startActivity(intent);
+                finish();
                 return true;
             case R.id.item2:
-                Toast.makeText(getApplicationContext(), "Item 2 Selected", Toast.LENGTH_LONG).show();
+                Intent intentReq = new Intent(getApplicationContext(),Requests.class);
+                startActivity(intentReq);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

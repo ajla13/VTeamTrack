@@ -38,6 +38,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".Requests"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".WelcomeScreen"
             android:exported="true">
             <intent-filter>

@@ -23,4 +23,10 @@ public class User {
     public String password;
 
     public String userRole;
+
+    public String phoneNumber;
+
+    public String dateOfBirth;
+
+    public boolean registrationConfirmed;
 }

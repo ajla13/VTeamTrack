@@ -31,13 +31,17 @@ public class RegistrationFormFragment extends Fragment {
     EditText passRepeat;
     EditText teamName;
     EditText name;
+    EditText phone;
     EditText surname;
+    EditText dateOfBirth;
     Team team;
+    String successText;
     UserModel userModel;
     TeamModel teamModel;
     User user;
     String errorText;
     String registrationType;
+
     public RegistrationFormFragment(String registrationType){
         this.registrationType=registrationType;
     }
@@ -57,8 +61,11 @@ public class RegistrationFormFragment extends Fragment {
         password=(EditText) view.findViewById(R.id.registration_password);
         passRepeat=(EditText) view.findViewById(R.id.registration_password_repeat);
         name=(EditText) view.findViewById(R.id.registration_name);
+        phone=(EditText) view.findViewById(R.id.registration_phone);
         teamName=(EditText) view.findViewById(R.id.registration_team);
         surname=(EditText) view.findViewById(R.id.registration_surname);
+        dateOfBirth=(EditText) view.findViewById(R.id.registration_dateOfBirth);
+
         Button register=(Button) view.findViewById(R.id.btn_register);
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -71,26 +78,27 @@ public class RegistrationFormFragment extends Fragment {
                         user.firstName=name.getText().toString();
                         user.lastName=surname.getText().toString();
                         user.email=email.getText().toString();
+                        user.phoneNumber=phone.getText().toString();
+                        user.dateOfBirth=dateOfBirth.getText().toString();
                         user.password=pw_hash;
                         user.teamName=teamName.getText().toString();
                         if(registrationType=="trainer"){
                             user.userRole="trainer";
-
-                        }
-                        else {
-                            user.userRole="player";
-
-                        }
-                        User createdUser = userModel.createUser(user);
-                        if(registrationType.equals("trainer")){
-
+                            User createdUser = userModel.createUser(user);
                             team = new Team();
                             team.name=teamName.getText().toString();
                             team.userId =createdUser.id;
                             teamModel.createTeam(team);
+                            successText="Registration successfull";
                         }
+                        else {
+                            user.userRole="player";
+                            user.registrationConfirmed = false;
+                            successText="Your registration request has been sent.";
+                        }
+
                         Toast.makeText(getActivity().getApplicationContext(),
-                                "Registration successfull", Toast.LENGTH_LONG).show();
+                                successText, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(getActivity().getApplicationContext(), Login.class);
                         startActivity(intent);
                         getActivity().finish();
@@ -124,7 +132,12 @@ public class RegistrationFormFragment extends Fragment {
             if(user == null){
                 return true;
             }
-            errorText="The entered email already exists.";
+            if(user.registrationConfirmed) {
+                errorText = "A player with that email already exists.";
+            }
+            else {
+                errorText="A registration request with that email already exists.";
+            }
             return false;
         }
     }

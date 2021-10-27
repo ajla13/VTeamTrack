@@ -30,10 +30,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/surname"
-        app:layout_constraintBottom_toTopOf="@id/registration_email"
+        app:layout_constraintBottom_toTopOf="@id/registration_dateOfBirth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/registration_name" />
+    <EditText
+        android:id="@+id/registration_dateOfBirth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/dateOfBirth"
+        app:layout_constraintBottom_toTopOf="@id/registration_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registration_surname" />
     <EditText
         android:id="@+id/registration_email"
         android:layout_width="wrap_content"
@@ -41,11 +50,22 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
-        app:layout_constraintTop_toBottomOf="@id/registration_surname"
+        app:layout_constraintTop_toBottomOf="@id/registration_dateOfBirth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/registration_password" />
+        app:layout_constraintBottom_toTopOf="@+id/registration_phone" />
 
+    <EditText
+        android:id="@+id/registration_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/phone"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@+id/registration_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registration_email" />
     <EditText
         android:id="@+id/registration_password"
         android:layout_width="wrap_content"
@@ -56,7 +76,7 @@
         app:layout_constraintBottom_toTopOf="@id/registration_password_repeat"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/registration_email" />
+        app:layout_constraintTop_toBottomOf="@id/registration_phone" />
     <EditText
         android:id="@+id/registration_password_repeat"
         android:layout_width="wrap_content"
