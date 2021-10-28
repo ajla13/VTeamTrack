@@ -72,4 +72,10 @@ public class CreateGameActivity extends AppCompatActivity {
          }
 
     }
+
+    public void cancel(View v){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

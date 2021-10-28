@@ -27,15 +27,15 @@ public class UserRepo {
         AppDatabase db = AppDatabase.getInstance(application);
         userDao = db.userDao();
         teamName= PreferenceData.getTeam(application.getApplicationContext());
-        allUsers = userDao.getPlayers(teamName,"player");
-        unconfirmedUsers = userDao.usersByregistration(false);
+        allUsers = userDao.getPlayers(teamName,"player", true);
+        unconfirmedUsers = userDao.usersByregistration(false, "player", teamName);
         userList=getUserList();
     }
 
     public LiveData<List<User>> getPlayers() {
         if(allUsers==null) {
             AppDatabase.executor.execute(() -> {
-                allUsers= userDao.getPlayers(teamName,"player");
+                allUsers= userDao.getPlayers(teamName,"player", true);
                 System.out.println("users in repo are null "+ allUsers);
             });
         }
@@ -45,7 +45,7 @@ public class UserRepo {
     public LiveData<List<User>> getUnconfirmedUsers() {
         if(unconfirmedUsers==null) {
             AppDatabase.executor.execute(() -> {
-                unconfirmedUsers = userDao.usersByregistration(false);
+                unconfirmedUsers = userDao.usersByregistration(false, "player", teamName);
             });
         }
         return unconfirmedUsers;
@@ -67,6 +67,14 @@ public class UserRepo {
 
     public void insert(User user) {
         userDao.insert(user);
+
+    }
+    public void delete(User user) {
+        userDao.delete(user);
+
+    }
+    public void update(User user) {
+       userDao.update(user);
 
     }
     public User getUser(int id) {

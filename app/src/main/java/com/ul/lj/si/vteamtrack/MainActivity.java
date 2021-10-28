@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item2:
                 Intent intentReq = new Intent(getApplicationContext(),Requests.class);
                 startActivity(intentReq);
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

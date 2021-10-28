@@ -84,6 +84,7 @@ public class RegistrationFormFragment extends Fragment {
                         user.teamName=teamName.getText().toString();
                         if(registrationType=="trainer"){
                             user.userRole="trainer";
+                            user.registrationConfirmed = true;
                             User createdUser = userModel.createUser(user);
                             team = new Team();
                             team.name=teamName.getText().toString();
@@ -94,6 +95,7 @@ public class RegistrationFormFragment extends Fragment {
                         else {
                             user.userRole="player";
                             user.registrationConfirmed = false;
+                            userModel.createUser(user);
                             successText="Your registration request has been sent.";
                         }
 

@@ -49,20 +49,26 @@ public class Login extends AppCompatActivity {
                                    "The entered creditentials are incorrect", Toast.LENGTH_LONG).show();
                        }
                        else {
-                           if(BCrypt.checkpw(password.getText().toString(), user.password)) {
-                               PreferenceData.setUserLoggedInStatus(getApplicationContext(),true);
-                               PreferenceData.setLoggedInUserEmail(getApplicationContext(),email.getText().toString());
-                               PreferenceData.setLoggedInUser(getApplicationContext(), user.id);
-                               PreferenceData.setLoggedInUserRole(getApplicationContext(),user.userRole);
-                               PreferenceData.setTeam(getApplicationContext(),teamName.getText().toString());
-                               Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                               startActivity(intent);
-                               finish();
+                           if(user.registrationConfirmed == true) {
+                               if (BCrypt.checkpw(password.getText().toString(), user.password)) {
+                                   PreferenceData.setUserLoggedInStatus(getApplicationContext(), true);
+                                   PreferenceData.setLoggedInUserEmail(getApplicationContext(), email.getText().toString());
+                                   PreferenceData.setLoggedInUser(getApplicationContext(), user.id);
+                                   PreferenceData.setLoggedInUserRole(getApplicationContext(), user.userRole);
+                                   PreferenceData.setTeam(getApplicationContext(), teamName.getText().toString());
+                                   Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                   startActivity(intent);
+                                   finish();
 
+                               } else {
+                                   Toast.makeText(getApplicationContext(),
+                                           "The entered creditentials are incorrect", Toast.LENGTH_LONG).show();
+                               }
                            }
                            else {
+                               System.out.println(user.registrationConfirmed);
                                Toast.makeText(getApplicationContext(),
-                                       "The entered creditentials are incorrect", Toast.LENGTH_LONG).show();
+                                       "Your registration has not been confirmed yet", Toast.LENGTH_LONG).show();
                            }
 
                        }
@@ -81,6 +87,7 @@ public class Login extends AppCompatActivity {
         if(user == null){
             return false;
         }
+
         return true;
     }
 

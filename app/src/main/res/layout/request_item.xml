@@ -66,6 +66,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
+            android:visibility="gone"
            />
 
         <TextView
@@ -78,6 +79,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_req_dateOfBirth"
+            android:visibility="gone"
             />
         <TextView
             android:id="@+id/item_req_phone"
@@ -89,6 +91,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_req_email"
+            android:visibility="gone"
           />
     </LinearLayout>
     <LinearLayout
@@ -103,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:drawableLeft="@drawable/ic_expand"
+            android:drawableLeft="@drawable/ic_accept"
             android:text="@string/accept"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_weight="1"
@@ -117,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
-            android:drawableLeft="@drawable/ic_expand"
+            android:drawableLeft="@drawable/ic_decline"
             android:text="@string/decline"
             android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"

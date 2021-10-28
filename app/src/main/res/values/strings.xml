@@ -19,6 +19,7 @@
     <string name="phone">Phone number</string>
     <string name="passRepeat">Repeat password</string>
     <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
     <string name="decline">Decline</string>
     <string name="team">Name of your team</string>
     <string name="welcome">Welcome</string>

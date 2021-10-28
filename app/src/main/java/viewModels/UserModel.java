@@ -57,6 +57,14 @@ public class UserModel extends AndroidViewModel {
         userRepo.insert(user);
         return user;
     }
+    public void deleteUser(User user) {
+        userRepo.delete(user);
+    }
+    public void update(User user) {
+        userRepo.update(user);
+
+    }
+
     public User getUser(int id) {
         return userRepo.getUser(id);
     }

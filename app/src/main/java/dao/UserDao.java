@@ -4,18 +4,21 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
 import entities.Team;
+import entities.Training;
 import entities.User;
 
 @Dao
 public interface UserDao {
 
-    @Query("SELECT * FROM user WHERE teamName LIKE :teamName AND userRole LIKE :userRole")
-    LiveData<List<User>> getPlayers(String teamName, String userRole);
+    @Query("SELECT * FROM user WHERE teamName LIKE :teamName AND userRole LIKE :userRole AND registrationConfirmed LIKE :registrationStatus")
+    LiveData<List<User>> getPlayers(String teamName, String userRole, boolean registrationStatus);
 
     @Query("SELECT * FROM user")
     LiveData<List<User>> getAllUsers();
@@ -36,8 +39,8 @@ public interface UserDao {
             "lastname LIKE :last LIMIT 1")
     User findByName(String first, String last);
 
-    @Query("SELECT * FROM user WHERE registrationConfirmed LIKE :confirmation")
-    LiveData<List<User>>  usersByregistration(boolean confirmation);
+    @Query("SELECT * FROM user WHERE registrationConfirmed LIKE :confirmation AND userRole LIKE :userRole AND teamName LIKE :teamName")
+    LiveData<List<User>>  usersByregistration(boolean confirmation, String userRole, String teamName);
 
     @Insert
     void insert(User user);
@@ -45,5 +48,6 @@ public interface UserDao {
     @Delete
     void delete(User user);
 
-
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void update(User user);
 }
