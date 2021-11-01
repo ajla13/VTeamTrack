@@ -27,7 +27,7 @@ public class UserRepo {
         AppDatabase db = AppDatabase.getInstance(application);
         userDao = db.userDao();
         teamName= PreferenceData.getTeam(application.getApplicationContext());
-        allUsers = userDao.getPlayers(teamName,"player", true);
+        allUsers = userDao.getPlayers(teamName, true);
         unconfirmedUsers = userDao.usersByregistration(false, "player", teamName);
         userList=getUserList();
     }
@@ -35,7 +35,7 @@ public class UserRepo {
     public LiveData<List<User>> getPlayers() {
         if(allUsers==null) {
             AppDatabase.executor.execute(() -> {
-                allUsers= userDao.getPlayers(teamName,"player", true);
+                allUsers= userDao.getPlayers(teamName, true);
                 System.out.println("users in repo are null "+ allUsers);
             });
         }

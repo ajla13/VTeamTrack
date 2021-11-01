@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.ArrayList;
+
 public class PreferenceData {
 
     static final String PREF_LOGGEDIN_USER_EMAIL = "logged_in_email";
     static final String PREF_USER_LOGGEDIN_STATUS = "logged_in_status";
     static final String PREF_USER_LOGGEDIN = "logged_in_user";
-    static final String PREF_USER_ROLE = "user_role";
+    static final String PREF_USER_ROLE = "main_user_role";
     static final String PREF_TEAM = "team";
     public static SharedPreferences getSharedPreferences(Context ctx)
     {

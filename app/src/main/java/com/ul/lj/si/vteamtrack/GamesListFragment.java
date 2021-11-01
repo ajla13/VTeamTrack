@@ -42,7 +42,9 @@ public class GamesListFragment extends Fragment {
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        if (container != null) {
+            container.removeAllViews();
+        }
         View view = inflater.inflate(R.layout.listview_schedule, container, false);
 
         gameModel = new ViewModelProvider(this).get(GameModel.class);

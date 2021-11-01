@@ -42,7 +42,9 @@ public class TrainingsListFragment extends Fragment {
 
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        if (container != null) {
+            container.removeAllViews();
+        }
         View view = inflater.inflate(R.layout.listview_training_schedule, container, false);
 
         trainingModel = new ViewModelProvider(this).get(TrainingModel.class);

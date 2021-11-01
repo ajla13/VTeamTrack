@@ -29,7 +29,9 @@ public class PlayersListFragment extends Fragment {
 
         @Nullable
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+            if (container != null) {
+                container.removeAllViews();
+            }
             View view = inflater.inflate(R.layout.listview, container, false);
 
             userModel = new ViewModelProvider(this).get(UserModel.class);
@@ -44,11 +46,11 @@ public class PlayersListFragment extends Fragment {
 
             if (arrayOfUsers != null){
 
-                userAdapter = new UsersAdapter(getActivity().getApplicationContext(), arrayOfUsers);
+                userAdapter = new UsersAdapter(getActivity(), arrayOfUsers);
                 listView.setAdapter(userAdapter);
             }else{
                 Log.d("gwyd","user list was null");
-                userAdapter = new UsersAdapter(getActivity().getApplicationContext(),new ArrayList<User>());
+                userAdapter = new UsersAdapter(getActivity(),new ArrayList<User>());
                 listView.setAdapter(userAdapter);
             }
 
@@ -59,6 +61,7 @@ public class PlayersListFragment extends Fragment {
                         userAdapter.setUsers(users);
                         userAdapter.clear();
                         userAdapter.addAll(users);
+
                     } else {
                         Log.d("gwyd", "no users found in db");
                         userAdapter.setUsers(new ArrayList<User>());

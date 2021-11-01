@@ -21,9 +21,13 @@
     <string name="changePass">Change Password</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="make_admin">Give admin permissions</string>
+    <string name="unset_admin">Take away admin permissions</string>
     <string name="decline">Decline</string>
     <string name="team">Name of your team</string>
     <string name="welcome">Welcome</string>
+    <string name="view_profile">View profile</string>
     <string name="register_player">Player registration</string>
     <string name="register_trainer">Trainer registration</string>
     <string name="registrationLink">Click here for member registration.</string>

@@ -7,6 +7,8 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.RenameTable;
 
+import java.util.ArrayList;
+
 @Entity(tableName = "user")
 public class User {
 
@@ -21,9 +23,7 @@ public class User {
     public String email;
 
     public String password;
-
     public String userRole;
-
     public String phoneNumber;
 
     public String dateOfBirth;

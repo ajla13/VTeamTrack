@@ -56,6 +56,10 @@ public class RegistrationFormFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        if (container != null) {
+            container.removeAllViews();
+        }
         View view = inflater.inflate(R.layout.registration, container, false);
         email=(EditText) view.findViewById(R.id.registration_email);
         password=(EditText) view.findViewById(R.id.registration_password);
@@ -95,6 +99,7 @@ public class RegistrationFormFragment extends Fragment {
                         else {
                             user.userRole="player";
                             user.registrationConfirmed = false;
+                            System.out.println(user.registrationConfirmed);
                             userModel.createUser(user);
                             successText="Your registration request has been sent.";
                         }
@@ -177,6 +182,14 @@ public class RegistrationFormFragment extends Fragment {
         }
         if(isEmpty(surname)){
             surname.setError("Surname can not be empty");
+            returnVaue=false;
+        }
+        if(isEmpty(phone)){
+            phone.setError("Phone number can not be empty");
+            returnVaue=false;
+        }
+        if(isEmpty(dateOfBirth)){
+            dateOfBirth.setError("Date of birth can not be empty");
             returnVaue=false;
         }
         return returnVaue;
