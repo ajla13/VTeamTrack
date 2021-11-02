@@ -26,8 +26,8 @@ public class Game {
 
 
     public Game(){}
-    public Game(int id, String date, String time, String location, String teamName, List<Integer> attendancy, String oponent){
-        this.id=id;
+    public Game(String date, String time, String location, String teamName, List<Integer> attendancy, String oponent){
+
         this.date=date;
         this.time=time;
         this.location=location;
@@ -38,11 +38,11 @@ public class Game {
 
     public static Game[] populateGame() {
         return new Game[] {
-                new Game(0, "03/11/2021", "15:00", "Hall B", "Coast VT", new ArrayList<Integer>(), "Leading VT"),
-                new Game(0, "12/11/2021", "17:00", "Hall B", "Coast VT", new ArrayList<Integer>(), "Mist VT"),
-                new Game(0, "24/11/2021", "14:00", "Hall A", "Coast VT",
+                new Game( "03/11/2021", "15:00", "Hall B", "Coast VT", new ArrayList<Integer>(), "Leading VT"),
+                new Game( "12/11/2021", "17:00", "Hall B", "Coast VT", new ArrayList<Integer>(), "Mist VT"),
+                new Game( "24/11/2021", "14:00", "Hall A", "Coast VT",
                         new ArrayList<Integer>(){{add(0);add(3);add(1);}}, "North Team"),
-                new Game(0, "20/10/2021", "17:00", "Hall A", "Coast VT",
+                new Game( "20/10/2021", "17:00", "Hall A", "Coast VT",
                         new ArrayList<Integer>(){{add(0);add(3);add(1);add(4);add(5); add(6);}}, "Leading VT")
         };
     }

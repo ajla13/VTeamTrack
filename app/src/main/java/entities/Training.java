@@ -26,8 +26,8 @@ public class Training {
     public List<Integer> attendancy;
 
     public Training(){}
-    public Training(int id, String date, String time, String location, String teamName, List<Integer> attendancy){
-        this.id=id;
+    public Training( String date, String time, String location, String teamName, List<Integer> attendancy){
+
         this.date=date;
         this.time=time;
         this.location=location;
@@ -37,12 +37,12 @@ public class Training {
 
     public static Training[] populateTraining() {
         return new Training[] {
-                new Training(0, "03/11/2021", "14:00", "Hall A", "Coast VT", new ArrayList<Integer>()),
-                new Training(0, "02/11/2021", "14:00", "Hall A", "Coast VT",
+                new Training( "03/11/2021", "14:00", "Hall A", "Coast VT", new ArrayList<Integer>()),
+                new Training( "02/11/2021", "14:00", "Hall A", "Coast VT",
                         new ArrayList<Integer>(){{add(0);add(3);add(1);}}),
-                new Training(0, "25/10/2021", "14:00", "Hall A", "Coast VT",
+                new Training( "25/10/2021", "14:00", "Hall A", "Coast VT",
                         new ArrayList<Integer>(){{add(0);add(3);add(1);add(4);}}),
-                new Training(0, "23/10/2021", "14:00", "Hall A", "Coast VT",
+                new Training( "23/10/2021", "14:00", "Hall A", "Coast VT",
                         new ArrayList<Integer>(){{add(0);add(6);add(5); add(3); add(1); add(2);}})
         };
     }

@@ -15,6 +15,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import org.mindrot.jbcrypt.BCrypt;
+
+import dao.GamesDao;
+import dao.TeamDao;
+import dao.TrainingDao;
+import dao.UserDao;
+import database.AppDatabase;
+import entities.Game;
+import entities.Team;
+import entities.Training;
 import entities.User;
 import viewModels.TeamModel;
 import viewModels.UserModel;
@@ -30,6 +39,11 @@ public class Login extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        AppDatabase db = AppDatabase.getInstance(getApplication());
+        UserDao userDao = db.userDao();
+        TeamDao teamDao = db.teamDao();
+        TrainingDao trainingDao = db.trainingDao();
+        GamesDao gamesDao = db.gameDao();
 
         teamModel = new ViewModelProvider(this).get(TeamModel.class);
         userModel = new ViewModelProvider(this).get(UserModel.class);
@@ -39,6 +53,18 @@ public class Login extends AppCompatActivity {
         password=(EditText) findViewById(R.id.login_password);
         teamName=(EditText) findViewById(R.id.login_team);
         Button login=(Button) findViewById(R.id.btn_login);
+        Button dbButton= findViewById(R.id.btn_prepopulate);
+
+
+        dbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userDao.insertAll(User.populateData());
+                teamDao.insertAll(Team.populateTeam());
+                trainingDao.insertAll(Training.populateTraining());
+                gamesDao.insertAll(Game.populateGame());
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

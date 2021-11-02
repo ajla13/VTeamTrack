@@ -18,15 +18,15 @@ public class Team {
     public Team(){
 
     }
-    public Team( int id, String name, int userId){
-        this.id=id;
+    public Team(  String name, int userId){
+
         this.name=name;
         this.userId=userId;
     }
     public static Team[] populateTeam() {
         return new Team[] {
-                new Team(0, "Coast VT", 10),
-                new Team(1, "Leading VT", 11),
+                new Team( "Coast VT", 10),
+                new Team( "Leading VT", 11),
         };
     }
 

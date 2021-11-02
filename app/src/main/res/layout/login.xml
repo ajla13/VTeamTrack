@@ -56,8 +56,17 @@
         android:onClick="switchToRegistration"
         android:pointerIcon="hand"
         android:text="@string/registrationLink"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_prepopulate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login" />
+    <Button
+        android:id="@+id/btn_prepopulate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prepopulate DB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registrationLink" />
 </androidx.constraintlayout.widget.ConstraintLayout>

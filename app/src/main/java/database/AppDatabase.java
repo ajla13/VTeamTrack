@@ -40,16 +40,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if(databaseInstance==null){
             databaseInstance= Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class,
                  DB_NAME).fallbackToDestructiveMigration().allowMainThreadQueries()
-                    .addCallback(new Callback() {
-                @Override
-                public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                    super.onCreate(db);
-                        getInstance(context).userDao().insertAll(User.populateData());
-                        getInstance(context).teamDao().insertAll(Team.populateTeam());
-                        getInstance(context).trainingDao().insertAll(Training.populateTraining());
-                        getInstance(context).gameDao().insertAll(Game.populateGame());
-
-                }}).build(); ;
+                   .build();
 
             }
         return databaseInstance;
