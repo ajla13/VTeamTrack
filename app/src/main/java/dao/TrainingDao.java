@@ -12,6 +12,7 @@ import java.util.List;
 
 import entities.Game;
 import entities.Training;
+import entities.User;
 
 @Dao
 public interface TrainingDao {
@@ -27,6 +28,9 @@ public interface TrainingDao {
 
     @Insert
     void insert(Training training);
+
+    @Insert
+    void insertAll(Training... trainings);
 
     @Delete
     void delete(Training training);

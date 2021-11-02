@@ -1,4 +1,4 @@
-package com.ul.lj.si.vteamtrack;
+package com.ul.lj.si.vteamtrack.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.ul.lj.si.vteamtrack.Login;
+import com.ul.lj.si.vteamtrack.R;
 
 import org.mindrot.jbcrypt.BCrypt;
 

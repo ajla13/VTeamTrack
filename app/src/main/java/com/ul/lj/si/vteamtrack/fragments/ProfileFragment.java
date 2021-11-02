@@ -1,4 +1,4 @@
-package com.ul.lj.si.vteamtrack;
+package com.ul.lj.si.vteamtrack.fragments;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,7 +15,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.ul.lj.si.vteamtrack.PreferenceData;
+import com.ul.lj.si.vteamtrack.R;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -43,6 +48,7 @@ public class ProfileFragment extends Fragment {
     private  LinearLayout changePassContainer;
     private EditText editName;
     private Button updateProfile;
+    private Button unregisterUser;
     private EditText editSurname;
     private EditText editEmail;
     private EditText editPhone;
@@ -87,6 +93,7 @@ public class ProfileFragment extends Fragment {
         cancelPass = view.findViewById(R.id.btn_profile_cancelPass);
         changePass = view.findViewById(R.id.btn_profile_changePass);
         makeAdmin = view.findViewById(R.id.btn_profile_admin);
+        unregisterUser = view.findViewById(R.id.btn_profile_unregister);
 
         edit = view.findViewById(R.id.btn_profile_edit);
         updateProfile = view.findViewById(R.id.btn_profile_update);
@@ -103,9 +110,20 @@ public class ProfileFragment extends Fragment {
         dateOfBirth.setText(user.dateOfBirth);
 
         if(!user.userRole.equals("trainer") &&
-        !PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("player")
+        PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("trainer")
         && user.id!=currentUserId){
             makeAdmin.setVisibility(View.VISIBLE);
+            if(!user.userRole.equals("admin")){
+                makeAdmin.setText("Give admin permissions");
+            }
+            else {
+                makeAdmin.setText("Take away admin permissions");
+            }
+        }
+        if(!user.userRole.equals("trainer") &&
+                !PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("player")
+                && user.id!=currentUserId){
+                unregisterUser.setVisibility(View.VISIBLE);
         }
 
 
@@ -121,6 +139,18 @@ public class ProfileFragment extends Fragment {
                     makeAdmin.setText("Give admin permissions");
                 }
                 userModel.update(user);
+            }
+        });
+        unregisterUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userModel.deleteUser(user);
+                FragmentManager fm = (getActivity()).getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment fragment = new HomeFragment();
+                ft.replace(R.id.nav_fragment, fragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
             }
         });
 
@@ -256,6 +286,12 @@ public class ProfileFragment extends Fragment {
         else if(!Patterns.EMAIL_ADDRESS.matcher(editEmail.getText()).matches()){
             editEmail.setError("Please enter a valid email");
             returnVaue=false;
+        }
+        else {
+              User  user = userModel.checkUserCred(email.getText().toString(),PreferenceData.getTeam(getContext().getApplicationContext()));
+              if(user!=null){
+                  editEmail.setError("That email adress is already taken");
+              }
         }
         if(isEmpty(editName)){
             editName.setError("Name can not be empty");

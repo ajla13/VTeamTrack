@@ -1,4 +1,4 @@
-package com.ul.lj.si.vteamtrack;
+package com.ul.lj.si.vteamtrack.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,8 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+
+
+import com.ul.lj.si.vteamtrack.R;
+import com.ul.lj.si.vteamtrack.fragments.ProfileFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class UsersAdapter extends ArrayAdapter<User> {
     public UsersAdapter(Context context, ArrayList<User> users) {
         super(context, 0, users);
         this.context= context;
+
     }
     
     public void setUsers(List<User> users) {

@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,12 +21,21 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingLeft="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_expand"
+            app:layout_constraintEnd_toStartOf="@+id/btn_attendance_game"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <Button
+            android:id="@+id/btn_attendance_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="@string/attendancy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_expand"
+            app:layout_constraintStart_toEndOf="@+id/item_game_oponent"
+            app:layout_constraintTop_toTopOf="parent">
+        </Button>
 
         <ImageButton
             android:id="@+id/btn_expand"
@@ -32,7 +45,7 @@
             android:src="@drawable/ic_expand"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_edit"
-            app:layout_constraintStart_toEndOf="@+id/item_game_date"
+            app:layout_constraintStart_toEndOf="@+id/btn_attendance_game"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
         <ImageButton
@@ -73,7 +86,6 @@
             android:id="@+id/item_game_date"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="20dp"
             app:layout_constraintBottom_toTopOf="@+id/item_game_time"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +96,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:paddingLeft="20dp"
             app:layout_constraintBottom_toTopOf="@+id/item_game_location"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +107,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:paddingLeft="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

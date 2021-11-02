@@ -19,10 +19,14 @@
     <string name="phone">Phone number</string>
     <string name="passRepeat">Repeat password</string>
     <string name="changePass">Change Password</string>
+    <string name="oldPass">Old password</string>
+    <string name="newPass">New password</string>
+    <string name="unregister">Unregister player</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="edit_profile">Edit profile</string>
     <string name="make_admin">Give admin permissions</string>
+    <string name="attendancy">Attendance</string>
     <string name="unset_admin">Take away admin permissions</string>
     <string name="decline">Decline</string>
     <string name="team">Name of your team</string>

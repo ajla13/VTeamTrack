@@ -1,4 +1,4 @@
-package com.ul.lj.si.vteamtrack;
+package com.ul.lj.si.vteamtrack.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.ul.lj.si.vteamtrack.MainActivity;
+import com.ul.lj.si.vteamtrack.R;
 
 import java.util.ArrayList;
 import java.util.List;

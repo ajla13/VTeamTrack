@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.ul.lj.si.vteamtrack.ProfileFragment"
+        android:name="com.ul.lj.si.vteamtrack.fragments.ProfileFragment"
         android:label="ProfileFragment" >
         <argument
             android:name="userId"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ul.lj.si.vteamtrack.HomeFragment"
+        android:name="com.ul.lj.si.vteamtrack.fragments.HomeFragment"
         android:label="HomeFragment" />
 
 </navigation>

@@ -6,9 +6,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import entities.Training;
 import viewModels.TrainingModel;
@@ -51,7 +59,7 @@ public class CreateTrainingActivity extends AppCompatActivity {
             training.time=trainingTime.getText().toString();
             training.location=trainingLocation.getText().toString();
             training.teamName=PreferenceData.getTeam(getApplicationContext());
-            System.out.println("tr "+training);
+            training.attendancy = new ArrayList<>();
             Training result = trainingModel.createTraining(training);
 
             if(result!= null){

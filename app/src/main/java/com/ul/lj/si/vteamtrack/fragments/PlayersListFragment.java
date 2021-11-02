@@ -1,6 +1,5 @@
-package com.ul.lj.si.vteamtrack;
+package com.ul.lj.si.vteamtrack.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.ul.lj.si.vteamtrack.R;
+import com.ul.lj.si.vteamtrack.adapters.UsersAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,13 +71,6 @@ public class PlayersListFragment extends Fragment {
                 }
             });
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    User usr = userAdapter.getItem(i);
-
-                }
-            });
 
             return view;
 

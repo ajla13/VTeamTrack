@@ -11,6 +11,7 @@ import androidx.room.Update;
 import java.util.List;
 
 import entities.Game;
+import entities.User;
 
 
 @Dao
@@ -27,6 +28,9 @@ public interface GamesDao {
 
         @Insert
         void insert(Game game);
+
+        @Insert
+        void insertAll(Game... games);
 
         @Delete
         void delete(Game game);

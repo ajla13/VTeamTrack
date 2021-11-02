@@ -1,4 +1,4 @@
-package com.ul.lj.si.vteamtrack;
+package com.ul.lj.si.vteamtrack.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.ul.lj.si.vteamtrack.R;
 
 public class RegistrationInitialFragment extends Fragment {
 

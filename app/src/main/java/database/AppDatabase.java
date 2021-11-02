@@ -2,10 +2,12 @@ package database;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.ul.lj.si.vteamtrack.Converters;
 
@@ -37,10 +39,23 @@ public abstract class AppDatabase extends RoomDatabase {
     public static synchronized AppDatabase getInstance(Context context) {
         if(databaseInstance==null){
             databaseInstance= Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class,
-                 DB_NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
-        }
+                 DB_NAME).fallbackToDestructiveMigration().allowMainThreadQueries()
+                    .addCallback(new Callback() {
+                @Override
+                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                    super.onCreate(db);
+                        getInstance(context).userDao().insertAll(User.populateData());
+                        getInstance(context).teamDao().insertAll(Team.populateTeam());
+                        getInstance(context).trainingDao().insertAll(Training.populateTraining());
+                        getInstance(context).gameDao().insertAll(Game.populateGame());
+
+                }}).build(); ;
+
+            }
         return databaseInstance;
+
     }
-}
+    }
+
 
 

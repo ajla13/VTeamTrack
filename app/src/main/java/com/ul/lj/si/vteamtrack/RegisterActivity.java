@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.ul.lj.si.vteamtrack.fragments.RegistrationFormFragment;
+import com.ul.lj.si.vteamtrack.fragments.RegistrationInitialFragment;
+
 
 public class RegisterActivity extends AppCompatActivity {
 

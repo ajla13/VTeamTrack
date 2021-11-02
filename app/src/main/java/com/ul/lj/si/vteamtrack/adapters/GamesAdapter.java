@@ -1,24 +1,33 @@
-package com.ul.lj.si.vteamtrack;
+package com.ul.lj.si.vteamtrack.adapters;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.ul.lj.si.vteamtrack.MainActivity;
+import com.ul.lj.si.vteamtrack.PreferenceData;
+import com.ul.lj.si.vteamtrack.R;
+import com.ul.lj.si.vteamtrack.UpdateGameActivity;
+import com.ul.lj.si.vteamtrack.fragments.GameAttendanceFragment;
+import com.ul.lj.si.vteamtrack.fragments.GamesListFragment;
+import com.ul.lj.si.vteamtrack.fragments.TrainingAttendancyFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +78,22 @@ public class GamesAdapter extends ArrayAdapter<Game> {
         ImageButton edit = (ImageButton) convertView.findViewById(R.id.btn_edit);
         ImageButton delete = (ImageButton) convertView.findViewById(R.id.btn_delete);
         ImageButton expand = (ImageButton) convertView.findViewById(R.id.btn_expand);
+        Button attendance = convertView.findViewById(R.id.btn_attendance_game);
+
+        attendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("gameId", game.id);
+                FragmentManager fm = ((FragmentActivity) activity).getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment fragment = new GameAttendanceFragment();
+                fragment.setArguments(bundle);
+                ft.replace(R.id.nav_fragment, fragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
+            }
+        });
 
         LinearLayout toggleLayout = (LinearLayout) convertView.findViewById(R.id.item_game_secondlayout);
 

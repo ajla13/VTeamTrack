@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
+
 import entities.Game;
 import viewModels.GameModel;
 
@@ -56,6 +58,7 @@ public class CreateGameActivity extends AppCompatActivity {
              game.time=gameTime.getText().toString();
              game.location=gameLocation.getText().toString();
              game.oponent =gameOponent.getText().toString();
+             game.attendancy = new ArrayList<>();
              game.teamName=PreferenceData.getTeam(getApplicationContext());
              Game result = gameModel.createGame(game);
 

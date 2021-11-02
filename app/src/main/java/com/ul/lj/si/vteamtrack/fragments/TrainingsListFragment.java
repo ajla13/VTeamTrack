@@ -1,4 +1,4 @@
-package com.ul.lj.si.vteamtrack;
+package com.ul.lj.si.vteamtrack.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,13 +19,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.ul.lj.si.vteamtrack.CreateTrainingActivity;
+import com.ul.lj.si.vteamtrack.PreferenceData;
+import com.ul.lj.si.vteamtrack.R;
+import com.ul.lj.si.vteamtrack.adapters.TrainingAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import entities.Game;
 import entities.Training;
-import viewModels.GameModel;
 import viewModels.TrainingModel;
 
 public class TrainingsListFragment extends Fragment {

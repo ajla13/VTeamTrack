@@ -21,6 +21,9 @@ public interface TeamDao {
     @Insert
     void insert(Team team);
 
+    @Insert
+    void insertAll(Team... teams);
+
     @Delete
     void delete(Team team);
 

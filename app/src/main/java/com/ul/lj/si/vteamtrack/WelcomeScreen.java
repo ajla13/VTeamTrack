@@ -9,11 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
 
+import database.AppDatabase;
+
 public class WelcomeScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppDatabase db = AppDatabase.getInstance(getApplication());
         final Intent[] intent = new Intent[1];
         setContentView(R.layout.splash_screen);
         SharedPreferences preferences=PreferenceData.getSharedPreferences(getApplication());
