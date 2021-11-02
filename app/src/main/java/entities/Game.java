@@ -41,9 +41,9 @@ public class Game {
                 new Game( "03/11/2021", "15:00", "Hall B", "Coast VT", new ArrayList<Integer>(), "Leading VT"),
                 new Game( "12/11/2021", "17:00", "Hall B", "Coast VT", new ArrayList<Integer>(), "Mist VT"),
                 new Game( "24/11/2021", "14:00", "Hall A", "Coast VT",
-                        new ArrayList<Integer>(){{add(0);add(3);add(1);}}, "North Team"),
+                        new ArrayList<Integer>(), "North Team"),
                 new Game( "20/10/2021", "17:00", "Hall A", "Coast VT",
-                        new ArrayList<Integer>(){{add(0);add(3);add(1);add(4);add(5); add(6);}}, "Leading VT")
+                        new ArrayList<Integer>(), "Leading VT")
         };
     }
 

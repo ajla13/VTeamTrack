@@ -287,12 +287,7 @@ public class ProfileFragment extends Fragment {
             editEmail.setError("Please enter a valid email");
             returnVaue=false;
         }
-        else {
-              User  user = userModel.checkUserCred(email.getText().toString(),PreferenceData.getTeam(getContext().getApplicationContext()));
-              if(user!=null){
-                  editEmail.setError("That email adress is already taken");
-              }
-        }
+
         if(isEmpty(editName)){
             editName.setError("Name can not be empty");
             returnVaue=false;

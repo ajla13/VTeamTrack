@@ -39,11 +39,11 @@ public class Training {
         return new Training[] {
                 new Training( "03/11/2021", "14:00", "Hall A", "Coast VT", new ArrayList<Integer>()),
                 new Training( "02/11/2021", "14:00", "Hall A", "Coast VT",
-                        new ArrayList<Integer>(){{add(0);add(3);add(1);}}),
+                        new ArrayList<Integer>()),
                 new Training( "25/10/2021", "14:00", "Hall A", "Coast VT",
-                        new ArrayList<Integer>(){{add(0);add(3);add(1);add(4);}}),
+                        new ArrayList<Integer>()),
                 new Training( "23/10/2021", "14:00", "Hall A", "Coast VT",
-                        new ArrayList<Integer>(){{add(0);add(6);add(5); add(3); add(1); add(2);}})
+                        new ArrayList<Integer>())
         };
     }
 
