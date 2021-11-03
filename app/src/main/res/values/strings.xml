@@ -32,6 +32,9 @@
     <string name="team">Name of your team</string>
     <string name="welcome">Welcome</string>
     <string name="view_profile">View profile</string>
+    <string name="view_posts">View posts</string>
+    <string name="write_post">Write a new post...</string>
+    <string name="post">Post</string>
     <string name="register_player">Player registration</string>
     <string name="register_trainer">Trainer registration</string>
     <string name="registrationLink">Click here for member registration.</string>

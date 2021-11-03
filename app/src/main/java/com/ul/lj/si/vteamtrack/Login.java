@@ -17,11 +17,13 @@ import androidx.lifecycle.ViewModelProvider;
 import org.mindrot.jbcrypt.BCrypt;
 
 import dao.GamesDao;
+import dao.PostDao;
 import dao.TeamDao;
 import dao.TrainingDao;
 import dao.UserDao;
 import database.AppDatabase;
 import entities.Game;
+import entities.Post;
 import entities.Team;
 import entities.Training;
 import entities.User;
@@ -44,6 +46,7 @@ public class Login extends AppCompatActivity {
         TeamDao teamDao = db.teamDao();
         TrainingDao trainingDao = db.trainingDao();
         GamesDao gamesDao = db.gameDao();
+        PostDao postDao = db.postDao();
 
         teamModel = new ViewModelProvider(this).get(TeamModel.class);
         userModel = new ViewModelProvider(this).get(UserModel.class);
@@ -63,6 +66,7 @@ public class Login extends AppCompatActivity {
                 teamDao.insertAll(Team.populateTeam());
                 trainingDao.insertAll(Training.populateTraining());
                 gamesDao.insertAll(Game.populateGame());
+                postDao.insertAll(Post.populatePost());
             }
         });
 

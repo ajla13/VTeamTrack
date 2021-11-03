@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigatin_view);
         NavController navController = Navigation.findNavController(this,R.id.nav_fragment);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.homeFragment, R.id.profileFragment)
+                R.id.homeFragment, R.id.profileFragment, R.id.postsFragment)
                 .build();
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.homeFragment:
                         navController.navigate(R.id.homeFragment);
+                        break;
+                    case R.id.postsFragment:
+                        Bundle bundlePosts = new Bundle();
+                        bundlePosts.putString("source", "navigation");
+                        navController.navigate(R.id.postsFragment, bundlePosts);
                         break;
                 }
                 return true;

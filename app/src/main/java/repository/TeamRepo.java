@@ -14,7 +14,8 @@ import database.AppDatabase;
 import entities.Team;
 import entities.User;
 
-public class TeamRepo {  public List<User> userList;
+public class TeamRepo {
+    public List<User> userList;
     private List<User> allTeamUsers;
     private TeamDao teamDao;
     private Team team;

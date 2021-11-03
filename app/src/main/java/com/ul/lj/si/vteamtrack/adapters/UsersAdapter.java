@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import com.ul.lj.si.vteamtrack.R;
+import com.ul.lj.si.vteamtrack.fragments.PostsFragment;
 import com.ul.lj.si.vteamtrack.fragments.ProfileFragment;
 
 import java.util.ArrayList;
@@ -52,9 +53,25 @@ public class UsersAdapter extends ArrayAdapter<User> {
         TextView userName = (TextView) convertView.findViewById(R.id.item_user_name);
         TextView userSurname = (TextView) convertView.findViewById(R.id.item_user_surname);
         Button viewProfile = convertView.findViewById(R.id.item_user_profile);
+        Button viewPosts = convertView.findViewById(R.id.item_user_posts);
         // Populate the data into the template view using the data object
         userName.setText(user.firstName);
         userSurname.setText(user.lastName);
+        viewPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("userId", user.id);
+                bundle.putString("source", "individualPost");
+                FragmentManager fm = ((FragmentActivity) context).getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment fragment = new PostsFragment();
+                fragment.setArguments(bundle);
+                ft.replace(R.id.nav_fragment, fragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
+            }
+        });
         viewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
