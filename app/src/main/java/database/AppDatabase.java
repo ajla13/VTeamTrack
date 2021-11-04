@@ -2,14 +2,13 @@ package database;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.ul.lj.si.vteamtrack.Converters;
+import com.ul.lj.si.vteamtrack.typeConverters.Converters;
+import com.ul.lj.si.vteamtrack.typeConverters.DateConverter;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,7 +25,7 @@ import entities.Training;
 import entities.User;
 
 @Database(entities = {User.class, Game.class, Team.class,Training.class, Post.class}, version = 1, exportSchema = false)
-@TypeConverters({Converters.class})
+@TypeConverters({Converters.class, DateConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract GamesDao gameDao();

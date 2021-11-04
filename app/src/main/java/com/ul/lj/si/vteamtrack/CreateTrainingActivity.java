@@ -9,9 +9,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -30,7 +35,7 @@ public class CreateTrainingActivity extends AppCompatActivity {
         trainingModel = new ViewModelProvider(this).get(TrainingModel.class);
 
     }
-    public void createTraining( View v){
+    public void createTraining( View v) throws ParseException {
 
         Training training = new Training();
         int error = 0;
@@ -55,7 +60,7 @@ public class CreateTrainingActivity extends AppCompatActivity {
             error=1;
         }
         if(error==0){
-            training.date=trainingDate.getText().toString();
+            training.date=new SimpleDateFormat("dd/MM/yyyy").parse(trainingDate.getText().toString());
             training.time=trainingTime.getText().toString();
             training.location=trainingLocation.getText().toString();
             training.teamName=PreferenceData.getTeam(getApplicationContext());
@@ -74,5 +79,20 @@ public class CreateTrainingActivity extends AppCompatActivity {
             error=0;
         }
 
+    }
+    public void showDatePickerDialog(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("viewId",v.getId());
+        bundle.putString("source", "editText");
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+
+
+    }
+    public void cancel(View v){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

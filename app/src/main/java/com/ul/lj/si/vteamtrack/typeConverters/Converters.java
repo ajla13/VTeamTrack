@@ -1,4 +1,4 @@
-package com.ul.lj.si.vteamtrack;
+package com.ul.lj.si.vteamtrack.typeConverters;
 
 import androidx.room.TypeConverter;
 

@@ -9,7 +9,14 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import entities.Game;
 import viewModels.GameModel;
@@ -21,6 +28,8 @@ public class UpdateGameActivity extends AppCompatActivity {
     private EditText gameLocation;
     private EditText gameTime;
     private EditText gameOponent;
+    SimpleDateFormat sdf;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +43,15 @@ public class UpdateGameActivity extends AppCompatActivity {
         gameLocation=(EditText)findViewById(R.id.game_update_location);
         gameOponent=(EditText)findViewById(R.id.game_update_oponent);
 
-        gameDate.setText(game.date);
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date utilDate = new Date(game.date.getTime());
+        gameDate.setText(sdf.format(utilDate));
+
         gameTime.setText(game.time);
         gameLocation.setText(game.location);
         gameOponent.setText(game.oponent);
     }
-    public void updateGame( View v){
+    public void updateGame( View v) throws ParseException {
 
         int error = 1;
 
@@ -68,7 +80,7 @@ public class UpdateGameActivity extends AppCompatActivity {
         }
 
         if(error==0){
-            game.date=gameDate.getText().toString();
+            game.date=sdf.parse(gameDate.getText().toString());
             game.time=gameTime.getText().toString();
             game.location=gameLocation.getText().toString();
             game.oponent=gameOponent.getText().toString();
@@ -86,5 +98,20 @@ public class UpdateGameActivity extends AppCompatActivity {
             error=1;
         }
 
+    }
+    public void showDatePickerDialog(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("viewId",v.getId());
+        bundle.putString("source", "editText");
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+
+
+    }
+    public void cancelUpdateGame(View v){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

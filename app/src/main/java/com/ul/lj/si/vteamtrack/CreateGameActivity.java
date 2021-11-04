@@ -8,8 +8,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
+import com.ul.lj.si.vteamtrack.fragments.TimePickerFragment;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import entities.Game;
@@ -24,7 +30,7 @@ public class CreateGameActivity extends AppCompatActivity {
         gameModel = new ViewModelProvider(this).get(GameModel.class);
 
     }
-    public void createGame( View v){
+    public void createGame( View v) throws ParseException {
 
          Game game = new Game();
          int error = 0;
@@ -54,7 +60,7 @@ public class CreateGameActivity extends AppCompatActivity {
             error=1;
          }
          if(error==0){
-             game.date=gameDate.getText().toString();
+             game.date=new SimpleDateFormat("dd/MM/yyyy").parse(gameDate.getText().toString());
              game.time=gameTime.getText().toString();
              game.location=gameLocation.getText().toString();
              game.oponent =gameOponent.getText().toString();
@@ -75,7 +81,24 @@ public class CreateGameActivity extends AppCompatActivity {
          }
 
     }
+    public void showDatePickerDialog(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("viewId",v.getId());
+        bundle.putString("source", "editText");
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
 
+
+    }
+    public void showTimePickerDialog(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("viewId",v.getId());
+        bundle.putString("source", "editText");
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
     public void cancel(View v){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);

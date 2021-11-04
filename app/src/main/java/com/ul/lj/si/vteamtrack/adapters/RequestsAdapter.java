@@ -21,7 +21,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.ul.lj.si.vteamtrack.MainActivity;
 import com.ul.lj.si.vteamtrack.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import entities.Game;
@@ -36,6 +38,7 @@ public class RequestsAdapter extends ArrayAdapter<User> {
     private List<User> users;
 
     private UserModel userModel;
+    SimpleDateFormat sdf;
 
     public RequestsAdapter(Activity activity, Context context, ArrayList<User> users) {
 
@@ -68,7 +71,11 @@ public class RequestsAdapter extends ArrayAdapter<User> {
         // Populate the data into the template view using the data object
         userName.setText(user.firstName);
         userSurname.setText(user.lastName);
-        dateOfBirth.setText(user.dateOfBirth);
+
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date utilDate = new Date(user.dateOfBirth.getTime());
+        dateOfBirth.setText(sdf.format(utilDate));
+
         phone.setText(user.phoneNumber);
         email.setText(user.email);
 

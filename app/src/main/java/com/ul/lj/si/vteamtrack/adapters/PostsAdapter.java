@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ul.lj.si.vteamtrack.PreferenceData;
 import com.ul.lj.si.vteamtrack.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import entities.Post;
@@ -25,8 +27,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
     User authorUser;
     UserModel userModel;
-    int authorId;
+    SimpleDateFormat sdf;
     private Activity activity;
+
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView content;
@@ -71,8 +74,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data model based on position
         Post post = posts.get(position);
-        System.out.println(post.authorId);
-        System.out.println(PreferenceData.getLoggedInUser(activity.getApplicationContext()));
         authorUser = userModel.getUser(post.authorId);
         // Set item views based on your views and data model
         TextView content = holder.content;
@@ -80,8 +81,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         TextView date = holder.date;
         content.setText(post.content);
         author.setText(authorUser.firstName);
-        date.setText(post.date);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date utilDate = new Date(post.date.getTime());
+        date.setText(sdf.format(utilDate));
 
     }
 

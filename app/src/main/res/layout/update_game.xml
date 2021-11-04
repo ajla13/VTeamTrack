@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingBottom="20dp"
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
     >
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/game_update_oponent_wrapper"
@@ -45,6 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
+            android:focusable="false"
+            android:onClick="showDatePickerDialog"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,10 +113,21 @@
         android:layout_height="wrap_content"
         android:onClick="updateGame"
         android:text="@string/update"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_cancel_update_game"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/game_update_location_wrapper" />
+
+    <Button
+        android:id="@+id/button_cancel_update_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cancelUpdateGame"
+        android:text="@string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_update_game" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

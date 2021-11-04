@@ -24,6 +24,10 @@ import com.ul.lj.si.vteamtrack.R;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import entities.User;
 import viewModels.UserModel;
 
@@ -53,6 +57,7 @@ public class ProfileFragment extends Fragment {
     private EditText editEmail;
     private EditText editPhone;
     private EditText editDateOfBirth;
+    SimpleDateFormat sdf;
 
     public ProfileFragment(int userId){
         this.userId = userId;
@@ -107,7 +112,11 @@ public class ProfileFragment extends Fragment {
         surname.setText(user.lastName);
         email.setText(user.email);
         phone.setText(user.phoneNumber);
-        dateOfBirth.setText(user.dateOfBirth);
+
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date utilDate = new Date(user.dateOfBirth.getTime());
+        dateOfBirth.setText(sdf.format(utilDate));
+
 
         if(!user.userRole.equals("trainer") &&
         PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("trainer")
@@ -192,7 +201,11 @@ public class ProfileFragment extends Fragment {
                     user.firstName = editName.getText().toString();
                     user.lastName = editSurname.getText().toString();
                     user.email = editEmail.getText().toString();
-                    user.dateOfBirth = editDateOfBirth.getText().toString();
+                    try {
+                        user.dateOfBirth = sdf.parse(editDateOfBirth.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     user.phoneNumber = editPhone.getText().toString();
 
 
@@ -216,7 +229,8 @@ public class ProfileFragment extends Fragment {
 
                     editDateOfBirth.setVisibility(View.GONE);
                     dateOfBirth.setVisibility(View.VISIBLE);
-                    dateOfBirth.setText(user.dateOfBirth);
+                    Date utilDate = new Date(user.dateOfBirth.getTime());
+                    dateOfBirth.setText(sdf.format(utilDate));
 
                     updateProfile.setVisibility(View.GONE);
                     edit.setVisibility(View.VISIBLE);

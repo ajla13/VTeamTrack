@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.text.ParseException;
+
 import dao.GamesDao;
 import dao.PostDao;
 import dao.TeamDao;
@@ -62,11 +64,27 @@ public class Login extends AppCompatActivity {
         dbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userDao.insertAll(User.populateData());
+                try {
+                    userDao.insertAll(User.populateData());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 teamDao.insertAll(Team.populateTeam());
-                trainingDao.insertAll(Training.populateTraining());
-                gamesDao.insertAll(Game.populateGame());
-                postDao.insertAll(Post.populatePost());
+                try {
+                    trainingDao.insertAll(Training.populateTraining());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    gamesDao.insertAll(Game.populateGame());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    postDao.insertAll(Post.populatePost());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

@@ -7,7 +7,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import entities.Game;
 import entities.Training;
@@ -20,6 +27,7 @@ public class UpdateTrainingActivity extends AppCompatActivity {
     private EditText trainingDate;
     private EditText trainingLocation;
     private EditText trainingTime;
+    SimpleDateFormat sdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +42,14 @@ public class UpdateTrainingActivity extends AppCompatActivity {
         trainingTime=(EditText)findViewById(R.id.training_update_time);
         trainingLocation=(EditText)findViewById(R.id.training_update_location);
 
-        trainingDate.setText(training.date);
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date utilDate = new Date(training.date.getTime());
+        trainingDate.setText(sdf.format(utilDate));
+
         trainingTime.setText(training.time);
         trainingLocation.setText(training.location);
     }
-    public void updateTraining( View v){
+    public void updateTraining( View v) throws ParseException {
 
         int error = 1;
 
@@ -62,7 +73,7 @@ public class UpdateTrainingActivity extends AppCompatActivity {
         }
 
         if(error==0){
-            training.date=trainingDate.getText().toString();
+            training.date=sdf.parse(trainingDate.getText().toString());
             training.time=trainingTime.getText().toString();
             training.location=trainingLocation.getText().toString();
             trainingModel.updateTraining(training);
@@ -79,5 +90,19 @@ public class UpdateTrainingActivity extends AppCompatActivity {
             error=1;
         }
 
+    }
+    public void showDatePickerDialog(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("viewId",v.getId());
+        bundle.putString("source", "editText");
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+
+    }
+    public void cancelUpdateTraining(View v){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -29,7 +29,9 @@ import com.ul.lj.si.vteamtrack.fragments.GameAttendanceFragment;
 import com.ul.lj.si.vteamtrack.fragments.GamesListFragment;
 import com.ul.lj.si.vteamtrack.fragments.TrainingAttendancyFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import entities.Game;
@@ -43,7 +45,7 @@ public class GamesAdapter extends ArrayAdapter<Game> {
     private List<Game> games;
 
     private GameModel gameModel;
-
+    SimpleDateFormat sdf;
     public GamesAdapter(Activity activity,Context context, ArrayList<Game> games) {
 
         super(context, 0, games);
@@ -70,7 +72,10 @@ public class GamesAdapter extends ArrayAdapter<Game> {
         TextView gameLocation = (TextView) convertView.findViewById(R.id.item_game_location);
         TextView gameOponent = (TextView) convertView.findViewById(R.id.item_game_oponent);
         // Populate the data into the template view using the data object
-        gameDate.setText(game.date);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date utilDate = new Date(game.date.getTime());
+        gameDate.setText(sdf.format(utilDate));
+
         gameTime.setText(game.time);
         gameLocation.setText(game.location);
         gameOponent.setText(game.oponent);

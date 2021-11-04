@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,6 +22,9 @@ import com.ul.lj.si.vteamtrack.Login;
 import com.ul.lj.si.vteamtrack.R;
 
 import org.mindrot.jbcrypt.BCrypt;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import entities.Team;
 import entities.User;
@@ -75,6 +79,7 @@ public class RegistrationFormFragment extends Fragment {
 
         Button register=(Button) view.findViewById(R.id.btn_register);
 
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,7 +91,11 @@ public class RegistrationFormFragment extends Fragment {
                         user.lastName=surname.getText().toString();
                         user.email=email.getText().toString();
                         user.phoneNumber=phone.getText().toString();
-                        user.dateOfBirth=dateOfBirth.getText().toString();
+                        try {
+                            user.dateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(dateOfBirth.getText().toString());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         user.password=pw_hash;
                         user.teamName=teamName.getText().toString();
                         if(registrationType=="trainer"){
@@ -197,4 +206,5 @@ public class RegistrationFormFragment extends Fragment {
         }
         return returnVaue;
     }
+
 }

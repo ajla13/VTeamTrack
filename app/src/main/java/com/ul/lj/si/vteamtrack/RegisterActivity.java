@@ -2,13 +2,16 @@ package com.ul.lj.si.vteamtrack;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
 import com.ul.lj.si.vteamtrack.fragments.RegistrationFormFragment;
 import com.ul.lj.si.vteamtrack.fragments.RegistrationInitialFragment;
 
@@ -46,5 +49,16 @@ public class RegisterActivity extends AppCompatActivity {
         registrationType="trainer";
         replaceFragment(new RegistrationFormFragment(registrationType));
     }
+    public void showDatePickerDialog(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("viewId",v.getId());
+        bundle.putString("source", "editText");
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+
+
+    }
+
 
 }

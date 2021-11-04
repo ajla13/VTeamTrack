@@ -30,7 +30,10 @@ import com.ul.lj.si.vteamtrack.fragments.ProfileFragment;
 import com.ul.lj.si.vteamtrack.fragments.TrainingAttendancyFragment;
 import com.ul.lj.si.vteamtrack.fragments.TrainingsListFragment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import entities.Training;
@@ -59,18 +62,19 @@ public class TrainingAdapter extends ArrayAdapter<Training> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
+
         Training training = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_training, parent, false);
         }
-        // Lookup view for data population
+
         TextView trainingDate = (TextView) convertView.findViewById(R.id.item_training_date);
         TextView trainingTime = (TextView) convertView.findViewById(R.id.item_training_time);
         TextView trainingLocation = (TextView) convertView.findViewById(R.id.item_training_location);
-        // Populate the data into the template view using the data object
-        trainingDate.setText(training.date);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date utilDate = new Date(training.date.getTime());
+        trainingDate.setText(sdf.format(utilDate));
         trainingTime.setText(training.time);
         trainingLocation.setText(training.location);
 

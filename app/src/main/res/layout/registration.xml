@@ -34,15 +34,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/registration_name" />
+
     <EditText
         android:id="@+id/registration_dateOfBirth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:focusable="false"
         android:hint="@string/dateOfBirth"
+        android:onClick="showDatePickerDialog"
         app:layout_constraintBottom_toTopOf="@id/registration_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/registration_surname" />
+
+
     <EditText
         android:id="@+id/registration_email"
         android:layout_width="wrap_content"
