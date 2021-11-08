@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.Date;
 import java.util.List;
 
 import entities.Training;
@@ -29,6 +30,9 @@ public class TrainingModel extends AndroidViewModel {
             trainings = trainingRepo.getAllTrainings();
         }
         return trainings;
+    }
+    public List<Training> getExpiredTrainings(Date date){
+        return trainingRepo.getExpiredTrainings(date);
     }
 
     public Training getTraining(int id) {

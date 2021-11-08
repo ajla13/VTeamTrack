@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
+import com.ul.lj.si.vteamtrack.fragments.TimePickerFragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,6 +29,7 @@ public class UpdateTrainingActivity extends AppCompatActivity {
     private EditText trainingLocation;
     private EditText trainingTime;
     SimpleDateFormat sdf;
+    SimpleDateFormat sdfTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,25 +45,28 @@ public class UpdateTrainingActivity extends AppCompatActivity {
         trainingLocation=(EditText)findViewById(R.id.training_update_location);
 
         sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date utilDate = new Date(training.date.getTime());
+        Date utilDate = new Date(training.getDate().getTime());
         trainingDate.setText(sdf.format(utilDate));
 
-        trainingTime.setText(training.time);
-        trainingLocation.setText(training.location);
+        sdfTime= new SimpleDateFormat("HH:mm");
+        Date utilTime = new Date(training.getTime().getTime());
+        trainingTime.setText(sdfTime.format(utilTime));
+
+        trainingLocation.setText(training.getLocation());
     }
     public void updateTraining( View v) throws ParseException {
 
         int error = 1;
 
-        if(!training.date.toString().equals(trainingDate.getText().toString())){
+        if(!training.getDate().toString().equals(trainingDate.getText().toString())){
             error=0;
 
         }
-        else if(!training.time.toString().equals(trainingTime.getText().toString())){
+        else if(!training.getTime().toString().equals(trainingTime.getText().toString())){
             error=0;
         }
 
-        else if(!training.location.toString().equals(trainingLocation.getText().toString())){
+        else if(!training.getLocation().toString().equals(trainingLocation.getText().toString())){
             error=0;
 
         }
@@ -73,9 +78,9 @@ public class UpdateTrainingActivity extends AppCompatActivity {
         }
 
         if(error==0){
-            training.date=sdf.parse(trainingDate.getText().toString());
-            training.time=trainingTime.getText().toString();
-            training.location=trainingLocation.getText().toString();
+            training.setDate(sdf.parse(trainingDate.getText().toString()));
+            training.setTime(sdfTime.parse(trainingTime.getText().toString()));
+            training.setLocation(trainingLocation.getText().toString());
             trainingModel.updateTraining(training);
 
             Toast.makeText(getApplicationContext(), "Training successfully updated", Toast.LENGTH_LONG).show();
@@ -99,6 +104,14 @@ public class UpdateTrainingActivity extends AppCompatActivity {
         newFragment.setArguments(bundle);
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
+    }
+    public void showTimePickerDialog(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("viewId",v.getId());
+        bundle.putString("source", "editText");
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "timePicker");
     }
     public void cancelUpdateTraining(View v){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

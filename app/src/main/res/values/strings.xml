@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">VTeamTrack</string>
     <string name="date">Date</string>
+    <string name="yes">Yes</string>
     <string name="oponent">Oponent</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
@@ -22,12 +23,15 @@
     <string name="oldPass">Old password</string>
     <string name="newPass">New password</string>
     <string name="unregister">Unregister player</string>
+    <string name="unregister_message">Are you sure you want to unregister this player?</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <string name="edit_profile">Edit profile</string>
     <string name="make_admin">Give admin permissions</string>
+    <string name="make_admin_msg">Are you sure you want to give admin permissions to this player?</string>
     <string name="attendancy">Attendance</string>
     <string name="unset_admin">Take away admin permissions</string>
+    <string name="unset_admin_msg">Are you sure you want to take away admin permissions to this player?</string>
     <string name="decline">Decline</string>
     <string name="team">Name of your team</string>
     <string name="welcome">Welcome</string>

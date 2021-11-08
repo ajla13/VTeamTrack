@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
+import com.ul.lj.si.vteamtrack.fragments.TimePickerFragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +30,7 @@ public class UpdateGameActivity extends AppCompatActivity {
     private EditText gameTime;
     private EditText gameOponent;
     SimpleDateFormat sdf;
+    SimpleDateFormat sdfTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,30 +46,33 @@ public class UpdateGameActivity extends AppCompatActivity {
         gameOponent=(EditText)findViewById(R.id.game_update_oponent);
 
         sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date utilDate = new Date(game.date.getTime());
+        sdfTime = new SimpleDateFormat("HH:mm");
+        Date utilDate = new Date(game.getDate().getTime());
         gameDate.setText(sdf.format(utilDate));
 
-        gameTime.setText(game.time);
-        gameLocation.setText(game.location);
-        gameOponent.setText(game.oponent);
+        Date utilTime = new Date(game.getTime().getTime());
+        gameTime.setText(sdfTime.format(utilTime));
+
+        gameLocation.setText(game.getLocation());
+        gameOponent.setText(game.getOponent());
     }
     public void updateGame( View v) throws ParseException {
 
         int error = 1;
 
-         if(!game.date.toString().equals(gameDate.getText().toString())){
+         if(!game.getDate().toString().equals(gameDate.getText().toString())){
             error=0;
 
         }
-        else if(!game.time.toString().equals(gameTime.getText().toString())){
+        else if(!game.getTime().toString().equals(gameTime.getText().toString())){
                  error=0;
         }
 
-        else if(!game.location.toString().equals(gameLocation.getText().toString())){
+        else if(!game.getLocation().toString().equals(gameLocation.getText().toString())){
                  error=0;
 
         }
-         else if(!game.oponent.toString().equals(gameOponent.getText().toString())){
+         else if(!game.getOponent().toString().equals(gameOponent.getText().toString())){
              error=0;
 
          }
@@ -80,10 +85,10 @@ public class UpdateGameActivity extends AppCompatActivity {
         }
 
         if(error==0){
-            game.date=sdf.parse(gameDate.getText().toString());
-            game.time=gameTime.getText().toString();
-            game.location=gameLocation.getText().toString();
-            game.oponent=gameOponent.getText().toString();
+            game.setDate(sdf.parse(gameDate.getText().toString()));
+            game.setTime(sdfTime.parse(gameTime.getText().toString()));
+            game.setLocation(gameLocation.getText().toString());
+            game.setOponent(gameOponent.getText().toString());
             gameModel.updateGame(game);
 
             Toast.makeText(getApplicationContext(), "Game successfully updated", Toast.LENGTH_LONG).show();
@@ -108,6 +113,14 @@ public class UpdateGameActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
 
+    }
+       public void showTimePickerDialog(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("viewId",v.getId());
+        bundle.putString("source", "editText");
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "timePicker");
     }
     public void cancelUpdateGame(View v){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

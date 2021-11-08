@@ -6,10 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.Date;
 import java.util.List;
 
 import database.AppDatabase;
 import entities.Game;
+import entities.Training;
 import entities.User;
 import repository.GameRepo;
 
@@ -31,7 +33,9 @@ public class GameModel extends AndroidViewModel {
         }
         return games;
     }
-
+    public List<Game> getExpiredGames(Date date){
+        return gameRepo.getExpiredGames(date);
+    }
     public Game getGame(int id) {
         return gameRepo.getGame(id);
     }

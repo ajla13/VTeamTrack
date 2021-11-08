@@ -15,8 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ul.lj.si.vteamtrack.MainActivity;
 import com.ul.lj.si.vteamtrack.R;
@@ -29,9 +31,10 @@ import java.util.List;
 import entities.Game;
 import entities.User;
 import viewModels.GameModel;
+import viewModels.TrainingModel;
 import viewModels.UserModel;
 
-public class RequestsAdapter extends ArrayAdapter<User> {
+public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHolder> {
 
     private Activity activity;
 
@@ -40,49 +43,83 @@ public class RequestsAdapter extends ArrayAdapter<User> {
     private UserModel userModel;
     SimpleDateFormat sdf;
 
-    public RequestsAdapter(Activity activity, Context context, ArrayList<User> users) {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        super(context, 0, users);
-        this.activity = activity;
-        userModel = new ViewModelProvider((FragmentActivity) activity).get(UserModel.class);
-    }
+        private TextView userName;
+        private TextView userSurname;
+        private TextView email;
+        private TextView phone;
+        private TextView dateOfBirth;
+        private ImageButton expand;
+        private Button accept;
+        private Button decline;
+        private LinearLayout toggleLayout;
 
-    public void setUsers(List<User> users) {
-        this.users = users;
-        notifyDataSetChanged();
-    }
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
-        User user = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.request_item, parent, false);
+        public ViewHolder(View itemView) {
+
+            super(itemView);
+
+            userName = (TextView) itemView.findViewById(R.id.item_req_name);
+            userSurname = (TextView) itemView.findViewById(R.id.item_req_surname);
+            email = (TextView) itemView.findViewById(R.id.item_req_email);
+            phone = (TextView) itemView.findViewById(R.id.item_req_phone);
+            dateOfBirth = (TextView) itemView.findViewById(R.id.item_req_dateOfBirth);
+            expand = (ImageButton) itemView.findViewById(R.id.btn_expand_req);
+            accept = (Button) itemView.findViewById(R.id.btn_req_accept);
+            decline = (Button) itemView.findViewById(R.id.btn_req_decline);
+            toggleLayout = itemView.findViewById(R.id.item_req_secondlayout);
+
         }
-        // Lookup view for data population
-        TextView userName = (TextView) convertView.findViewById(R.id.item_req_name);
-        TextView userSurname = (TextView) convertView.findViewById(R.id.item_req_surname);
-        TextView email = (TextView) convertView.findViewById(R.id.item_req_email);
-        TextView phone = (TextView) convertView.findViewById(R.id.item_req_phone);
-        TextView dateOfBirth = (TextView) convertView.findViewById(R.id.item_req_dateOfBirth);
-        ImageButton expand = (ImageButton) convertView.findViewById(R.id.btn_expand_req);
-        Button accept = (Button) convertView.findViewById(R.id.btn_req_accept);
-        Button decline = (Button) convertView.findViewById(R.id.btn_req_decline);
-        LinearLayout toggleLayout = convertView.findViewById(R.id.item_req_secondlayout);
-        // Populate the data into the template view using the data object
-        userName.setText(user.firstName);
-        userSurname.setText(user.lastName);
+    }
+
+    public RequestsAdapter(List<User> users, Activity activity) {
+        this.activity = activity;
+        this.users = users;
+    }
+
+    @NonNull
+    @Override
+    public RequestsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        userModel = new ViewModelProvider((FragmentActivity) activity).get(UserModel.class);
+
+
+        // Inflate the custom layout
+        View contactView = inflater.inflate(R.layout.request_item, parent, false);
+
+        // Return a new holder instance
+        RequestsAdapter.ViewHolder viewHolder = new RequestsAdapter.ViewHolder(contactView);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RequestsAdapter.ViewHolder holder, int position) {
+
+        User user = users.get(position);
+        TextView userName = holder.userName;
+        TextView userSurname  = holder.userSurname;
+        TextView email = holder.email;
+        TextView phone = holder.phone;
+        TextView dateOfBirth = holder.dateOfBirth;
+        Button accept = holder.accept;
+        Button decline = holder.decline;
+        ImageButton expand = holder.expand;
+        LinearLayout toggleLayout = holder.toggleLayout;
 
         sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date utilDate = new Date(user.dateOfBirth.getTime());
+        Date utilDate = new Date(user.getDateOfBirth().getTime());
         dateOfBirth.setText(sdf.format(utilDate));
 
-        phone.setText(user.phoneNumber);
-        email.setText(user.email);
+        userName.setText(user.getFirstName());
+        userSurname.setText(user.getLastName());
+        email.setText(user.getEmail());
+        phone.setText(user.getPhoneNumber());
 
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.registrationConfirmed = true;
+                user.setRegistrationConfirmed(true);
                 userModel.update(user);
                 Toast.makeText(activity.getApplicationContext(),
                         "User registration accepted", Toast.LENGTH_LONG).show();
@@ -136,7 +173,11 @@ public class RequestsAdapter extends ArrayAdapter<User> {
                 }
             }
         });
-        // Return the completed view to render on screen
-        return convertView;
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return users.size();
     }
 }

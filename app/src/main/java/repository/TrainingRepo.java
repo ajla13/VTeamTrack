@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.ul.lj.si.vteamtrack.PreferenceData;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -41,6 +42,10 @@ public class TrainingRepo {
         return allTrainings;
     }
 
+    public List<Training> getExpiredTrainings(Date date){
+        return trainingDao.getExpairedTrainings(teamName,date);
+    }
+
     public Training getTraining(int id) {
         training = trainingDao.getTraining(id);
         return training;
@@ -54,6 +59,7 @@ public class TrainingRepo {
             trainingDao.delete(training);
         });
     }
+
     public void update(Training training) {
         AppDatabase.executor.execute(() -> {
             trainingDao.update(training);

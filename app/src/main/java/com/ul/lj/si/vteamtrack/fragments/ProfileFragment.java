@@ -1,5 +1,7 @@
 package com.ul.lj.si.vteamtrack.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -58,6 +60,7 @@ public class ProfileFragment extends Fragment {
     private EditText editPhone;
     private EditText editDateOfBirth;
     SimpleDateFormat sdf;
+    AlertDialog.Builder builder;
 
     public ProfileFragment(int userId){
         this.userId = userId;
@@ -83,6 +86,7 @@ public class ProfileFragment extends Fragment {
         currentUserId = PreferenceData.getLoggedInUser(getActivity().getApplicationContext());
 
         userId = this.getArguments().getInt("userId");
+        builder = new AlertDialog.Builder(getActivity());
 
 
         user = userModel.getUser(userId);
@@ -108,30 +112,31 @@ public class ProfileFragment extends Fragment {
         editPhone = view.findViewById(R.id.user_profile_phone_edit);
         editDateOfBirth = view.findViewById(R.id.user_profile_dateOfBirth_edit);
 
-        name.setText(user.firstName);
-        surname.setText(user.lastName);
-        email.setText(user.email);
-        phone.setText(user.phoneNumber);
+        name.setText(user.getFirstName());
+        surname.setText(user.getLastName());
+        email.setText(user.getEmail());
+        phone.setText(user.getPhoneNumber());
 
         sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date utilDate = new Date(user.dateOfBirth.getTime());
+        Date utilDate = new Date(user.getDateOfBirth().getTime());
         dateOfBirth.setText(sdf.format(utilDate));
 
 
-        if(!user.userRole.equals("trainer") &&
+        if(!user.getUserRole().equals("trainer") &&
         PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("trainer")
-        && user.id!=currentUserId){
+        && user.getId()!=currentUserId){
+
             makeAdmin.setVisibility(View.VISIBLE);
-            if(!user.userRole.equals("admin")){
+            if(!user.getUserRole().equals("admin")){
                 makeAdmin.setText("Give admin permissions");
             }
             else {
                 makeAdmin.setText("Take away admin permissions");
             }
         }
-        if(!user.userRole.equals("trainer") &&
+        if(!user.getUserRole().equals("trainer") &&
                 !PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("player")
-                && user.id!=currentUserId){
+                && user.getId()!=currentUserId){
                 unregisterUser.setVisibility(View.VISIBLE);
         }
 
@@ -139,27 +144,79 @@ public class ProfileFragment extends Fragment {
         makeAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!user.userRole.equals("admin")){
-                    user.userRole="admin";
-                    makeAdmin.setText("Take away admin permissions");
+                if(!user.getUserRole().equals("admin")){
+                        builder.setMessage(R.string.make_admin_msg)
+                                .setTitle(R.string.make_admin)
+                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        user.setUserRole("admin");
+                                        userModel.update(user);
+                                        makeAdmin.setText("Take away admin permissions");
+                                        Toast.makeText(getActivity().getApplicationContext(),
+                                                "Given admin permissions to player " + user.getFirstName() +" " +
+                                                        user.getLastName(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+
                 }
                 else {
-                    user.userRole="player";
-                    makeAdmin.setText("Give admin permissions");
+                    builder.setMessage(R.string.unset_admin_msg)
+                            .setTitle(R.string.unset_admin)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    user.setUserRole("player");
+                                    userModel.update(user);
+                                    makeAdmin.setText("Give admin permissions");
+                                    Toast.makeText(getActivity().getApplicationContext(),
+                                            "Admin permission taken away from player " + user.getFirstName() +" " +
+                                                    user.getLastName(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
                 }
-                userModel.update(user);
+                AlertDialog dialog = builder.create();
+                builder.show();
             }
         });
+
         unregisterUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userModel.deleteUser(user);
-                FragmentManager fm = (getActivity()).getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment fragment = new HomeFragment();
-                ft.replace(R.id.nav_fragment, fragment);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
+                builder.setMessage(R.string.unregister_message)
+                        .setTitle(R.string.unregister)
+                        .setPositiveButton(R.string.unregister, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                        "Player " + user.getFirstName() +" " +
+                                                user.getLastName() + " unregistered", Toast.LENGTH_LONG).show();
+                                userModel.deleteUser(user);
+                                FragmentManager fm = (getActivity()).getSupportFragmentManager();
+                                FragmentTransaction ft = fm.beginTransaction();
+                                Fragment fragment = new HomeFragment();
+                                ft.replace(R.id.nav_fragment, fragment);
+                                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                ft.commit();
+
+                            }
+                        });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                builder.show();
+
             }
         });
 
@@ -198,38 +255,38 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (dataValidation()) {
-                    user.firstName = editName.getText().toString();
-                    user.lastName = editSurname.getText().toString();
-                    user.email = editEmail.getText().toString();
+                    user.setFirstName(editName.getText().toString());
+                    user.setLastName(editSurname.getText().toString());
+                    user.setEmail(editEmail.getText().toString());
+
                     try {
-                        user.dateOfBirth = sdf.parse(editDateOfBirth.getText().toString());
+                        user.setDateOfBirth(sdf.parse(editDateOfBirth.getText().toString()));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    user.phoneNumber = editPhone.getText().toString();
-
+                    user.setPhoneNumber(editPhone.getText().toString());
 
                     userModel.update(user);
 
                     editName.setVisibility(View.GONE);
                     name.setVisibility(View.VISIBLE);
-                    name.setText(user.firstName.toString());
+                    name.setText(user.getFirstName().toString());
 
                     editSurname.setVisibility(View.GONE);
                     surname.setVisibility(View.VISIBLE);
-                    surname.setText(user.lastName.toString());
+                    surname.setText(user.getLastName().toString());
 
                     editEmail.setVisibility(View.GONE);
                     email.setVisibility(View.VISIBLE);
-                    email.setText(user.email.toString());
+                    email.setText(user.getEmail().toString());
 
                     editPhone.setVisibility(View.GONE);
                     phone.setVisibility(View.VISIBLE);
-                    phone.setText(user.phoneNumber);
+                    phone.setText(user.getPhoneNumber());
 
                     editDateOfBirth.setVisibility(View.GONE);
                     dateOfBirth.setVisibility(View.VISIBLE);
-                    Date utilDate = new Date(user.dateOfBirth.getTime());
+                    Date utilDate = new Date(user.getDateOfBirth().getTime());
                     dateOfBirth.setText(sdf.format(utilDate));
 
                     updateProfile.setVisibility(View.GONE);
@@ -267,9 +324,9 @@ public class ProfileFragment extends Fragment {
         String status="";
         String userOldPass=oldPass.getText().toString();
         String userNewPass = newPass.getText().toString();
-        if(BCrypt.checkpw(userOldPass, user.password)){
+        if(BCrypt.checkpw(userOldPass, user.getPassword())){
             if(!userNewPass.equals(userOldPass)){
-                user.password = BCrypt.hashpw(userNewPass, BCrypt.gensalt());
+                user.setPassword(BCrypt.hashpw(userNewPass, BCrypt.gensalt()));
                 userModel.update(user);
                 status = "Password changed.";
 
@@ -300,6 +357,17 @@ public class ProfileFragment extends Fragment {
         else if(!Patterns.EMAIL_ADDRESS.matcher(editEmail.getText()).matches()){
             editEmail.setError("Please enter a valid email");
             returnVaue=false;
+        }
+        else {
+            User tempUser = userModel.checkUserCred(editEmail.getText().toString(),
+                    PreferenceData.getTeam(getActivity().getApplicationContext()));
+            if( tempUser!= null){
+                if(user.getId()!=tempUser.getId()){
+                    editEmail.setError("Email taken");
+                    returnVaue=false;
+                }
+            }
+
         }
 
         if(isEmpty(editName)){

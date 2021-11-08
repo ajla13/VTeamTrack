@@ -29,6 +29,10 @@ android {
 }
 
 dependencies {
+    implementation ('io.socket:socket.io-client:2.0.0') {
+        exclude group: 'org.json', module: 'json'
+    }
+    implementation 'androidx.preference:preference:1.1.0'
     implementation 'androidx.room:room-common:2.3.0'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'

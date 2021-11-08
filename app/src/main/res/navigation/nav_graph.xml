@@ -20,5 +20,9 @@
         android:id="@+id/postsFragment"
         android:name="com.ul.lj.si.vteamtrack.fragments.PostsFragment"
         android:label="PostsFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.ul.lj.si.vteamtrack.fragments.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>

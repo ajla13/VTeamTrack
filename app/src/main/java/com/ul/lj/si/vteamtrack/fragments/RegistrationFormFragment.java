@@ -25,6 +25,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import entities.Team;
 import entities.User;
@@ -85,33 +86,38 @@ public class RegistrationFormFragment extends Fragment {
             public void onClick(View view) {
                 if(dataValidation()){
                     if(creditentials()){
-                        String pw_hash = BCrypt.hashpw(password.getText().toString(), BCrypt.gensalt());
-                        User user = new User();
-                        user.firstName=name.getText().toString();
-                        user.lastName=surname.getText().toString();
-                        user.email=email.getText().toString();
-                        user.phoneNumber=phone.getText().toString();
+                        Date dOfB= new Date();
                         try {
-                            user.dateOfBirth=new SimpleDateFormat("dd/MM/yyyy").parse(dateOfBirth.getText().toString());
+                            dOfB=new SimpleDateFormat("dd/MM/yyyy").parse(dateOfBirth.getText().toString());
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        user.password=pw_hash;
-                        user.teamName=teamName.getText().toString();
+
                         if(registrationType=="trainer"){
-                            user.userRole="trainer";
-                            user.registrationConfirmed = true;
-                            User createdUser = userModel.createUser(user);
-                            team = new Team();
-                            team.name=teamName.getText().toString();
-                            team.userId =createdUser.id;
-                            teamModel.createTeam(team);
-                            successText="Registration successfull";
+                            String firstName = name.getText().toString();
+                            String lastname =  surname.getText().toString();
+                            String teamNameDb = teamName.getText().toString();
+                            String emaileDb = email.getText().toString();
+                            String pass = password.getText().toString();
+                            String phoneDb = phone.getText().toString();
+                            team = new Team(teamNameDb);
+
+                            Team teamReturned = teamModel.createTeam(team);
+                            System.out.println("teamID " + teamReturned.getId());
+                            User user = new User(teamReturned.getId(),firstName, lastname, dOfB,teamNameDb, emaileDb,pass,
+                                    "trainer",phoneDb,true);
+                        //    User createdUser = userModel.createUser(user);
+                            successText="Registration successful";
                         }
                         else {
-                            user.userRole="player";
-                            user.registrationConfirmed = false;
-                            System.out.println(user.registrationConfirmed);
+                            User user = new User(0,
+                                    name.getText().toString(),
+                                    surname.getText().toString(),
+                                    dOfB,teamName.getText().toString(),email.getText().toString(),password.getText().toString(),
+                                    "player",phone.getText().toString(),false);
+
+                            Team teamPlayer = teamModel.getTeam(teamName.getText().toString());
+                            user.setTeamId(teamPlayer.getId());
                             userModel.createUser(user);
                             successText="Your registration request has been sent.";
                         }
@@ -131,10 +137,11 @@ public class RegistrationFormFragment extends Fragment {
         });
         return view;
     }
+
     boolean creditentials(){
         Team team = teamModel.getTeam(teamName.getText().toString());
         if(registrationType.equals("trainer")){
-            System.out.println(team);
+
             if(team==null){
                 return true;
             }
@@ -151,7 +158,7 @@ public class RegistrationFormFragment extends Fragment {
             if(user == null){
                 return true;
             }
-            if(user.registrationConfirmed) {
+            if(user.isRegistrationConfirmed()) {
                 errorText = "A player with that email already exists.";
             }
             else {

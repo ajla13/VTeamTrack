@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.ul.lj.si.vteamtrack.PreferenceData;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 import dao.GamesDao;
 import database.AppDatabase;
 import entities.Game;
+import entities.Training;
 
 public class GameRepo {
 
@@ -45,7 +47,9 @@ public class GameRepo {
         game = gameDao.getGame(id);
         return game;
     }
-
+    public List<Game> getExpiredGames(Date date){
+        return gameDao.getExpiredGames(teamName,date);
+    }
     public void insert(Game game) {
         AppDatabase.executor.execute(() -> {
             gameDao.insert(game);

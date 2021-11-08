@@ -4,39 +4,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavArgument;
+
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
 
-import entities.User;
-import viewModels.UserModel;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import java.net.URISyntaxException;
+
 
 public class MainActivity extends AppCompatActivity {
-    private UserModel userModel;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
+        mSocket.connect();
 
         int currentUserId = PreferenceData.getLoggedInUser(getApplicationContext());
 
@@ -68,12 +62,22 @@ public class MainActivity extends AppCompatActivity {
                         bundlePosts.putString("source", "navigation");
                         navController.navigate(R.id.postsFragment, bundlePosts);
                         break;
+                    case R.id.settingsFragment:
+                        navController.navigate(R.id.settingsFragment);
+                        break;
                 }
                 return true;
             }
         });
 
     }
+    private Socket mSocket;
+    {
+        try {
+            mSocket = IO.socket("http://chat.socket.io");
+        } catch (URISyntaxException e) {}
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         String userRole=PreferenceData.getUserRole(getApplicationContext());

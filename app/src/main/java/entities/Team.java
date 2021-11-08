@@ -3,30 +3,41 @@ package entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.List;
+
 
 @Entity(tableName = "team")
 public class Team {
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
     public String name;
 
-    public int userId;
-
-    public Team(){
-
+    public int getId() {
+        return id;
     }
-    public Team(  String name, int userId){
+
+    public String getName() {
+        return name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Team(String name){
 
         this.name=name;
-        this.userId=userId;
+
     }
     public static Team[] populateTeam() {
         return new Team[] {
-                new Team( "Coast VT", 10),
-                new Team( "Leading VT", 11),
+                new Team( "Coast VT"),
+                new Team( "Leading VT"),
         };
     }
 

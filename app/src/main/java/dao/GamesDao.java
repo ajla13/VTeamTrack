@@ -8,10 +8,11 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.Date;
 import java.util.List;
 
 import entities.Game;
-import entities.User;
+
 
 
 @Dao
@@ -19,6 +20,10 @@ public interface GamesDao {
 
         @Query("SELECT * FROM game WHERE teamName LIKE :teamName")
         LiveData<List<Game>> getAll(String teamName);
+
+
+        @Query("SELECT * FROM game WHERE teamName LIKE :teamName AND date <= :date")
+        List<Game> getExpiredGames(String teamName, Date date);
 
         @Query("SELECT * FROM game WHERE id IN (:gameIds)")
         LiveData<List<Game>> loadAllByIds(int[] gameIds);

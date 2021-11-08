@@ -5,17 +5,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ul.lj.si.vteamtrack.R;
-import com.ul.lj.si.vteamtrack.adapters.TrainingAttendancyAdapter;
-import com.ul.lj.si.vteamtrack.adapters.UsersAdapter;
+import com.ul.lj.si.vteamtrack.adapters.TrainingAttendanceAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +26,11 @@ import entities.User;
 import viewModels.TrainingModel;
 import viewModels.UserModel;
 
-public class TrainingAttendancyFragment extends Fragment {
+public class TrainingAttendanceFragment extends Fragment {
 
     private TrainingModel trainingModel;
     private UserModel userModel;
-    private ListView listView;
-    private TrainingAttendancyAdapter trainingAttendancyAdapter;
+    private TrainingAttendanceAdapter trainingAttendanceAdapter;
     private Training training;
 
     @Nullable
@@ -50,32 +50,33 @@ public class TrainingAttendancyFragment extends Fragment {
         training = trainingModel.getTraining(trainerId);
 
         ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
-
-
-        listView = (ListView)view.findViewById(R.id.lvUsers);
-        listView.setAdapter(trainingAttendancyAdapter);
+        RecyclerView rvUsers = (RecyclerView) view.findViewById(R.id.rvUsers);
 
         if (arrayOfUsers != null){
 
-            trainingAttendancyAdapter = new TrainingAttendancyAdapter(getActivity(), training, arrayOfUsers);
-            listView.setAdapter(trainingAttendancyAdapter);
+            trainingAttendanceAdapter = new TrainingAttendanceAdapter(arrayOfUsers, getActivity(), training);
+            rvUsers.setAdapter(trainingAttendanceAdapter);
+            rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
         }else{
             Log.d("gwyd","user list was null");
-            trainingAttendancyAdapter = new TrainingAttendancyAdapter(getActivity(), training, new ArrayList<User>());
-            listView.setAdapter(trainingAttendancyAdapter);
+            trainingAttendanceAdapter = new TrainingAttendanceAdapter(new ArrayList<User>(), getActivity(), training);
+            rvUsers.setAdapter(trainingAttendanceAdapter);
+            rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
+
         userModel.getPlayers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if (users != null) {
-                    trainingAttendancyAdapter.setUsers(users);
-                    trainingAttendancyAdapter.clear();
-                    trainingAttendancyAdapter.addAll(users);
+                    trainingAttendanceAdapter = new TrainingAttendanceAdapter(users, getActivity(), training);
+                    rvUsers.setAdapter(trainingAttendanceAdapter);
+                    rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                 } else {
                     Log.d("gwyd", "no users found in db");
-                    trainingAttendancyAdapter.setUsers(new ArrayList<User>());
-                }
+                    trainingAttendanceAdapter = new TrainingAttendanceAdapter(new ArrayList<User>(), getActivity(), training);
+                    rvUsers.setAdapter(trainingAttendanceAdapter);
+                    rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));                }
             }
         });
 

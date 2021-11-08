@@ -11,4 +11,7 @@
     <item android:title="Posts"
         android:id="@+id/postsFragment"
         android:icon="@drawable/ic_profile"/>
+    <item android:title="Settings"
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings"/>
 </menu>

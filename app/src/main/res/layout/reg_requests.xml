@@ -1,19 +1,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.ul.lj.si.vteamtrack.MainActivity" >
+    android:layout_height="wrap_content"
+    tools:context="com.ul.lj.si.vteamtrack.MainActivity">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/regRequest"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
+    <TextView
+        android:id="@+id/empty_view_req"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true">
-
-    </ListView>
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="No registration requests yet" />
 
 </RelativeLayout>

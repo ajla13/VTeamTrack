@@ -17,22 +17,27 @@ import com.ul.lj.si.vteamtrack.fragments.TimePickerFragment;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import entities.Game;
+import entities.Team;
 import viewModels.GameModel;
+import viewModels.TeamModel;
 
 public class CreateGameActivity extends AppCompatActivity {
     GameModel gameModel;
+    TeamModel teamModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_game);
         gameModel = new ViewModelProvider(this).get(GameModel.class);
+        teamModel = new ViewModelProvider(this).get(TeamModel.class);
 
     }
     public void createGame( View v) throws ParseException {
 
-         Game game = new Game();
+
          int error = 0;
         EditText gameOponent=(EditText)findViewById(R.id.game_oponent);
         if(gameOponent.getText().toString().trim().equals("")){
@@ -60,12 +65,14 @@ public class CreateGameActivity extends AppCompatActivity {
             error=1;
          }
          if(error==0){
-             game.date=new SimpleDateFormat("dd/MM/yyyy").parse(gameDate.getText().toString());
-             game.time=gameTime.getText().toString();
-             game.location=gameLocation.getText().toString();
-             game.oponent =gameOponent.getText().toString();
-             game.attendancy = new ArrayList<>();
-             game.teamName=PreferenceData.getTeam(getApplicationContext());
+             Date date=new SimpleDateFormat("dd/MM/yyyy").parse(gameDate.getText().toString());
+             Date time=new SimpleDateFormat("HH:mm").parse(gameTime.getText().toString());
+             String location=gameLocation.getText().toString();
+             String oponent =gameOponent.getText().toString();
+             ArrayList attendance = new ArrayList<>();
+             String teamName=PreferenceData.getTeam(getApplicationContext());
+             Team teamGame = teamModel.getTeam(teamName);
+             Game game = new Game(teamGame.getId(),date, time, location, teamName, attendance, oponent);
              Game result = gameModel.createGame(game);
 
              if(result!= null){

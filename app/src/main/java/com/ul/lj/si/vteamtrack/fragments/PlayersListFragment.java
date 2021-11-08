@@ -7,13 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ul.lj.si.vteamtrack.R;
+import com.ul.lj.si.vteamtrack.adapters.PostsAdapter;
 import com.ul.lj.si.vteamtrack.adapters.UsersAdapter;
 
 import java.util.ArrayList;
@@ -24,9 +28,9 @@ import viewModels.UserModel;
 
 
 public class PlayersListFragment extends Fragment {
-    UserModel userModel;
-    ListView listView;
-    UsersAdapter userAdapter;
+
+    private UserModel userModel;
+    private UsersAdapter userAdapter;
 
 
         @Nullable
@@ -35,46 +39,52 @@ public class PlayersListFragment extends Fragment {
                 container.removeAllViews();
             }
             View view = inflater.inflate(R.layout.listview, container, false);
+            RecyclerView rvUsers = (RecyclerView) view.findViewById(R.id.rvUsers);
 
             userModel = new ViewModelProvider(this).get(UserModel.class);
-
 
             ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
 
 
-            listView = (ListView)view.findViewById(R.id.lvUsers);
-            listView.setAdapter(userAdapter);
+            if (arrayOfUsers != null) {
 
-
-            if (arrayOfUsers != null){
-
-                userAdapter = new UsersAdapter(getActivity(), arrayOfUsers);
-                listView.setAdapter(userAdapter);
-            }else{
-                Log.d("gwyd","user list was null");
-                userAdapter = new UsersAdapter(getActivity(),new ArrayList<User>());
-                listView.setAdapter(userAdapter);
+                userAdapter = new UsersAdapter(arrayOfUsers, getActivity());
+                rvUsers.setAdapter(userAdapter);
+                rvUsers.setLayoutManager((new LinearLayoutManager(getActivity())));
+            } else {
+                Log.d("gwyd", "user list was null");
+                userAdapter = new UsersAdapter(new ArrayList<User>(), getActivity());
+                rvUsers.setAdapter(userAdapter);
+                rvUsers.setLayoutManager((new LinearLayoutManager(getActivity())));
             }
 
             userModel.getPlayers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
                 @Override
                 public void onChanged(@Nullable List<User> users) {
                     if (users != null) {
-                        userAdapter.setUsers(users);
-                        userAdapter.clear();
-                        userAdapter.addAll(users);
-
+                        userAdapter = new UsersAdapter(users, getActivity());
+                        rvUsers.setAdapter(userAdapter);
+                        rvUsers.setLayoutManager((new LinearLayoutManager(getActivity())));
                     } else {
                         Log.d("gwyd", "no users found in db");
-                        userAdapter.setUsers(new ArrayList<User>());
+                        userAdapter = new UsersAdapter(new ArrayList<User>(), getActivity());
+                        rvUsers.setAdapter(userAdapter);
+                        rvUsers.setLayoutManager((new LinearLayoutManager(getActivity())));
                     }
+                    if (users.isEmpty()) {
+                        TextView empty = view.findViewById(R.id.empty_view_player);
+                        rvUsers.setVisibility(View.GONE);
+                        empty.setVisibility(View.VISIBLE);
+                    } else {
+                        TextView empty = view.findViewById(R.id.empty_view_player);
+                        rvUsers.setVisibility(View.VISIBLE);
+                        empty.setVisibility(View.GONE);
+                    }
+
                 }
             });
-
-
             return view;
-
-    }
+        }
 
     @Override
     public void onDestroyView() {

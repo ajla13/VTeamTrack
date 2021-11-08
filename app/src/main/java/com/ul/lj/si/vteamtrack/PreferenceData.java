@@ -13,6 +13,9 @@ public class PreferenceData {
     static final String PREF_USER_LOGGEDIN = "logged_in_user";
     static final String PREF_USER_ROLE = "main_user_role";
     static final String PREF_TEAM = "team";
+    static final String PREF_POST_ID = "postId";
+    static final String PREF_TRAINING_EX="pref_training_expiration";
+    static final String PREF_GAME_EX="pref_game_expiration";
     public static SharedPreferences getSharedPreferences(Context ctx)
     {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -22,6 +25,24 @@ public class PreferenceData {
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(PREF_LOGGEDIN_USER_EMAIL, email);
+        editor.commit();
+    }
+    public static void setCurentPostId(Context ctx, int id)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putInt(PREF_POST_ID, id);
+        editor.commit();
+    }
+    public static void setTrainingEx(Context ctx, boolean toggle)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putBoolean(PREF_TRAINING_EX, toggle);
+        editor.commit();
+    }
+    public static void setGameEx(Context ctx, boolean toggle)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putBoolean(PREF_GAME_EX, toggle);
         editor.commit();
     }
     public static void setLoggedInUserRole(Context ctx, String role)
@@ -59,6 +80,19 @@ public class PreferenceData {
     {
         return getSharedPreferences(ctx).getInt(PREF_USER_LOGGEDIN, 0);
     }
+    public static boolean getTrainingPref(Context ctx)
+    {
+        return getSharedPreferences(ctx).getBoolean(PREF_TRAINING_EX, false);
+    }
+    public static boolean getGamePref(Context ctx)
+    {
+        return getSharedPreferences(ctx).getBoolean(PREF_GAME_EX, false);
+    }
+    public static int getPostId(Context ctx)
+    {
+        return getSharedPreferences(ctx).getInt(PREF_POST_ID, 0);
+    }
+
     public static void setUserLoggedInStatus(Context ctx, boolean status)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();

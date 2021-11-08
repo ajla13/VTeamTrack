@@ -14,30 +14,35 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
+import com.ul.lj.si.vteamtrack.fragments.TimePickerFragment;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import entities.Team;
 import entities.Training;
+import viewModels.TeamModel;
 import viewModels.TrainingModel;
 
 public class CreateTrainingActivity extends AppCompatActivity {
     TrainingModel trainingModel;
+    TeamModel teamModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_training);
         trainingModel = new ViewModelProvider(this).get(TrainingModel.class);
+        teamModel = new ViewModelProvider(this).get(TeamModel.class);
 
     }
     public void createTraining( View v) throws ParseException {
 
-        Training training = new Training();
         int error = 0;
 
         EditText trainingDate=(EditText)findViewById(R.id.training_date);
@@ -60,11 +65,13 @@ public class CreateTrainingActivity extends AppCompatActivity {
             error=1;
         }
         if(error==0){
-            training.date=new SimpleDateFormat("dd/MM/yyyy").parse(trainingDate.getText().toString());
-            training.time=trainingTime.getText().toString();
-            training.location=trainingLocation.getText().toString();
-            training.teamName=PreferenceData.getTeam(getApplicationContext());
-            training.attendancy = new ArrayList<>();
+            Date date=new SimpleDateFormat("dd/MM/yyyy").parse(trainingDate.getText().toString());
+            Date time=new SimpleDateFormat("HH:mm").parse(trainingTime.getText().toString());
+            String location = trainingLocation.getText().toString();
+            String teamName = PreferenceData.getTeam(getApplicationContext());
+            ArrayList attendance = new ArrayList<>();
+            Team teamTraining = teamModel.getTeam(teamName);
+            Training training = new Training(teamTraining.getId(),date,time, location,teamName, attendance);
             Training result = trainingModel.createTraining(training);
 
             if(result!= null){
@@ -89,6 +96,14 @@ public class CreateTrainingActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
 
+    }
+    public void showTimePickerDialog(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("viewId",v.getId());
+        bundle.putString("source", "editText");
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(bundle);
+        newFragment.show(getSupportFragmentManager(), "timePicker");
     }
     public void cancel(View v){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

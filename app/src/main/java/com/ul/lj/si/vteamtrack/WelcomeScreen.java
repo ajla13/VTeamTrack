@@ -6,12 +6,23 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import database.AppDatabase;
+import entities.Game;
+import entities.Training;
+import viewModels.GameModel;
+import viewModels.TrainingModel;
 
 public class WelcomeScreen extends AppCompatActivity {
+
+    private TrainingModel trainingModel;
+    private GameModel gameModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -19,7 +30,31 @@ public class WelcomeScreen extends AppCompatActivity {
         AppDatabase db = AppDatabase.getInstance(getApplication());
         final Intent[] intent = new Intent[1];
         setContentView(R.layout.splash_screen);
+
         SharedPreferences preferences=PreferenceData.getSharedPreferences(getApplication());
+        if(PreferenceData.getTrainingPref(getApplicationContext())){
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MONTH, -1);
+            Date result = cal.getTime();
+
+            trainingModel = new ViewModelProvider(this).get(TrainingModel.class);
+            List<Training> expired= trainingModel.getExpiredTrainings(result);
+            for (Training training : expired) {
+                trainingModel.deleteTraining(training);
+            }
+        }
+        if(PreferenceData.getGamePref(getApplicationContext())){
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MONTH, -1);
+            Date result = cal.getTime();
+
+            gameModel = new ViewModelProvider(this).get(GameModel.class);
+            List<Game> expired= gameModel.getExpiredGames(result);
+            for (Game game : expired) {
+                gameModel.deleteGame(game);
+            }
+        }
+
         Thread background = new Thread() {
             public void run() {
                 try {

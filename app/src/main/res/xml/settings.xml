@@ -1,0 +1,14 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
+        app:key="trainingExpiration"
+        app:title="Delete training records older than one month" />
+
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
+        app:key="gameExpiration"
+        app:title="Delete game records older than one month" />
+
+</PreferenceScreen>

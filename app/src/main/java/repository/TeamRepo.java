@@ -34,8 +34,7 @@ public class TeamRepo {
     }
 
     public void insert(Team team) {
-        AppDatabase.executor.execute(() -> {
-            teamDao.insert(team);
-        });
+        teamDao.insert(team);
+
     }
 }

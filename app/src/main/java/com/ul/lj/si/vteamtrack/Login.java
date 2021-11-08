@@ -64,12 +64,13 @@ public class Login extends AppCompatActivity {
         dbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                teamDao.insertAll(Team.populateTeam());
+
                 try {
                     userDao.insertAll(User.populateData());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                teamDao.insertAll(Team.populateTeam());
                 try {
                     trainingDao.insertAll(Training.populateTraining());
                 } catch (ParseException e) {
@@ -97,12 +98,14 @@ public class Login extends AppCompatActivity {
                                    "The entered creditentials are incorrect", Toast.LENGTH_LONG).show();
                        }
                        else {
-                           if(user.registrationConfirmed == true) {
-                               if (BCrypt.checkpw(password.getText().toString(), user.password)) {
+
+                           if(user.isRegistrationConfirmed()) {
+
+                               if (BCrypt.checkpw(password.getText().toString(), user.getPassword())) {
                                    PreferenceData.setUserLoggedInStatus(getApplicationContext(), true);
                                    PreferenceData.setLoggedInUserEmail(getApplicationContext(), email.getText().toString());
-                                   PreferenceData.setLoggedInUser(getApplicationContext(), user.id);
-                                   PreferenceData.setLoggedInUserRole(getApplicationContext(), user.userRole);
+                                   PreferenceData.setLoggedInUser(getApplicationContext(), user.getId());
+                                   PreferenceData.setLoggedInUserRole(getApplicationContext(), user.getUserRole());
                                    PreferenceData.setTeam(getApplicationContext(), teamName.getText().toString());
                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                    startActivity(intent);
@@ -114,7 +117,7 @@ public class Login extends AppCompatActivity {
                                }
                            }
                            else {
-                               System.out.println(user.registrationConfirmed);
+
                                Toast.makeText(getApplicationContext(),
                                        "Your registration has not been confirmed yet", Toast.LENGTH_LONG).show();
                            }
@@ -131,7 +134,6 @@ public class Login extends AppCompatActivity {
     boolean creditentials(){
 
         user = userModel.checkUserCred(email.getText().toString(),teamName.getText().toString());
-
         if(user == null){
             return false;
         }

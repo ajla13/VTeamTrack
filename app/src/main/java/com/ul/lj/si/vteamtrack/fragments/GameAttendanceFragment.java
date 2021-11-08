@@ -5,17 +5,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.ul.lj.si.vteamtrack.R;
 import com.ul.lj.si.vteamtrack.adapters.GameAttendanceAdapter;
-import com.ul.lj.si.vteamtrack.adapters.TrainingAttendancyAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,6 @@ public class GameAttendanceFragment extends Fragment {
 
     private GameModel gameModel;
     private UserModel userModel;
-    private ListView listView;
     private GameAttendanceAdapter gameAttendanceAdapter;
     private Game game;
 
@@ -53,30 +53,33 @@ public class GameAttendanceFragment extends Fragment {
 
         ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
 
+        RecyclerView rvUsers = (RecyclerView) view.findViewById(R.id.rvUsers);
 
-        listView = (ListView)view.findViewById(R.id.lvUsers);
-        listView.setAdapter(gameAttendanceAdapter);
 
         if (arrayOfUsers != null){
 
-            gameAttendanceAdapter = new GameAttendanceAdapter(getActivity(), game, arrayOfUsers);
-            listView.setAdapter(gameAttendanceAdapter);
+            gameAttendanceAdapter = new GameAttendanceAdapter(arrayOfUsers, getActivity(), game);
+            rvUsers.setAdapter(gameAttendanceAdapter);
+            rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
         }else{
             Log.d("gwyd","user list was null");
-            gameAttendanceAdapter = new GameAttendanceAdapter(getActivity(), game, new ArrayList<User>());
-            listView.setAdapter(gameAttendanceAdapter);
+            gameAttendanceAdapter = new GameAttendanceAdapter(new ArrayList<User>(), getActivity(), game);
+            rvUsers.setAdapter(gameAttendanceAdapter);
+            rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
         userModel.getPlayers().observe(getViewLifecycleOwner(), new Observer<List<User>>() {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if (users != null) {
-                    gameAttendanceAdapter.setUsers(users);
-                    gameAttendanceAdapter.clear();
-                    gameAttendanceAdapter.addAll(users);
+                    gameAttendanceAdapter = new GameAttendanceAdapter(users, getActivity(), game);
+                    rvUsers.setAdapter(gameAttendanceAdapter);
+                    rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                 } else {
                     Log.d("gwyd", "no users found in db");
-                    gameAttendanceAdapter.setUsers(new ArrayList<User>());
+                    gameAttendanceAdapter = new GameAttendanceAdapter(new ArrayList<User>(), getActivity(), game);
+                    rvUsers.setAdapter(gameAttendanceAdapter);
+                    rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
                 }
             }
         });

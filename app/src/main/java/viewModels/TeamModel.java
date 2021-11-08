@@ -27,8 +27,9 @@ public class TeamModel extends AndroidViewModel {
     public Team getTeam (String teamName){
         return teamRepo.getTeam(teamName);
     }
-    public void createTeam(Team team) {
+    public Team createTeam(Team team) {
         teamRepo.insert(team);
+        return team;
     }
 
 }
