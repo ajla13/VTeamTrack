@@ -81,10 +81,10 @@ public class Comment {
 
     public static Comment[] populateComment() throws ParseException {
         return new Comment[]{
-                new Comment(1, 1, "Test post 1", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021")),
-                new Comment(1, 1, "Test post 1", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021")),
-                new Comment(1, 1, "Test post 1", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021")),
-                new Comment(1, 1, "Test post 1", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"))
+                new Comment(1, 2, "comm 1", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021")),
+                new Comment(1, 2, "comm 1", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021")),
+                new Comment(1, 2, "comm 1", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021")),
+                new Comment(1, 2, "comm 1", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"))
         };
     }
 }

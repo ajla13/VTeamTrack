@@ -27,17 +27,11 @@ public class CommentRepo {
         AppDatabase db = AppDatabase.getInstance(application);
         commentDao = db.commentDao();
         postId = PreferenceData.getPostId(application.getApplicationContext());
-        commentsByPost = commentDao.getCommentsByPost(postId);
     }
 
+    public List<Comment> getCommentListByPost(int postId2) {
+        return commentDao.getCommentsListByPost(postId2);
 
-    public LiveData<List<Comment>> getCommentsByPost() {
-        if(commentsByPost==null){
-            AppDatabase.executor.execute(() -> {
-                commentsByPost = commentDao.getCommentsByPost(postId);
-            });
-        }
-        return commentsByPost;
     }
 
     public Comment getComment(int id){

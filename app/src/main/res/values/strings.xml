@@ -39,6 +39,7 @@
     <string name="view_posts">View posts</string>
     <string name="write_post">Write a new post...</string>
     <string name="post">Post</string>
+    <string name="write_comment">Write a comment...</string>
     <string name="register_player">Player registration</string>
     <string name="register_trainer">Trainer registration</string>
     <string name="registrationLink">Click here for member registration.</string>

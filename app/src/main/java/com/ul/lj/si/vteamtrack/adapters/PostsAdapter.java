@@ -2,13 +2,18 @@ package com.ul.lj.si.vteamtrack.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,7 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ul.lj.si.vteamtrack.PreferenceData;
 import com.ul.lj.si.vteamtrack.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,11 +40,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
     private User authorUser;
     private UserModel userModel;
-    private CommentModel commentModel;
     private Activity activity;
     private List<Post> posts;
-    private ArrayList<Comment> comments;
-    private CommentAdapter commentAdapter;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -45,6 +49,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         public TextView author;
         public TextView date;
         public RecyclerView commentView;
+        public EditText createComment;
+        public Button postComment;
 
         public ViewHolder(View itemView) {
 
@@ -54,6 +60,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
            author = (TextView) itemView.findViewById(R.id.item_post_author);
            date = (TextView)  itemView.findViewById(R.id.item_post_date);
            commentView = (RecyclerView) itemView.findViewById(R.id.rvComments);
+           createComment = (EditText) itemView.findViewById(R.id.new_comment);
+           postComment = (Button) itemView.findViewById(R.id.btn_create_comment);
         }
     }
 
@@ -85,53 +93,93 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Get the data model based on position
         Post post = posts.get(position);
-        PreferenceData.setCurentPostId(activity.getApplicationContext(), post.getId());
-        commentModel = new ViewModelProvider((FragmentActivity)activity).get(CommentModel.class);
 
-        //commentModel = new ViewModelProvider((FragmentActivity)activity).get(CommentModel.class);
+        PreferenceData.setCurentPostId(activity.getApplicationContext(), post.getId());
+        CommentModel commentModel = new ViewModelProvider((FragmentActivity)activity).get(CommentModel.class);
+
         authorUser = userModel.getUser(post.getAuthorId());
         // Set item views based on your views and data model
         TextView content = holder.content;
         TextView author = holder.author;
         TextView date = holder.date;
         RecyclerView rvComments = holder.commentView;
+        EditText createComment = holder.createComment;
+        Button postComment = holder.postComment;
 
         content.setText(post.getContent());
         author.setText(authorUser.getFirstName());
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date utilDate = new Date(post.getDate().getTime());
         date.setText(sdf.format(utilDate));
 
-        comments = (ArrayList<Comment>) commentModel.getCommentsByPost().getValue();
+        ArrayList<Comment> comments = (ArrayList<Comment>) commentModel.getCommentListByPost(post.getId());
+        System.out.println("comments list "+ comments.size());
+        CommentAdapter commentAdapter = new CommentAdapter(comments, activity);
+        rvComments.setAdapter(commentAdapter);
+        rvComments.setLayoutManager(new LinearLayoutManager(activity));
 
-        if (comments != null) {
-            commentAdapter = new CommentAdapter(comments, activity);
-            rvComments.setAdapter(commentAdapter);
-            rvComments.setLayoutManager(new LinearLayoutManager(activity));
-        } else {
-            Log.d("gwyd", "comments list was null");
-            commentAdapter = new CommentAdapter(new ArrayList<Comment>(), activity);
-            rvComments.setAdapter(commentAdapter);
-            rvComments.setLayoutManager(new LinearLayoutManager(activity));
-        }
-        commentModel.getCommentsByPost().observe
+        postComment.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                String content = createComment.getText().toString();
+                int authorId = PreferenceData.getLoggedInUser(activity.getApplicationContext());
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                LocalDate date = LocalDate.now();
+
+                String _day = String.valueOf(date.getDayOfMonth());
+                String _month = String.valueOf(date.getMonthValue());
+                String _year = String.valueOf(date.getYear());
+
+                StringBuilder dateTemp = new StringBuilder().append(_day).append("/").append(_month).append("/").append(_year).append(" ");
+                String dateT = dateTemp.toString();
+                Date dateComment = new Date();
+                try {
+                    dateComment=new SimpleDateFormat("dd/MM/yyyy").parse(dateT);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                String teamName=PreferenceData.getTeam(activity.getApplicationContext());
+                Comment comment = new Comment(authorId,post.getId(), content,dateComment);
+                commentModel.createComment(comment);
+                createComment.setText("");
+                ArrayList<Comment> commentsUpdated = (ArrayList<Comment>) commentModel.getCommentListByPost(post.getId());
+                CommentAdapter commentAdapter = new CommentAdapter(commentsUpdated, activity);
+                rvComments.setAdapter(commentAdapter);
+                rvComments.setLayoutManager(new LinearLayoutManager(activity));
+
+            }
+        });
+       /* commentModel.getCommentsByPost().observe
                 ((FragmentActivity) activity, new Observer<List<Comment>>() {
 
                     @Override
                     public void onChanged(List<Comment> commentsObserved) {
+                        System.out.println("comments in here");
+
                         if (commentsObserved != null) {
-                            commentAdapter = new CommentAdapter(commentsObserved, activity);
+                            CommentAdapter commentAdapter = new CommentAdapter(commentsObserved, activity);
                             rvComments.setAdapter(commentAdapter);
                             rvComments.setLayoutManager(new LinearLayoutManager(activity));
+                            System.out.println("comments in here2");
+                            if(commentsObserved.size() > 0){
+                                System.out.println("content comm "+commentsObserved.get(1).getContent());
+
+                            }
                         } else {
+                            System.out.println("comments in here3");
                             Log.d("gwyd", "comments list was null");
-                            commentAdapter = new CommentAdapter(new ArrayList<Comment>(), activity);
+                            CommentAdapter commentAdapter = new CommentAdapter(new ArrayList<Comment>(), activity);
                             rvComments.setAdapter(commentAdapter);
                             rvComments.setLayoutManager(new LinearLayoutManager(activity));
                         }
                     }
-                });
+                });*/
 
     }
 

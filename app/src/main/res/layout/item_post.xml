@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,13 +24,38 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         />
+    <EditText
+        android:id="@+id/new_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_marginLeft="50dp"
+        android:hint="@string/write_comment"
+        app:layout_constraintBottom_toTopOf="@+id/btn_create_comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_post_content"
+        tools:ignore="SpeakableTextPresentCheck" />
+    <Button
+        android:id="@+id/btn_create_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/post"
+        app:layout_constraintBottom_toTopOf="@+id/rvComments"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_comment" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvComments"
+        android:layout_marginLeft="50dp"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_post_content" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_create_comment" />
 
 </LinearLayout>

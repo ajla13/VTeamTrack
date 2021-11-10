@@ -18,12 +18,14 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.text.ParseException;
 
+import dao.CommentDao;
 import dao.GamesDao;
 import dao.PostDao;
 import dao.TeamDao;
 import dao.TrainingDao;
 import dao.UserDao;
 import database.AppDatabase;
+import entities.Comment;
 import entities.Game;
 import entities.Post;
 import entities.Team;
@@ -49,6 +51,7 @@ public class Login extends AppCompatActivity {
         TrainingDao trainingDao = db.trainingDao();
         GamesDao gamesDao = db.gameDao();
         PostDao postDao = db.postDao();
+        CommentDao commentDao = db.commentDao();
 
         teamModel = new ViewModelProvider(this).get(TeamModel.class);
         userModel = new ViewModelProvider(this).get(UserModel.class);
@@ -83,6 +86,11 @@ public class Login extends AppCompatActivity {
                 }
                 try {
                     postDao.insertAll(Post.populatePost());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    commentDao.insertAll(Comment.populateComment());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
