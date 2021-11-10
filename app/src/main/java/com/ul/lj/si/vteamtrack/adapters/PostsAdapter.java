@@ -72,6 +72,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         userModel = new ViewModelProvider((FragmentActivity) activity).get(UserModel.class);
+
         // Inflate the custom layout
         View contactView = inflater.inflate(R.layout.item_post, parent, false);
 
@@ -86,6 +87,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         Post post = posts.get(position);
         PreferenceData.setCurentPostId(activity.getApplicationContext(), post.getId());
         commentModel = new ViewModelProvider((FragmentActivity)activity).get(CommentModel.class);
+
+        //commentModel = new ViewModelProvider((FragmentActivity)activity).get(CommentModel.class);
         authorUser = userModel.getUser(post.getAuthorId());
         // Set item views based on your views and data model
         TextView content = holder.content;

@@ -16,7 +16,7 @@ public class CommentModel extends AndroidViewModel {
     private CommentRepo commentRepo;
     private LiveData<List<Comment>> commentsByPost;
 
-    public CommentModel(@NonNull Application application, int id) {
+    public CommentModel(@NonNull Application application) {
         super(application);
         commentRepo = new CommentRepo(application);
         commentsByPost = commentRepo.getCommentsByPost();
