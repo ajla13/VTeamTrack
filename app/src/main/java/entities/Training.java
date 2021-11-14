@@ -35,6 +35,9 @@ public class Training {
     @TypeConverters(Converters.class)
     private List<Integer> attendancy;
 
+    @TypeConverters(Converters.class)
+    private List<Integer> participation;
+
     public int getId() {
         return id;
     }
@@ -53,6 +56,10 @@ public class Training {
 
     public Date getTime() {
         return time;
+    }
+
+    public List<Integer> getParticipation() {
+        return participation;
     }
 
     public List<Integer> getAttendancy() {
@@ -87,11 +94,15 @@ public class Training {
         this.location = location;
     }
 
+    public void setParticipation(List<Integer> participation) {
+        this.participation = participation;
+    }
+
     public void setTime(Date time) {
         this.time = time;
     }
 
-    public Training( int teamId,Date date, Date time, String location, String teamName, List<Integer> attendancy){
+    public Training( int teamId,Date date, Date time, String location, String teamName, List<Integer> attendancy, List<Integer> participation){
 
         this.date=date;
         this.teamId = teamId;
@@ -99,17 +110,19 @@ public class Training {
         this.location=location;
         this.teamName=teamName;
         this.attendancy=attendancy;
+        this.participation=participation;
     }
 
     public static Training[] populateTraining() throws ParseException {
         return new Training[] {
-                new Training( 1,new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), new SimpleDateFormat("hh:mm").parse("14:00"), "Hall A", "Coast VT", new ArrayList<Integer>()),
+                new Training( 1,new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), new SimpleDateFormat("hh:mm").parse("14:00"), "Hall A", "Coast VT", new ArrayList<Integer>(),
+                        new ArrayList<Integer>()),
                 new Training( 1,new SimpleDateFormat("dd/MM/yyyy").parse("20/04/2021"), new SimpleDateFormat("hh:mm").parse("14:00"), "Hall A", "Coast VT",
-                        new ArrayList<Integer>()),
+                        new ArrayList<Integer>(), new ArrayList<Integer>()),
                 new Training( 1,new SimpleDateFormat("dd/MM/yyyy").parse("23/04/2021"), new SimpleDateFormat("hh:mm").parse("14:00"), "Hall A", "Coast VT",
-                        new ArrayList<Integer>()),
+                        new ArrayList<Integer>(), new ArrayList<Integer>()),
                 new Training( 1,new SimpleDateFormat("dd/MM/yyyy").parse("25/04/2021"), new SimpleDateFormat("hh:mm").parse("14:00"), "Hall A", "Coast VT",
-                        new ArrayList<Integer>())
+                        new ArrayList<Integer>(), new ArrayList<Integer>())
         };
     }
 

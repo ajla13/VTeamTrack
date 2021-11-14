@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,6 +21,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.ul.lj.si.vteamtrack.fragments.FeeListFragment;
 
 import entities.Comment;
 import io.socket.client.IO;
@@ -108,6 +111,17 @@ public class MainActivity extends AppCompatActivity {
             case R.id.item2:
                 Intent intentReq = new Intent(getApplicationContext(),Requests.class);
                 startActivity(intentReq);
+                return true;
+            case R.id.item3:
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.nav_fragment,new FeeListFragment());
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
+                return true;
+            case R.id.item4:
+                Intent intentSurvey = new Intent(getApplicationContext(),SurveyListActivity.class);
+                startActivity(intentSurvey);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

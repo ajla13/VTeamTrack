@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ul.lj.si.vteamtrack.R;
 import com.ul.lj.si.vteamtrack.adapters.TrainingAttendanceAdapter;
+import com.ul.lj.si.vteamtrack.adapters.TrainingParticipationAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class TrainingAttendanceFragment extends Fragment {
     private TrainingModel trainingModel;
     private UserModel userModel;
     private TrainingAttendanceAdapter trainingAttendanceAdapter;
+    private TrainingParticipationAdapter trainingParticipationAdapter;
     private Training training;
 
     @Nullable
@@ -40,7 +42,7 @@ public class TrainingAttendanceFragment extends Fragment {
             container.removeAllViews();
         }
 
-        View view = inflater.inflate(R.layout.listview, container, false);
+        View view = inflater.inflate(R.layout.training_list, container, false);
 
         int trainerId = this.getArguments().getInt("trainingId");
 
@@ -51,14 +53,23 @@ public class TrainingAttendanceFragment extends Fragment {
 
         ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
         RecyclerView rvUsers = (RecyclerView) view.findViewById(R.id.rvUsers);
+        RecyclerView rvUsersParticipation = (RecyclerView) view.findViewById(R.id.rvUsersParticipation);
+
 
         if (arrayOfUsers != null){
+            trainingParticipationAdapter=new TrainingParticipationAdapter(arrayOfUsers, getActivity(), training);
+            rvUsersParticipation.setAdapter(trainingParticipationAdapter);
+            rvUsersParticipation.setLayoutManager(new LinearLayoutManager(getActivity()));
 
             trainingAttendanceAdapter = new TrainingAttendanceAdapter(arrayOfUsers, getActivity(), training);
             rvUsers.setAdapter(trainingAttendanceAdapter);
             rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
         }else{
             Log.d("gwyd","user list was null");
+            trainingParticipationAdapter=new TrainingParticipationAdapter(new ArrayList<User>(), getActivity(), training);
+            rvUsersParticipation.setAdapter(trainingParticipationAdapter);
+            rvUsersParticipation.setLayoutManager(new LinearLayoutManager(getActivity()));
+
             trainingAttendanceAdapter = new TrainingAttendanceAdapter(new ArrayList<User>(), getActivity(), training);
             rvUsers.setAdapter(trainingAttendanceAdapter);
             rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -68,12 +79,21 @@ public class TrainingAttendanceFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if (users != null) {
+                    trainingParticipationAdapter=new TrainingParticipationAdapter(users, getActivity(), training);
+                    rvUsersParticipation.setAdapter(trainingParticipationAdapter);
+                    rvUsersParticipation.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
                     trainingAttendanceAdapter = new TrainingAttendanceAdapter(users, getActivity(), training);
                     rvUsers.setAdapter(trainingAttendanceAdapter);
                     rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                 } else {
                     Log.d("gwyd", "no users found in db");
+                    trainingParticipationAdapter=new TrainingParticipationAdapter(new ArrayList<User>(), getActivity(), training);
+                    rvUsersParticipation.setAdapter(trainingParticipationAdapter);
+                    rvUsersParticipation.setLayoutManager(new LinearLayoutManager(getActivity()));
+
                     trainingAttendanceAdapter = new TrainingAttendanceAdapter(new ArrayList<User>(), getActivity(), training);
                     rvUsers.setAdapter(trainingAttendanceAdapter);
                     rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));                }

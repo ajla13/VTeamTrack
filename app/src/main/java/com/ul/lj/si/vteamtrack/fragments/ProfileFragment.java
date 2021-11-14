@@ -59,12 +59,9 @@ public class ProfileFragment extends Fragment {
     private EditText editEmail;
     private EditText editPhone;
     private EditText editDateOfBirth;
-    SimpleDateFormat sdf;
-    AlertDialog.Builder builder;
+    private SimpleDateFormat sdf;
+    private AlertDialog.Builder builder;
 
-    public ProfileFragment(int userId){
-        this.userId = userId;
-    }
     public ProfileFragment(){
 
     }

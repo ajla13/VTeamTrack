@@ -1,8 +1,8 @@
 package com.ul.lj.si.vteamtrack.adapters;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ul.lj.si.vteamtrack.PreferenceData;
 import com.ul.lj.si.vteamtrack.R;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import entities.Comment;
-import entities.Post;
 import entities.User;
 import viewModels.CommentModel;
-import viewModels.PostModel;
 import viewModels.UserModel;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
@@ -77,6 +73,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return viewHolder;
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
         Comment comment = comments.get(position);

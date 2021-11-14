@@ -4,5 +4,7 @@
     tools:context="example.javatpoint.com.optionmenu.MainActivity">
 
     <item  android:id="@+id/item1"
-        android:title="Log out"/>
+        android:title="@string/log_out"/>
+    <item  android:id="@+id/item4"
+        android:title="@string/surveys"/>
 </menu>

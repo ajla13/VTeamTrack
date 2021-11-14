@@ -18,16 +18,22 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.text.ParseException;
 
+import dao.AnswerDao;
 import dao.CommentDao;
+import dao.FeeDao;
 import dao.GamesDao;
 import dao.PostDao;
+import dao.SurveyDao;
 import dao.TeamDao;
 import dao.TrainingDao;
 import dao.UserDao;
 import database.AppDatabase;
+import entities.Answer;
 import entities.Comment;
+import entities.Fee;
 import entities.Game;
 import entities.Post;
+import entities.Survey;
 import entities.Team;
 import entities.Training;
 import entities.User;
@@ -51,7 +57,10 @@ public class Login extends AppCompatActivity {
         TrainingDao trainingDao = db.trainingDao();
         GamesDao gamesDao = db.gameDao();
         PostDao postDao = db.postDao();
+        SurveyDao surveyDao = db.surveyDao();
+        AnswerDao answerDao = db.answerDao();
         CommentDao commentDao = db.commentDao();
+        FeeDao feeDao = db.feeDao();
 
         teamModel = new ViewModelProvider(this).get(TeamModel.class);
         userModel = new ViewModelProvider(this).get(UserModel.class);
@@ -94,6 +103,13 @@ public class Login extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                try {
+                    feeDao.insertAll(Fee.populateFee());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                surveyDao.insertAll(Survey.populateSurvey());
+                answerDao.insertAll(Answer.populateAnswer());
             }
         });
 

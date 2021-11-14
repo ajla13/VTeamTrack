@@ -25,11 +25,14 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import entities.Fee;
 import entities.Team;
 import entities.User;
 
+import viewModels.FeeModel;
 import viewModels.TeamModel;
 import viewModels.UserModel;
 
@@ -46,6 +49,7 @@ public class RegistrationFormFragment extends Fragment {
     String successText;
     UserModel userModel;
     TeamModel teamModel;
+    FeeModel feeModel;
     User user;
     String errorText;
     String registrationType;
@@ -59,6 +63,7 @@ public class RegistrationFormFragment extends Fragment {
         super.onCreate(savedInstanceState);
         userModel = new ViewModelProvider(this).get(UserModel.class);
         teamModel = new ViewModelProvider(this).get(TeamModel.class);
+        feeModel = new ViewModelProvider(this).get(FeeModel.class);
     }
 
     @Nullable
@@ -103,10 +108,10 @@ public class RegistrationFormFragment extends Fragment {
                             team = new Team(teamNameDb);
 
                             Team teamReturned = teamModel.createTeam(team);
-                            System.out.println("teamID " + teamReturned.getId());
-                            User user = new User(teamReturned.getId(),firstName, lastname, dOfB,teamNameDb, emaileDb,pass,
+                            Team teamWithId = teamModel.getTeam(teamReturned.getName());
+                            User user = new User(teamWithId.getId(),firstName, lastname, dOfB,teamNameDb, emaileDb,pass,
                                     "trainer",phoneDb,true);
-                        //    User createdUser = userModel.createUser(user);
+                            User createdUser = userModel.createUser(user);
                             successText="Registration successful";
                         }
                         else {
@@ -115,9 +120,13 @@ public class RegistrationFormFragment extends Fragment {
                                     surname.getText().toString(),
                                     dOfB,teamName.getText().toString(),email.getText().toString(),password.getText().toString(),
                                     "player",phone.getText().toString(),false);
+                            Calendar c = Calendar.getInstance();
+                            SimpleDateFormat monthDate = new SimpleDateFormat("MM");
+                            System.out.println("month fee "+monthDate.format(new Date()).toString());
 
                             Team teamPlayer = teamModel.getTeam(teamName.getText().toString());
                             user.setTeamId(teamPlayer.getId());
+
                             userModel.createUser(user);
                             successText="Your registration request has been sent.";
                         }

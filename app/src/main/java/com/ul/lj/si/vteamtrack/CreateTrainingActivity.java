@@ -70,8 +70,9 @@ public class CreateTrainingActivity extends AppCompatActivity {
             String location = trainingLocation.getText().toString();
             String teamName = PreferenceData.getTeam(getApplicationContext());
             ArrayList attendance = new ArrayList<>();
+            ArrayList participation = new ArrayList<>();
             Team teamTraining = teamModel.getTeam(teamName);
-            Training training = new Training(teamTraining.getId(),date,time, location,teamName, attendance);
+            Training training = new Training(teamTraining.getId(),date,time, location,teamName, attendance, participation);
             Training result = trainingModel.createTraining(training);
 
             if(result!= null){

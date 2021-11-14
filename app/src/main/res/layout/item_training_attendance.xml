@@ -8,32 +8,30 @@
     android:paddingTop="20dp"
     android:paddingRight="20dp"
     android:paddingBottom="20dp">
+        <TextView
+            android:id="@+id/training_attendance_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/training_attendance_user_surname"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/training_attendance_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/training_attendance_user_surname"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/training_attendance_user_surname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox_training_attendance"
-        app:layout_constraintStart_toEndOf="@+id/training_attendance_user_name"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/training_attendance_user_surname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/checkBox_training_attendance"
+            app:layout_constraintStart_toEndOf="@+id/training_attendance_user_name"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <CheckBox
-        android:id="@+id/checkBox_training_attendance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="right|center_vertical|end" />
-
+        <CheckBox
+            android:id="@+id/checkBox_training_attendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right|center_vertical|end" />
 </LinearLayout>

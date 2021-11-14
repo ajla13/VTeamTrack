@@ -62,8 +62,6 @@ public class GamesListFragment extends Fragment {
 
         ArrayList<Game> arrayOfGames = (ArrayList<Game>) gameModel.getGames().getValue();
 
-
-
         launchActivity = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
