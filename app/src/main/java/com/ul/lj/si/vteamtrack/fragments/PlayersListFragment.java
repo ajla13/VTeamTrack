@@ -1,5 +1,6 @@
 package com.ul.lj.si.vteamtrack.fragments;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,10 +17,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ul.lj.si.vteamtrack.Login;
 import com.ul.lj.si.vteamtrack.R;
 import com.ul.lj.si.vteamtrack.adapters.PostsAdapter;
 import com.ul.lj.si.vteamtrack.adapters.UsersAdapter;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,23 +35,35 @@ public class PlayersListFragment extends Fragment {
 
     private UserModel userModel;
     private UsersAdapter userAdapter;
-
+    private  byte[] imageByteArray;
 
         @Nullable
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             if (container != null) {
                 container.removeAllViews();
             }
+
             View view = inflater.inflate(R.layout.listview, container, false);
             RecyclerView rvUsers = (RecyclerView) view.findViewById(R.id.rvUsers);
-
+            AssetManager am =getActivity().getAssets();
+            try {
+                InputStream is = am.open("avatar.jpg");
+                imageByteArray= new byte[is.available()];
+                is.read(imageByteArray);
+                is.close();
+                // use the input stream as you want
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             userModel = new ViewModelProvider(this).get(UserModel.class);
 
             ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
 
 
             if (arrayOfUsers != null) {
-
+                for (int i=0; i<arrayOfUsers.size();i++) {
+                    arrayOfUsers.get(i).setImage(imageByteArray);
+                }
                 userAdapter = new UsersAdapter(arrayOfUsers, getActivity());
                 rvUsers.setAdapter(userAdapter);
                 rvUsers.setLayoutManager((new LinearLayoutManager(getActivity())));
@@ -62,6 +78,9 @@ public class PlayersListFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable List<User> users) {
                     if (users != null) {
+                        for (int i=0; i<users.size();i++) {
+                            users.get(i).setImage(imageByteArray);
+                        }
                         userAdapter = new UsersAdapter(users, getActivity());
                         rvUsers.setAdapter(userAdapter);
                         rvUsers.setLayoutManager((new LinearLayoutManager(getActivity())));

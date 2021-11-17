@@ -1,13 +1,19 @@
 package com.ul.lj.si.vteamtrack.adapters;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -26,7 +32,12 @@ import com.ul.lj.si.vteamtrack.fragments.ProfileFragment;
 
 import org.w3c.dom.Text;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import entities.Training;
@@ -47,8 +58,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
         private TextView userName;
         private TextView userSurname;
-        private Button viewProfile;
+        private ImageButton viewProfile;
         private Button viewPosts;
+        private ImageView image;
 
         public ViewHolder(View itemView) {
 
@@ -56,8 +68,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
             userName = (TextView) itemView.findViewById(R.id.item_user_name);
             userSurname = (TextView) itemView.findViewById(R.id.item_user_surname);
-            viewProfile = (Button) itemView.findViewById(R.id.item_user_profile);
+            viewProfile = (ImageButton) itemView.findViewById(R.id.item_user_profile);
             viewPosts = (Button) itemView.findViewById(R.id.item_user_posts);
+            image = (ImageView) itemView.findViewById(R.id.item_user_profile_image);
+
         }
     }
 
@@ -83,11 +97,17 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         User user = users.get(position);
         TextView userName = holder.userName;
         TextView surname= holder.userSurname;
-        Button viewProfile = holder.viewProfile;
+        ImageButton viewProfile = holder.viewProfile;
         Button viewPosts = holder.viewPosts;
+        ImageView image = holder.image;
+
 
         userName.setText(user.getFirstName());
         surname.setText(user.getLastName());
+        byte[] byteToImage= user.getImage();
+        Bitmap bmp= BitmapFactory.decodeByteArray(byteToImage, 0 , byteToImage.length);
+        image.setImageBitmap(bmp);
+
         viewPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +138,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             }
         });
 
+
     }
+
 
     @Override
     public int getItemCount() {

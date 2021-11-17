@@ -1,6 +1,7 @@
 package com.ul.lj.si.vteamtrack;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -16,7 +17,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
 
 import dao.AnswerDao;
 import dao.CommentDao;
@@ -47,6 +52,7 @@ public class Login extends AppCompatActivity {
     TeamModel teamModel;
     UserModel userModel;
     User user;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +77,6 @@ public class Login extends AppCompatActivity {
         teamName=(EditText) findViewById(R.id.login_team);
         Button login=(Button) findViewById(R.id.btn_login);
         Button dbButton= findViewById(R.id.btn_prepopulate);
-
 
         dbButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +115,7 @@ public class Login extends AppCompatActivity {
                 }
                 surveyDao.insertAll(Survey.populateSurvey());
                 answerDao.insertAll(Answer.populateAnswer());
+
             }
         });
 

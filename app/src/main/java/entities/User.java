@@ -3,6 +3,7 @@ package entities;
 import static androidx.room.ForeignKey.CASCADE;
 
 
+import android.content.res.AssetManager;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -12,6 +13,8 @@ import androidx.room.PrimaryKey;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -42,6 +45,17 @@ public class User {
 
     @ColumnInfo(name = "teamId")
     public int teamId;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] image;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public int getId() {
         return id;
@@ -146,6 +160,7 @@ public class User {
 
     }
     public static User[] populateData() throws ParseException {
+
         return new User[] {
                 new User(1,"Jane", "Doe", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT", "jane.doe@mail.com", "janedoe", "player", "00386725643", true),
                 new User(1,"John", "Doe", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT","john.doe@mail.com", "johndoe", "player", "00386526781", true ),
