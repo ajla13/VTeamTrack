@@ -70,6 +70,8 @@ public class PostsFragment extends Fragment {
             createPost.setVisibility(View.GONE);
             postContent.setVisibility(View.GONE);
         }
+        System.out.println(userId);
+        System.out.println(posts);
 
 
         if (posts != null){
@@ -82,7 +84,7 @@ public class PostsFragment extends Fragment {
                     return post1.getDate().compareTo(post2.getDate());
                 }
             });
-
+            System.out.println("userId "+ userId);
             adapter = new PostsAdapter(posts, getActivity());
             rvPosts.setAdapter(adapter);
             rvPosts.setLayoutManager((new LinearLayoutManager(getActivity())));

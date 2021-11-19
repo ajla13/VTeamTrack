@@ -63,7 +63,6 @@ public class TrainingsListFragment extends Fragment {
 
         RecyclerView rvTrainings = (RecyclerView) view.findViewById(R.id.rvTrainingSchedule);
 
-
         launchActivity = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {

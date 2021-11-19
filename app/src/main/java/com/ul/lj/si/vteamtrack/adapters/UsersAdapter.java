@@ -1,11 +1,15 @@
 package com.ul.lj.si.vteamtrack.adapters;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +21,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -26,6 +35,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.ul.lj.si.vteamtrack.R;
 import com.ul.lj.si.vteamtrack.fragments.PostsFragment;
 import com.ul.lj.si.vteamtrack.fragments.ProfileFragment;
@@ -49,11 +59,20 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     private List<User> users;
     private Activity activity;
     private UserModel userModel;
+    private ActivityResultLauncher<Intent> launchActivity;
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     public UsersAdapter(List<User> users, Activity activity) {
         this.users=users;
         this.activity = activity;
+
+
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView userName;
@@ -71,6 +90,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             viewProfile = (ImageButton) itemView.findViewById(R.id.item_user_profile);
             viewPosts = (Button) itemView.findViewById(R.id.item_user_posts);
             image = (ImageView) itemView.findViewById(R.id.item_user_profile_image);
+
 
         }
     }
@@ -104,9 +124,16 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
         userName.setText(user.getFirstName());
         surname.setText(user.getLastName());
-        byte[] byteToImage= user.getImage();
-        Bitmap bmp= BitmapFactory.decodeByteArray(byteToImage, 0 , byteToImage.length);
-        image.setImageBitmap(bmp);
+        String imageUri = user.getImageUri();
+        System.out.println("user image URi"+user.getImageUri());
+
+        if(imageUri!=null && !imageUri.equals("")){
+            System.out.println("user image URi"+Uri.parse(imageUri));
+            /*image.setImageURI(Uri.parse(imageUri));
+            Glide.with(activity.getApplicationContext())
+                    .load(Uri.parse(imageUri))
+                    .into(image);*/
+        }
 
         viewPosts.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,7 +167,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
 
     }
-
 
     @Override
     public int getItemCount() {

@@ -45,11 +45,8 @@ public class PostRepo {
 
     public List<Post>  getPostsByAuthor(int authorId) {
 
-        if (postsByAuthor == null) {
-            AppDatabase.executor.execute(() -> {
                 postsByAuthor = postDao.getPostsByAuthor(authorId);
-            });
-        }
+
         return postsByAuthor;
     }
 

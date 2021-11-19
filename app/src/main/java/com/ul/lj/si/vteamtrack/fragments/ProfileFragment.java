@@ -2,6 +2,7 @@ package com.ul.lj.si.vteamtrack.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -21,8 +22,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.ul.lj.si.vteamtrack.CreateTrainingActivity;
 import com.ul.lj.si.vteamtrack.PreferenceData;
 import com.ul.lj.si.vteamtrack.R;
+import com.ul.lj.si.vteamtrack.UploadImage;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -61,6 +64,7 @@ public class ProfileFragment extends Fragment {
     private EditText editDateOfBirth;
     private SimpleDateFormat sdf;
     private AlertDialog.Builder builder;
+    private Button uploadImage;
 
     public ProfileFragment(){
 
@@ -100,6 +104,17 @@ public class ProfileFragment extends Fragment {
         changePass = view.findViewById(R.id.btn_profile_changePass);
         makeAdmin = view.findViewById(R.id.btn_profile_admin);
         unregisterUser = view.findViewById(R.id.btn_profile_unregister);
+        uploadImage = view.findViewById(R.id.uploadImageBtn);
+
+        uploadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), UploadImage.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+
+            }
+        });
 
         edit = view.findViewById(R.id.btn_profile_edit);
         updateProfile = view.findViewById(R.id.btn_profile_update);

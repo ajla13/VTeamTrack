@@ -1,5 +1,7 @@
 package com.ul.lj.si.vteamtrack.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -35,7 +41,7 @@ public class PlayersListFragment extends Fragment {
 
     private UserModel userModel;
     private UsersAdapter userAdapter;
-    private  byte[] imageByteArray;
+    private ActivityResultLauncher<Intent> launchActivity;
 
         @Nullable
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,25 +51,23 @@ public class PlayersListFragment extends Fragment {
 
             View view = inflater.inflate(R.layout.listview, container, false);
             RecyclerView rvUsers = (RecyclerView) view.findViewById(R.id.rvUsers);
-            AssetManager am =getActivity().getAssets();
-            try {
-                InputStream is = am.open("avatar.jpg");
-                imageByteArray= new byte[is.available()];
-                is.read(imageByteArray);
-                is.close();
-                // use the input stream as you want
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
             userModel = new ViewModelProvider(this).get(UserModel.class);
 
             ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
 
+            launchActivity = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult result) {
+                            if (result.getResultCode() == Activity.RESULT_OK) {
+                                Intent data = result.getData();
 
+                            }
+                        }
+                    });
             if (arrayOfUsers != null) {
-                for (int i=0; i<arrayOfUsers.size();i++) {
-                    arrayOfUsers.get(i).setImage(imageByteArray);
-                }
                 userAdapter = new UsersAdapter(arrayOfUsers, getActivity());
                 rvUsers.setAdapter(userAdapter);
                 rvUsers.setLayoutManager((new LinearLayoutManager(getActivity())));
@@ -78,9 +82,7 @@ public class PlayersListFragment extends Fragment {
                 @Override
                 public void onChanged(@Nullable List<User> users) {
                     if (users != null) {
-                        for (int i=0; i<users.size();i++) {
-                            users.get(i).setImage(imageByteArray);
-                        }
+
                         userAdapter = new UsersAdapter(users, getActivity());
                         rvUsers.setAdapter(userAdapter);
                         rvUsers.setLayoutManager((new LinearLayoutManager(getActivity())));
