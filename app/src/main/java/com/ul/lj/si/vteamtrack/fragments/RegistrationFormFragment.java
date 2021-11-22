@@ -2,8 +2,11 @@ package com.ul.lj.si.vteamtrack.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -31,9 +34,11 @@ import com.ul.lj.si.vteamtrack.CreateTrainingActivity;
 import com.ul.lj.si.vteamtrack.Login;
 import com.ul.lj.si.vteamtrack.R;
 import com.ul.lj.si.vteamtrack.UploadImage;
+import com.ul.lj.si.vteamtrack.helpers.ImageHandler;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -67,7 +72,9 @@ public class RegistrationFormFragment extends Fragment {
     private ImageView image;
     private ImageButton imgPlus;
     private ActivityResultLauncher<Intent> launchActivity;
-    private String imageUri;
+    private Uri imageUri;
+    private ImageHandler imageHandler;
+    private Bitmap bitmap;
 
     public RegistrationFormFragment(){}
 
@@ -78,7 +85,9 @@ public class RegistrationFormFragment extends Fragment {
         teamModel = new ViewModelProvider(this).get(TeamModel.class);
         feeModel = new ViewModelProvider(this).get(FeeModel.class);
         registrationType = this.getArguments().getString("registrationType");
-        imageUri="";
+        imageUri=null;
+        imageHandler = new ImageHandler();
+        bitmap=null;
 
         launchActivity = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -88,8 +97,15 @@ public class RegistrationFormFragment extends Fragment {
 
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Intent data = result.getData();
-                            imageUri = data.getData().toString();
-                            System.out.println(imageUri);
+                            assert data != null;
+                            imageUri = data.getData();
+
+                            try {
+                                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
                             Glide.with(getActivity().getApplicationContext())
                                     .load(data.getData())
                                     .into(image);
@@ -149,21 +165,24 @@ public class RegistrationFormFragment extends Fragment {
                             String pass = password.getText().toString();
                             String phoneDb = phone.getText().toString();
                             team = new Team(teamNameDb);
+                            String pathToFile = imageHandler.saveToInternalStorage(bitmap, firstName+"-"+lastname+".jpg", getActivity().getApplicationContext());
 
                             Team teamReturned = teamModel.createTeam(team);
                             Team teamWithId = teamModel.getTeam(teamReturned.getName());
                             User user = new User(teamWithId.getId(),firstName, lastname, dOfB,teamNameDb, emaileDb,pass,
-                                    "trainer",phoneDb,true, imageUri);
+                                    "trainer",phoneDb,true, pathToFile);
 
                             User createdUser = userModel.createUser(user);
                             successText="Registration successful";
                         }
                         else {
+                            String pathToFile = imageHandler.saveToInternalStorage(bitmap,  name.getText().toString()+"-"+ surname.getText().toString(),getActivity().getApplicationContext());
+
                             User user = new User(0,
                                     name.getText().toString(),
                                     surname.getText().toString(),
                                     dOfB,teamName.getText().toString(),email.getText().toString(),password.getText().toString(),
-                                    "player",phone.getText().toString(),false, imageUri);
+                                    "player",phone.getText().toString(),false,pathToFile);
 
                             Calendar c = Calendar.getInstance();
                             SimpleDateFormat monthDate = new SimpleDateFormat("MM");

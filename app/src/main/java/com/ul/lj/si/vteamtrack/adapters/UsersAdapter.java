@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import com.bumptech.glide.Glide;
 import com.ul.lj.si.vteamtrack.R;
 import com.ul.lj.si.vteamtrack.fragments.PostsFragment;
 import com.ul.lj.si.vteamtrack.fragments.ProfileFragment;
+import com.ul.lj.si.vteamtrack.helpers.ImageHandler;
 
 import org.w3c.dom.Text;
 
@@ -60,6 +62,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     private Activity activity;
     private UserModel userModel;
     private ActivityResultLauncher<Intent> launchActivity;
+    private ImageHandler imageHandler;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -126,9 +129,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         surname.setText(user.getLastName());
         String imageUri = user.getImageUri();
         System.out.println("user image URi"+user.getImageUri());
+        imageHandler = new ImageHandler();
 
         if(imageUri!=null && !imageUri.equals("")){
             System.out.println("user image URi"+Uri.parse(imageUri));
+            Bitmap bitmapImage = imageHandler.loadImageFromStorage(imageUri, user.getFirstName()+"-"+user.getLastName()+".jpg");
+             image.setImageBitmap(bitmapImage);
             /*image.setImageURI(Uri.parse(imageUri));
             Glide.with(activity.getApplicationContext())
                     .load(Uri.parse(imageUri))
