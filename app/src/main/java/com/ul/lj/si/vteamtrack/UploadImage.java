@@ -98,7 +98,6 @@ public class UploadImage extends AppCompatActivity {
         }
         public void upload(View view){
             if(source.equals("registration")){
-
                 Intent intent = new Intent();
                 intent.setData(selectedImage);
                 this.setResult(RESULT_OK, intent);

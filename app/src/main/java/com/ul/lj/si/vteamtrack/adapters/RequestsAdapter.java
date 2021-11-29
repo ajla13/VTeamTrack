@@ -23,13 +23,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ul.lj.si.vteamtrack.MainActivity;
 import com.ul.lj.si.vteamtrack.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import entities.Fee;
 import entities.Game;
 import entities.User;
+import viewModels.FeeModel;
 import viewModels.GameModel;
 import viewModels.TrainingModel;
 import viewModels.UserModel;
@@ -41,6 +44,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
     private List<User> users;
 
     private UserModel userModel;
+    private FeeModel feeModel;
     SimpleDateFormat sdf;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -83,6 +87,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         userModel = new ViewModelProvider((FragmentActivity) activity).get(UserModel.class);
+        feeModel = new ViewModelProvider((FragmentActivity) activity).get(FeeModel.class);
 
 
         // Inflate the custom layout
@@ -120,6 +125,12 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 user.setRegistrationConfirmed(true);
+                try {
+                    Fee userFee = new Fee("january", user.getId(), false, user.getTeamName(), "10", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), new SimpleDateFormat("hh:mm").parse("15:00"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 userModel.update(user);
                 Toast.makeText(activity.getApplicationContext(),
                         "User registration accepted", Toast.LENGTH_LONG).show();

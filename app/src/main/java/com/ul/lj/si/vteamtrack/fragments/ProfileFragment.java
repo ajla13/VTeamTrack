@@ -3,6 +3,8 @@ package com.ul.lj.si.vteamtrack.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,6 +68,7 @@ public class ProfileFragment extends Fragment {
     private SimpleDateFormat sdf;
     private AlertDialog.Builder builder;
     private Button uploadImage;
+    private ImageView profileImage;
 
     public ProfileFragment(){
 
@@ -105,6 +109,7 @@ public class ProfileFragment extends Fragment {
         makeAdmin = view.findViewById(R.id.btn_profile_admin);
         unregisterUser = view.findViewById(R.id.btn_profile_unregister);
         uploadImage = view.findViewById(R.id.uploadImageBtn);
+        profileImage  = view.findViewById(R.id.profileImage);
 
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +133,11 @@ public class ProfileFragment extends Fragment {
         surname.setText(user.getLastName());
         email.setText(user.getEmail());
         phone.setText(user.getPhoneNumber());
+        byte [] profileImg= user.getImage();
+        if(profileImg!=null){
+            Bitmap bmp = BitmapFactory.decodeByteArray(profileImg, 0, profileImg.length);
+            profileImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, profileImage.getWidth(), profileImage.getHeight(), false));
+        }
 
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date utilDate = new Date(user.getDateOfBirth().getTime());

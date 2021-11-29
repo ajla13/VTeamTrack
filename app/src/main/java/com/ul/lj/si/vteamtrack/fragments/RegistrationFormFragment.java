@@ -38,6 +38,7 @@ import com.ul.lj.si.vteamtrack.helpers.ImageHandler;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -167,9 +168,13 @@ public class RegistrationFormFragment extends Fragment {
                             team = new Team(teamNameDb);
                             String pathToFile = imageHandler.saveToInternalStorage(bitmap, firstName+"-"+lastname+".jpg", getActivity().getApplicationContext());
 
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            byte[] imageInByte = baos.toByteArray();
+
                             Team teamReturned = teamModel.createTeam(team);
                             Team teamWithId = teamModel.getTeam(teamReturned.getName());
-                            User user = new User(teamWithId.getId(),firstName, lastname, dOfB,teamNameDb, emaileDb,pass,
+                            User user = new User(imageInByte,teamWithId.getId(),firstName, lastname, dOfB,teamNameDb, emaileDb,pass,
                                     "trainer",phoneDb,true, pathToFile);
 
                             User createdUser = userModel.createUser(user);
@@ -177,8 +182,11 @@ public class RegistrationFormFragment extends Fragment {
                         }
                         else {
                             String pathToFile = imageHandler.saveToInternalStorage(bitmap,  name.getText().toString()+"-"+ surname.getText().toString(),getActivity().getApplicationContext());
-
-                            User user = new User(0,
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            byte[] imageInByte = baos.toByteArray();
+                            System.out.println(String.valueOf(imageInByte));
+                            User user = new User(imageInByte,0,
                                     name.getText().toString(),
                                     surname.getText().toString(),
                                     dOfB,teamName.getText().toString(),email.getText().toString(),password.getText().toString(),

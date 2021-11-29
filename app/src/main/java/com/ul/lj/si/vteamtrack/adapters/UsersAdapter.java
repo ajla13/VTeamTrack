@@ -128,17 +128,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         userName.setText(user.getFirstName());
         surname.setText(user.getLastName());
         String imageUri = user.getImageUri();
-        System.out.println("user image URi"+user.getImageUri());
-        imageHandler = new ImageHandler();
+        byte [] profileImg= user.getImage();
 
-        if(imageUri!=null && !imageUri.equals("")){
-            System.out.println("user image URi"+Uri.parse(imageUri));
-            Bitmap bitmapImage = imageHandler.loadImageFromStorage(imageUri, user.getFirstName()+"-"+user.getLastName()+".jpg");
-             image.setImageBitmap(bitmapImage);
-            /*image.setImageURI(Uri.parse(imageUri));
-            Glide.with(activity.getApplicationContext())
-                    .load(Uri.parse(imageUri))
-                    .into(image);*/
+        if(profileImg!=null){
+            Bitmap bmp = BitmapFactory.decodeByteArray(profileImg, 0, profileImg.length);
+            image.setImageBitmap(Bitmap.createScaledBitmap(bmp, image.getWidth(), image.getHeight(), false));
         }
 
         viewPosts.setOnClickListener(new View.OnClickListener() {

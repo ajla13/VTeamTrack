@@ -3,69 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Denis/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/activity_main.xml" value="0.1640625" />
+        <entry key="..\:/Users/Denis/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_user.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/Denis/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/listview.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/Denis/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/profile.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/activity_main.xml" value="0.24909420289855072" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/create_game.xml" value="0.26145833333333335" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/create_training.xml" value="0.26145833333333335" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_game.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_game_attaendance.xml" value="0.19947916666666668" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_game_attendance.xml" value="0.29322916666666665" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_training.xml" value="0.21614583333333334" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_training_attendance.xml" value="0.18489583333333334" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_user.xml" value="0.26145833333333335" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/listview.xml" value="0.21614583333333334" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/listview_schedule.xml" value="0.21614583333333334" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/listview_training_schedule.xml" value="0.21614583333333334" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/profile.xml" value="0.26145833333333335" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/reg_requests.xml" value="0.21614583333333334" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/register_initial.xml" value="0.1796875" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/register_main.xml" value="0.1796875" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/register_trainer.xml" value="0.146875" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/registration.xml" value="0.146875" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/request_item.xml" value="0.21614583333333334" />
-        <entry key="..\:/Users/User/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/welcome_screen.xml" value="0.2109375" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/drawable/border.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/drawable/circle.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/drawable/gradient.xml" value="0.18489583333333334" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/drawable/ic_launcher_background.xml" value="0.11302083333333333" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/drawable/img.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/font/font_main.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/comment_item.xml" value="0.15520833333333334" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/create_survey.xml" value="0.13072916666666667" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/create_training.xml" value="0.1539855072463768" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/fee_fragment.xml" value="0.12817028985507245" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/home_fragment.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_answer.xml" value="0.15416666666666667" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_create_answer.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_fee_list.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_game.xml" value="0.1421875" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_game_attendance.xml" value="0.14945652173913043" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_post.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_survey.xml" value="0.1296875" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_training.xml" value="0.1203125" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_training_attendance.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_training_participation.xml" value="0.16168478260869565" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_user.xml" value="0.14945652173913043" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/listview.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/listview_schedule.xml" value="0.14945652173913043" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/listview_training_schedule.xml" value="0.1203125" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/main_activity.xml" value="0.153125" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/posts_list.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/profile.xml" value="0.12552083333333333" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/reg_requests.xml" value="0.15172101449275363" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/register_main.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/registration.xml" value="0.264" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/request_item.xml" value="0.15172101449275363" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/survey.xml" value="0.1" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/survey_activity.xml" value="0.1296875" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/survey_list.xml" value="0.1296875" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/training_list.xml" value="0.16168478260869565" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/update_game.xml" value="0.1539855072463768" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/update_training.xml" value="0.1539855072463768" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/upload_image.xml" value="0.12552083333333333" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/menu/bottom_nav.xml" value="0.16875" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/menu/main_menu.xml" value="0.16875" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/menu/trainer_menu.xml" value="0.16875" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/xml/settings.xml" value="0.15885416666666666" />
       </map>
     </option>
   </component>
