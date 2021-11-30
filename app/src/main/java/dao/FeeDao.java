@@ -28,6 +28,10 @@ public interface FeeDao {
     @Query("SELECT * FROM fee WHERE playerId LIKE :playerId AND teamName LIKE :teamName")
     List<Fee> getFeeByPlayer(int playerId, String teamName);
 
+    @Query("SELECT * FROM fee WHERE playerId LIKE :playerId AND teamName LIKE :teamName AND month LIKE:month")
+    List<Fee> getMonthlyPlayerFee(int playerId, String teamName,String month);
+
+
     @Insert
     void insert(Fee fee);
 

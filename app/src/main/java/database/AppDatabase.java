@@ -16,6 +16,7 @@ import java.util.concurrent.Executors;
 import dao.AnswerDao;
 import dao.CommentDao;
 import dao.FeeDao;
+import dao.FeeMonthDao;
 import dao.GamesDao;
 import dao.PostDao;
 import dao.SurveyDao;
@@ -25,6 +26,7 @@ import dao.UserDao;
 import entities.Answer;
 import entities.Comment;
 import entities.Fee;
+import entities.FeeMonth;
 import entities.Game;
 import entities.Post;
 import entities.Survey;
@@ -33,7 +35,7 @@ import entities.Training;
 import entities.User;
 
 @Database(entities = {User.class, Game.class, Team.class,Training.class, Post.class, Comment.class,
-        Survey.class, Answer.class, Fee.class},
+        Survey.class, Answer.class, Fee.class, FeeMonth.class},
         version = 1, exportSchema = false)
 @TypeConverters({Converters.class, DateConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -46,6 +48,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract FeeDao feeDao();
     public abstract SurveyDao surveyDao();
     public abstract AnswerDao answerDao();
+    public abstract FeeMonthDao feeMonthDao();
     private static final String DB_NAME="user_db";
     private static AppDatabase databaseInstance;
 

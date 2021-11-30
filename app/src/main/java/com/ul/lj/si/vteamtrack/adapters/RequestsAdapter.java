@@ -26,13 +26,16 @@ import com.ul.lj.si.vteamtrack.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import entities.Fee;
+import entities.FeeMonth;
 import entities.Game;
 import entities.User;
 import viewModels.FeeModel;
+import viewModels.FeeMonthModel;
 import viewModels.GameModel;
 import viewModels.TrainingModel;
 import viewModels.UserModel;
@@ -46,6 +49,8 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
     private UserModel userModel;
     private FeeModel feeModel;
     SimpleDateFormat sdf;
+    private FeeMonthModel feeMonthModel;
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -88,6 +93,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
         LayoutInflater inflater = LayoutInflater.from(context);
         userModel = new ViewModelProvider((FragmentActivity) activity).get(UserModel.class);
         feeModel = new ViewModelProvider((FragmentActivity) activity).get(FeeModel.class);
+        feeMonthModel = new ViewModelProvider((FragmentActivity)activity).get(FeeMonthModel.class);
 
 
         // Inflate the custom layout
@@ -125,11 +131,11 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 user.setRegistrationConfirmed(true);
-                try {
-                    Fee userFee = new Fee("january", user.getId(), false, user.getTeamName(), "10", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), new SimpleDateFormat("hh:mm").parse("15:00"));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                Calendar cal = Calendar.getInstance();
+                String currentMonth= new SimpleDateFormat("MMM").format(cal.getTime());
+                FeeMonth feeMonth = feeMonthModel.getFeeMonthByMonth(currentMonth);
+                Fee userFee = new Fee(currentMonth, user.getId(), false, user.getTeamName(), "10", feeMonth.getId());
+                feeModel.insert(userFee);
 
                 userModel.update(user);
                 Toast.makeText(activity.getApplicationContext(),

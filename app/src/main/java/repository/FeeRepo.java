@@ -48,7 +48,12 @@ public class FeeRepo {
     public Fee getFee(int id){
         return feeDao.getFee(id);
     }
-
+    public List<Fee> getFeeByPlayer(int id){
+        return feeDao.getFeeByPlayer(id, teamName);
+    }
+    public List<Fee> getMonthlyPlayerFee(int id, String month){
+        return feeDao.getMonthlyPlayerFee(id, teamName,month);
+    }
     public void delete(Fee fee){
         feeDao.delete(fee);
     }

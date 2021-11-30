@@ -108,11 +108,7 @@ public class Login extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                try {
-                    feeDao.insertAll(Fee.populateFee());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+
                 surveyDao.insertAll(Survey.populateSurvey());
                 answerDao.insertAll(Answer.populateAnswer());
 

@@ -27,8 +27,14 @@ public class FeeModel extends AndroidViewModel {
         }
         return allFees;
     }
+    public List<Fee> getMonthlyPlayerFee(int id, String month){
+        return feeRepo.getMonthlyPlayerFee(id, month);
+    }
     public List<Fee> getFeeByMonth(String month){
         return feeRepo.getFeeByMonth(month);
+    }
+    public List<Fee> getFeeByPlayer(int id){
+        return feeRepo.getFeeByPlayer(id);
     }
 
     public Fee getFee(int id){

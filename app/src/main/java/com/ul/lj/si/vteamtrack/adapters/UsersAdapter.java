@@ -129,10 +129,10 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         surname.setText(user.getLastName());
         String imageUri = user.getImageUri();
         byte [] profileImg= user.getImage();
-
+        System.out.println(image);
         if(profileImg!=null){
             Bitmap bmp = BitmapFactory.decodeByteArray(profileImg, 0, profileImg.length);
-            image.setImageBitmap(Bitmap.createScaledBitmap(bmp, image.getWidth(), image.getHeight(), false));
+            image.setImageBitmap(bmp);
         }
 
         viewPosts.setOnClickListener(new View.OnClickListener() {

@@ -1,11 +1,14 @@
 package com.ul.lj.si.vteamtrack.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -18,6 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,6 +32,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.ul.lj.si.vteamtrack.CreateTrainingActivity;
 import com.ul.lj.si.vteamtrack.PreferenceData;
 import com.ul.lj.si.vteamtrack.R;
@@ -32,6 +40,8 @@ import com.ul.lj.si.vteamtrack.UploadImage;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -69,6 +79,8 @@ public class ProfileFragment extends Fragment {
     private AlertDialog.Builder builder;
     private Button uploadImage;
     private ImageView profileImage;
+    private ActivityResultLauncher<Intent> launchActivity;
+    private Bitmap bitmapUpload;
 
     public ProfileFragment(){
 
@@ -111,12 +123,43 @@ public class ProfileFragment extends Fragment {
         uploadImage = view.findViewById(R.id.uploadImageBtn);
         profileImage  = view.findViewById(R.id.profileImage);
 
+        launchActivity = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            assert data != null;
+                            Uri imageUri = data.getData();
+
+                            try {
+                                bitmapUpload = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            Glide.with(getActivity().getApplicationContext())
+                                    .load(data.getData())
+                                    .into(profileImage);
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmapUpload.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            byte[] imageInByte = baos.toByteArray();
+                            user.setImage(imageInByte);
+                            userModel.update(user);
+
+                        }
+                    }
+                });
+
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity().getApplicationContext(), UploadImage.class);
                 intent.putExtra("userId", userId);
-                startActivity(intent);
+                intent.putExtra("source", "profile");
+                launchActivity.launch(intent);
 
             }
         });
@@ -133,10 +176,10 @@ public class ProfileFragment extends Fragment {
         surname.setText(user.getLastName());
         email.setText(user.getEmail());
         phone.setText(user.getPhoneNumber());
-        byte [] profileImg= user.getImage();
-        if(profileImg!=null){
-            Bitmap bmp = BitmapFactory.decodeByteArray(profileImg, 0, profileImg.length);
-            profileImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, profileImage.getWidth(), profileImage.getHeight(), false));
+        byte [] profileImageByte= user.getImage();
+        if(profileImageByte!=null){
+            Bitmap bmp = BitmapFactory.decodeByteArray(profileImageByte, 0, profileImageByte.length);
+            profileImage.setImageBitmap(bmp);
         }
 
         sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -280,6 +323,7 @@ public class ProfileFragment extends Fragment {
                     user.setFirstName(editName.getText().toString());
                     user.setLastName(editSurname.getText().toString());
                     user.setEmail(editEmail.getText().toString());
+
 
                     try {
                         user.setDateOfBirth(sdf.parse(editDateOfBirth.getText().toString()));

@@ -24,16 +24,32 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.ul.lj.si.vteamtrack.fragments.FeeListFragment;
 
 import entities.Comment;
+import entities.Fee;
+import entities.FeeMonth;
+import entities.Team;
+import entities.User;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import viewModels.CommentModel;
+import viewModels.FeeModel;
+import viewModels.FeeMonthModel;
+import viewModels.TeamModel;
+import viewModels.UserModel;
 
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
+  private FeeMonthModel feeMonthModel;
+  private UserModel userModel;
+  private FeeModel feeModel;
+  private TeamModel teamModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
         mSocket.connect();
 
         int currentUserId = PreferenceData.getLoggedInUser(getApplicationContext());
-
+        feeMonthModel = new ViewModelProvider(this).get(FeeMonthModel.class);
+        feeModel = new ViewModelProvider(this).get(FeeModel.class);
+        userModel = new ViewModelProvider(this).get(UserModel.class);
+        teamModel = new ViewModelProvider(this).get(TeamModel.class);
         BottomNavigationView bottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigatin_view);
         NavController navController = Navigation.findNavController(this,R.id.nav_fragment);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -79,6 +98,77 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        String teamName = PreferenceData.getTeam(getApplicationContext());
+        Calendar calendar = Calendar.getInstance();
+        String currentMonth= new SimpleDateFormat("MMM").format(calendar.getTime());
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyy");
+        FeeMonth feeMonth= feeMonthModel.getFeeMonthByMonth(currentMonth);
+
+        if(feeMonth!=null) {
+            if (new Date().compareTo(feeMonth.getValidationDate()) > 0) {
+                feeMonthModel.delete(feeMonth);
+
+                Calendar cal2 = Calendar.getInstance();
+                cal2.add(Calendar.YEAR, 1);
+
+                String validationDateAsString = dateFormat.format(cal2.getTime());
+
+                Date validationDate = new Date();
+                try {
+                    validationDate = dateFormat.parse(validationDateAsString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Team curentTeam = teamModel.getTeam(teamName);
+                FeeMonth newFeeMonth = new FeeMonth(currentMonth,validationDate, curentTeam.getId(), curentTeam.getName());
+
+                feeMonthModel.insert(newFeeMonth);
+                FeeMonth feeMonthReturned = feeMonthModel.getFeeMonthByMonth(currentMonth);
+                List<User> userList = userModel.getUserList();
+                if(userList!=null) {
+                    for (User user : userList) {
+                        if (user.getUserRole().equals("player") || user.getUserRole().equals("admin")) {
+                            Fee userFee = new Fee(currentMonth, user.getId(), false,
+                                    teamName, "10", feeMonthReturned.getId());
+                            feeModel.insert(userFee);
+                        }
+
+                    }
+                }
+
+            }
+        }
+        else {
+            Calendar cal2 = Calendar.getInstance();
+            cal2.add(Calendar.YEAR, 1);
+
+            String validationDateAsString = dateFormat.format(cal2.getTime());
+
+            Date validationDate = new Date();
+            try {
+                validationDate = dateFormat.parse(validationDateAsString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Team curentTeam = teamModel.getTeam(teamName);
+            FeeMonth newFeeMonth = new FeeMonth(currentMonth,validationDate, curentTeam.getId(),
+            curentTeam.getName());
+            feeMonthModel.insert(newFeeMonth);
+            FeeMonth feeMonthReturned = feeMonthModel.getFeeMonthByMonth(currentMonth);
+            List<User> userList = userModel.getUserList();
+            for( User user: userList){
+                if(user.getUserRole().equals("player") || user.getUserRole().equals("admin")){
+                    Fee userFee = new Fee(currentMonth,user.getId(),false,
+                            teamName,"10",feeMonthReturned.getId());
+                    feeModel.insert(userFee);
+                }
+
+            }
+
+        }
+
 
     }
     private Socket mSocket;

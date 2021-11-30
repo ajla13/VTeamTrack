@@ -6,8 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
         android:id="@+id/profileImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300px"
+        android:layout_height="300px"
         app:layout_constraintBottom_toTopOf="@+id/layout_profile_first"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

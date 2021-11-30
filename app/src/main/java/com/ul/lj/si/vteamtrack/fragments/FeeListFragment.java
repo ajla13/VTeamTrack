@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ul.lj.si.vteamtrack.PreferenceData;
 import com.ul.lj.si.vteamtrack.R;
 import com.ul.lj.si.vteamtrack.adapters.FeeAdapter;
 
@@ -61,7 +62,15 @@ public class FeeListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fee_fragment, container, false);
         feeModel=new ViewModelProvider(getActivity()).get(FeeModel.class);
-        feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("january");
+        String userRole = PreferenceData.getUserRole(getActivity().getApplicationContext());
+        int currentUser = PreferenceData.getLoggedInUser(getActivity().getApplicationContext());
+        if(userRole.equals("trainer")){
+            feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Jan");
+
+        }
+        else {
+            feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Jan");
+        }
 
         validationDate= view.findViewById(R.id.validationDate);
 
@@ -89,7 +98,13 @@ public class FeeListFragment extends Fragment {
         january.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("january");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Jan");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Jan");
+                }
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 0,1);
 
                 if(new Date().compareTo(c.getTime())<0){
@@ -106,7 +121,13 @@ public class FeeListFragment extends Fragment {
         february.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("february");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Feb");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Feb");
+                }
                 setAdapter();
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 1,1);
 
@@ -123,7 +144,13 @@ public class FeeListFragment extends Fragment {
         march.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("march");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Mar");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Mar");
+                }
                 setAdapter();
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 2,1);
 
@@ -140,7 +167,13 @@ public class FeeListFragment extends Fragment {
         april.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("april");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Apr");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Apr");
+                }
                 setAdapter();
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 3,1);
 
@@ -157,7 +190,13 @@ public class FeeListFragment extends Fragment {
         may.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("may");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("May");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "May");
+                }
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 4,1);
 
                 if(new Date().compareTo(c.getTime())<0){
@@ -174,7 +213,13 @@ public class FeeListFragment extends Fragment {
         june.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("june");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Jun");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Jun");
+                }
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 5,1);
 
                 if(new Date().compareTo(c.getTime())<0){
@@ -191,7 +236,13 @@ public class FeeListFragment extends Fragment {
         july.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("july");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Jul");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Jul");
+                }
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 6,1);
 
                 if(new Date().compareTo(c.getTime())<0){
@@ -208,7 +259,13 @@ public class FeeListFragment extends Fragment {
         august.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("august");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Aug");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Aug");
+                }
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 7,1);
 
                 if(new Date().compareTo(c.getTime())<0){
@@ -225,7 +282,13 @@ public class FeeListFragment extends Fragment {
         september.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("september");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Sep");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Sep");
+                }
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 8,1);
 
                 if(new Date().compareTo(c.getTime())<0){
@@ -242,7 +305,13 @@ public class FeeListFragment extends Fragment {
         october.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("october");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Oct");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Oct");
+                }
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 9,1);
                 if(new Date().compareTo(c.getTime())<0){
                     validationDate.setText("Membership for october "+(yearFormat.format(c2.getTime())).toString());
@@ -258,7 +327,13 @@ public class FeeListFragment extends Fragment {
         november.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("november");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Nov");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Nov");
+                }
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 10,1);
 
                 if(new Date().compareTo(c.getTime())<0){
@@ -275,7 +350,13 @@ public class FeeListFragment extends Fragment {
         december.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("december");
+                if(userRole.equals("trainer")){
+                    feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Dec");
+
+                }
+                else {
+                    feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Dec");
+                }
                 c.set(Integer.parseInt(yearFormat.format(currentDate)), 11,30);
 
                 if(new Date().compareTo(c.getTime())<0){

@@ -44,12 +44,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import entities.Fee;
+import entities.FeeMonth;
 import entities.Team;
 import entities.User;
 
 import viewModels.FeeModel;
+import viewModels.FeeMonthModel;
 import viewModels.TeamModel;
 import viewModels.UserModel;
 
@@ -76,6 +79,7 @@ public class RegistrationFormFragment extends Fragment {
     private Uri imageUri;
     private ImageHandler imageHandler;
     private Bitmap bitmap;
+    private FeeMonthModel feeMonthModel;
 
     public RegistrationFormFragment(){}
 
@@ -85,6 +89,7 @@ public class RegistrationFormFragment extends Fragment {
         userModel = new ViewModelProvider(this).get(UserModel.class);
         teamModel = new ViewModelProvider(this).get(TeamModel.class);
         feeModel = new ViewModelProvider(this).get(FeeModel.class);
+        feeMonthModel = new ViewModelProvider(this).get(FeeMonthModel.class);
         registrationType = this.getArguments().getString("registrationType");
         imageUri=null;
         imageHandler = new ImageHandler();
@@ -178,6 +183,36 @@ public class RegistrationFormFragment extends Fragment {
                                     "trainer",phoneDb,true, pathToFile);
 
                             User createdUser = userModel.createUser(user);
+                            Calendar cal = Calendar.getInstance();
+                            String currentMonth= new SimpleDateFormat("MMM").format(cal.getTime());
+
+                            Date currentDate = new Date();
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/mm/yyy");
+
+                            Calendar c = Calendar.getInstance();
+                            c.add(Calendar.YEAR, 1);
+                            String validationDateAsString = dateFormat.format(c.getTime());
+
+                            Date validationDate = new Date();
+                            try {
+                                validationDate = dateFormat.parse(validationDateAsString);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            FeeMonth feeMonth = new FeeMonth(currentMonth,validationDate, teamWithId.getId(),teamWithId.getName());
+                            feeMonthModel.insert(feeMonth);
+                            FeeMonth feeMonthReturned = feeMonthModel.getFeeMonthByMonth(currentMonth);
+                            List<User> userList = userModel.getUserList();
+                            if(userList!=null) {
+                                for (User userItem : userList) {
+                                    if (userItem.getUserRole().equals("player") || userItem.getUserRole().equals("admin")) {
+                                        Fee userFee = new Fee(currentMonth, userItem.getId(), false,
+                                                teamWithId.getName(), "10", feeMonthReturned.getId());
+                                        feeModel.insert(userFee);
+                                    }
+
+                                }
+                            }
                             successText="Registration successful";
                         }
                         else {
@@ -185,7 +220,6 @@ public class RegistrationFormFragment extends Fragment {
                             ByteArrayOutputStream baos = new ByteArrayOutputStream();
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                             byte[] imageInByte = baos.toByteArray();
-                            System.out.println(String.valueOf(imageInByte));
                             User user = new User(imageInByte,0,
                                     name.getText().toString(),
                                     surname.getText().toString(),
@@ -199,6 +233,7 @@ public class RegistrationFormFragment extends Fragment {
                             user.setTeamId(teamPlayer.getId());
 
                             userModel.createUser(user);
+
                             successText="Your registration request has been sent.";
                         }
 

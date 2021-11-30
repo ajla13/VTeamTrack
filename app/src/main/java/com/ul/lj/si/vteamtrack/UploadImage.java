@@ -97,12 +97,12 @@ public class UploadImage extends AppCompatActivity {
             launchActivity.launch(intent);
         }
         public void upload(View view){
-            if(source.equals("registration")){
+
                 Intent intent = new Intent();
                 intent.setData(selectedImage);
                 this.setResult(RESULT_OK, intent);
                 finish();
-            }
+
         }
 
         public static void verifyStoragePermissions(Activity activity) {

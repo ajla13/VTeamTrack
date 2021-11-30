@@ -11,19 +11,23 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-@Entity(tableName = "fee", foreignKeys = @ForeignKey(entity = User.class,
+@Entity(tableName = "fee", foreignKeys = {@ForeignKey(entity = User.class,
         parentColumns = "id",
         childColumns = "playerId",
-        onDelete = CASCADE))
+        onDelete = CASCADE),
+        @ForeignKey(entity = FeeMonth.class,
+        parentColumns = "id",
+        childColumns = "feeMonthId",
+        onDelete = CASCADE)})
 public class Fee {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private Date validationDate;
-    private Date payedOnDate;
 
     private int playerId;
+
+    private int feeMonthId;
 
     private String amount;
 
@@ -32,6 +36,10 @@ public class Fee {
     private String teamName;
 
     private boolean payed;
+
+    public int getFeeMonthId() {
+        return feeMonthId;
+    }
 
     public String getTeamName() {
         return teamName;
@@ -45,18 +53,11 @@ public class Fee {
         return id;
     }
 
-    public Date getPayedOnDate() {
-        return payedOnDate;
-    }
 
     public String getMonth() {
         return month;
     }
 
-
-    public Date getValidationDate() {
-        return validationDate;
-    }
 
     public int getPlayerId() {
         return playerId;
@@ -78,10 +79,6 @@ public class Fee {
         this.payed = payed;
     }
 
-    public void setPayedOnDate(Date payedOnDate) {
-        this.payedOnDate = payedOnDate;
-    }
-
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
     }
@@ -90,31 +87,31 @@ public class Fee {
         this.teamName = teamName;
     }
 
+    public void setFeeMonthId(int feeMonthId) {
+        this.feeMonthId = feeMonthId;
+    }
+
     public void setMonth(String month) {
         this.month = month;
     }
 
-    public void setValidationDate(Date validationDate) {
-        this.validationDate = validationDate;
-    }
 
-    public Fee(String month, int playerId, boolean payed, String teamName, String amount, Date validationDate, Date payedOnDate) {
+    public Fee(String month, int playerId, boolean payed, String teamName, String amount, int feeMonthId) {
         this.playerId = playerId;
         this.amount = amount;
-        this.validationDate = validationDate;
-        this.payedOnDate = payedOnDate;
         this.payed = payed;
         this.month = month;
         this.teamName = teamName;
+        this.feeMonthId = feeMonthId;
     }
 
     public static Fee[] populateFee() throws ParseException {
 
         return new Fee[]{
-                new Fee("january", 1, false, "Coast VT", "10", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), new SimpleDateFormat("hh:mm").parse("15:00")),
-                new Fee("february", 1, false, "Coast VT", "10", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), new SimpleDateFormat("hh:mm").parse("15:00")),
-                new Fee("march", 1, false, "Coast VT", "10", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), new SimpleDateFormat("hh:mm").parse("15:00")),
-                new Fee("april", 1, false, "Coast VT", "10", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), new SimpleDateFormat("hh:mm").parse("15:00")),
+                new Fee("Jan", 1, false, "Coast VT", "10",1),
+                new Fee("Feb", 1, false, "Coast VT", "10",1),
+                new Fee("Mar", 1, false, "Coast VT", "10",1),
+                new Fee("Apr", 1, false, "Coast VT", "10",1),
         };
     }
 }

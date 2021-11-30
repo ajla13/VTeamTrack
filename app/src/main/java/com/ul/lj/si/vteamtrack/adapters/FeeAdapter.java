@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.ul.lj.si.vteamtrack.PreferenceData;
 import com.ul.lj.si.vteamtrack.R;
 
 import java.util.Date;
@@ -77,6 +78,7 @@ public class FeeAdapter extends RecyclerView.Adapter<FeeAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         Fee fee = fees.get(position);
         User player = userModel.getUser(fee.getPlayerId());
         TextView userName = holder.userName;
@@ -87,22 +89,24 @@ public class FeeAdapter extends RecyclerView.Adapter<FeeAdapter.ViewHolder> {
 
         boolean checked = fee.isPayed();
         payed.setChecked(checked);
+            if(PreferenceData.getUserRole(activity.getApplicationContext()).equals("trainer")){
+                payed.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(!checked){
+                            fee.setPayed(true);
+                        }
+                        else {
+                            fee.setPayed(false);
 
-            payed.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(!checked){
-                       fee.setPayed(true);
-                       fee.setPayedOnDate(new Date());
+                        }
+                        feeModel.update(fee);
                     }
-                    else {
-                        fee.setPayed(false);
-                        fee.setPayedOnDate(null);
-                    }
-                    feeModel.update(fee);
-                }
-            });
-
+                });
+            }
+            else {
+                payed.setEnabled(false);
+            }
 
     }
 
