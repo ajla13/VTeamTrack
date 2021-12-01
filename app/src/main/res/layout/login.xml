@@ -56,10 +56,32 @@
         android:onClick="switchToRegistration"
         android:pointerIcon="hand"
         android:text="@string/registrationLink"
-        app:layout_constraintBottom_toTopOf="@+id/btn_prepopulate"
+        app:layout_constraintBottom_toTopOf="@+id/viewGames"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login" />
+    <TextView
+        android:id="@+id/viewGames"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="switchToRegistration"
+        android:pointerIcon="hand"
+        android:text="@string/view_games"
+        app:layout_constraintBottom_toTopOf="@+id/viewTrainings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/registrationLink" />
+    <TextView
+        android:id="@+id/viewTrainings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="switchToRegistration"
+        android:pointerIcon="hand"
+        android:text="@string/view_trainings"
+        app:layout_constraintBottom_toTopOf="@+id/btn_prepopulate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewGames" />
     <Button
         android:id="@+id/btn_prepopulate"
         android:layout_width="wrap_content"

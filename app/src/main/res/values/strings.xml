@@ -46,7 +46,8 @@
     <string name="registrationLink">Click here for member registration.</string>
     <string name="post_delete">Are you sure you want to delete this post?</string>
     <string name="participation">Possible participation</string>
-    <string name="nos_surveys">No active surveys</string>
+    <string name="view_trainings">View trainings</string>
+    <string name="view_games">View games</string>
     <string name="delete">Delete</string>
     <string name="january">January</string>
     <string name="februrary">February</string>

@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
+
 import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
 import com.ul.lj.si.vteamtrack.fragments.RegistrationFormFragment;
 import com.ul.lj.si.vteamtrack.fragments.RegistrationInitialFragment;
