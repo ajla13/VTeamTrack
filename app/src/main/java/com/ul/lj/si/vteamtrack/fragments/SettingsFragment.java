@@ -5,6 +5,7 @@ import static java.time.ZonedDateTime.*;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -21,8 +22,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import entities.Game;
+import entities.Team;
 import entities.Training;
 import viewModels.GameModel;
+import viewModels.TeamModel;
 import viewModels.TrainingModel;
 
 
@@ -36,6 +39,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.settings, rootKey);
         SwitchPreferenceCompat toggleGameExpired = findPreference("gameExpiration");
         SwitchPreferenceCompat toggleTrainingExpired = findPreference("trainingExpiration");
+        SwitchPreferenceCompat togglePublicTeam = findPreference("publicTeam");
+        togglePublicTeam.setEnabled(PreferenceData.getPrefPublicTeam(getActivity().getApplicationContext()));
         toggleTrainingExpired.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -73,6 +78,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                         gameModel.deleteGame(game);
                     }
                 }
+                return true;
+            }
+        });
+        togglePublicTeam.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                PreferenceData.setPublicTeam(getActivity().getApplicationContext(),(Boolean) newValue);
+                TeamModel teamModel = new ViewModelProvider((FragmentActivity)getActivity()).get(TeamModel.class);
+                Team team = teamModel.getTeam(PreferenceData.getTeam(getActivity().getApplicationContext()));
+                team.setPublicTeam((Boolean)newValue);
+                teamModel.update(team);
                 return true;
             }
         });

@@ -33,6 +33,9 @@ public class GameModel extends AndroidViewModel {
         }
         return games;
     }
+    public List<Game> getPublicGames(String nameOfTeam){
+        return gameRepo.getPublicGames(nameOfTeam);
+    }
     public List<Game> getExpiredGames(Date date){
         return gameRepo.getExpiredGames(date);
     }

@@ -34,6 +34,9 @@ public class TrainingModel extends AndroidViewModel {
     public List<Training> getExpiredTrainings(Date date){
         return trainingRepo.getExpiredTrainings(date);
     }
+    public List<Training> getTeamTrainings(String nameOfTeam){
+        return trainingRepo.getTeamTrainings(nameOfTeam);
+    }
 
     public Training getTraining(int id) {
         return trainingRepo.getTraining(id);

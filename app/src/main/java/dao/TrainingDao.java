@@ -21,8 +21,14 @@ public interface TrainingDao {
     @Query("SELECT * FROM training WHERE teamName LIKE :teamName")
     LiveData<List<Training>> getAll(String teamName);
 
+    @Query("SELECT * FROM training WHERE teamName IN (SELECT name FROM team WHERE publicTeam LIKE :status )")
+    List<Training> getAllPublicTrainings(boolean status);
+
     @Query("SELECT * FROM training WHERE teamName LIKE :teamName AND date <= :date")
     List<Training> getExpairedTrainings(String teamName, Date date);
+
+    @Query("SELECT * FROM training WHERE teamName LIKE :teamName")
+    List<Training> getTeamTrainings(String teamName);
 
     @Query("SELECT * FROM training WHERE id IN (:trainingIds)")
     LiveData<List<Training>> loadAllByIds(int[] trainingIds);

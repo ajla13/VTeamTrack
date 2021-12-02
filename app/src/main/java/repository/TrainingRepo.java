@@ -45,6 +45,9 @@ public class TrainingRepo {
     public List<Training> getExpiredTrainings(Date date){
         return trainingDao.getExpairedTrainings(teamName,date);
     }
+    public List<Training> getTeamTrainings(String nameOfTeam){
+        return trainingDao.getTeamTrainings(nameOfTeam);
+    }
 
     public Training getTraining(int id) {
         training = trainingDao.getTraining(id);

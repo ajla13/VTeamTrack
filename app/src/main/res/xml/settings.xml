@@ -10,5 +10,9 @@
         app:defaultValue="false"
         app:key="gameExpiration"
         app:title="Delete game records older than one month" />
+    <SwitchPreferenceCompat
+        app:defaultValue="false"
+        app:key="publicTeam"
+        app:title="Make team public" />
 
 </PreferenceScreen>

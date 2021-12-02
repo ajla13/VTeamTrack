@@ -170,7 +170,7 @@ public class RegistrationFormFragment extends Fragment {
                             String emaileDb = email.getText().toString();
                             String pass = password.getText().toString();
                             String phoneDb = phone.getText().toString();
-                            team = new Team(teamNameDb);
+                            team = new Team(teamNameDb, false);
                             String pathToFile = imageHandler.saveToInternalStorage(bitmap, firstName+"-"+lastname+".jpg", getActivity().getApplicationContext());
 
                             ByteArrayOutputStream baos = new ByteArrayOutputStream();

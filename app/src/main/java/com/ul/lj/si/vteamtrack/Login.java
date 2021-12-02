@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -77,6 +78,8 @@ public class Login extends AppCompatActivity {
         teamName=(EditText) findViewById(R.id.login_team);
         Button login=(Button) findViewById(R.id.btn_login);
         Button dbButton= findViewById(R.id.btn_prepopulate);
+        TextView viewTrainings = findViewById(R.id.viewTrainings);
+        TextView viewGames = findViewById(R.id.viewGames);
 
         dbButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,9 +191,20 @@ public class Login extends AppCompatActivity {
         }
         return returnVaue;
     }
-
     public void switchToRegistration(View v) {
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+
         startActivity(intent);
     }
+    public void switchToTrainings(View v) {
+        Intent intent = new Intent(getApplicationContext(), TeamsActivity.class);
+        intent.putExtra("source", "trainings");
+        startActivity(intent);
+    }
+    public void switchToGames(View v) {
+        Intent intent = new Intent(getApplicationContext(), TeamsActivity.class);
+        intent.putExtra("source", "games");
+        startActivity(intent);
+    }
+
 }

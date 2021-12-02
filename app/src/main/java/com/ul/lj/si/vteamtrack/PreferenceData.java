@@ -16,6 +16,7 @@ public class PreferenceData {
     static final String PREF_POST_ID = "postId";
     static final String PREF_TRAINING_EX="pref_training_expiration";
     static final String PREF_GAME_EX="pref_game_expiration";
+    static final String PREF_PUBLIC_TEAM="pref_public_team";
     public static SharedPreferences getSharedPreferences(Context ctx)
     {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -25,6 +26,12 @@ public class PreferenceData {
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(PREF_LOGGEDIN_USER_EMAIL, email);
+        editor.commit();
+    }
+    public static void setPublicTeam(Context ctx, Boolean value)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putBoolean(PREF_PUBLIC_TEAM, value);
         editor.commit();
     }
     public static void setCurentPostId(Context ctx, int id)
@@ -72,6 +79,11 @@ public class PreferenceData {
     {
         return getSharedPreferences(ctx).getString(PREF_USER_ROLE, "");
     }
+
+    public static Boolean getPrefPublicTeam(Context ctx) {
+        return getSharedPreferences(ctx).getBoolean(PREF_PUBLIC_TEAM,true);
+    }
+
     public static String getTeam(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_TEAM, "");

@@ -12,6 +12,7 @@ import dao.TeamDao;
 import dao.UserDao;
 import database.AppDatabase;
 import entities.Team;
+import entities.Training;
 import entities.User;
 
 public class TeamRepo {
@@ -32,9 +33,14 @@ public class TeamRepo {
         return teamDao.getTeam(teamName);
 
     }
-
+    public List<Team> getPublicTeams() {
+        return teamDao.getPublicTeams(true);
+    }
     public void insert(Team team) {
         teamDao.insert(team);
 
+    }
+    public void update(Team team){
+        teamDao.update(team);
     }
 }

@@ -13,6 +13,16 @@ public class Team {
 
     public String name;
 
+    private boolean publicTeam;
+
+    public boolean isPublicTeam() {
+        return publicTeam;
+    }
+
+    public void setPublicTeam(boolean publicTeam) {
+        this.publicTeam = publicTeam;
+    }
+
     public int getId() {
         return id;
     }
@@ -29,15 +39,17 @@ public class Team {
         this.name = name;
     }
 
-    public Team(String name){
+    public Team(String name, boolean publicTeam){
 
         this.name=name;
+        this.publicTeam = publicTeam;
 
     }
     public static Team[] populateTeam() {
         return new Team[] {
-                new Team( "Coast VT"),
-                new Team( "Leading VT"),
+                new Team( "Coast VT", true),
+                new Team( "Leading VT", false
+                ),
         };
     }
 

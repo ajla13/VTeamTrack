@@ -50,6 +50,10 @@ public class GameRepo {
     public List<Game> getExpiredGames(Date date){
         return gameDao.getExpiredGames(teamName,date);
     }
+    public List<Game> getPublicGames(String nameOfTeam){
+        return gameDao.getPublicGames(nameOfTeam);
+    }
+
     public void insert(Game game) {
         AppDatabase.executor.execute(() -> {
             gameDao.insert(game);

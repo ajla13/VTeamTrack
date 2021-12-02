@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import entities.Team;
+import entities.Training;
 import entities.User;
 import repository.TeamRepo;
 
@@ -29,6 +30,14 @@ public class TeamModel extends AndroidViewModel {
     }
     public Team createTeam(Team team) {
         teamRepo.insert(team);
+        return team;
+    }
+
+    public List<Team> getPublicTeams(){
+        return teamRepo.getPublicTeams();
+    }
+    public Team update(Team team){
+        teamRepo.update(team);
         return team;
     }
 

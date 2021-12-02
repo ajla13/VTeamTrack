@@ -18,6 +18,8 @@ public interface TeamDao {
     @Query("SELECT * FROM team WHERE name LIKE :teamName ")
     Team getTeam(String teamName);
 
+    @Query("SELECT * FROM team WHERE publicTeam LIKE :status")
+    List<Team> getPublicTeams(boolean status);
     @Insert
     void insert(Team team);
 

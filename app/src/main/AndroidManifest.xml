@@ -53,6 +53,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".TeamsActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".WelcomeScreen"
             android:exported="true">
             <intent-filter>

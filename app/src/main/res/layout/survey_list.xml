@@ -33,6 +33,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:visibility="gone"
-        android:text="@string/nos_surveys" />
+        android:text="@string/no_surveys" />
 
 </RelativeLayout>

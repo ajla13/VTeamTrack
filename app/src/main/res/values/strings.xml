@@ -66,6 +66,7 @@
     <string name="question">Question</string>
     <string name="add_answer">Add answer</string>
     <string name="add_survey">Add survey</string>
+    <string name="no_surveys">No surveys</string>
     <string name="done">Done</string>
 
 </resources>
