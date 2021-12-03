@@ -179,7 +179,7 @@ public class RegistrationFormFragment extends Fragment {
 
                             Team teamReturned = teamModel.createTeam(team);
                             Team teamWithId = teamModel.getTeam(teamReturned.getName());
-                            User user = new User(imageInByte,teamWithId.getId(),firstName, lastname, dOfB,teamNameDb, emaileDb,pass,
+                            User user = new User(imageInByte,teamWithId.getId(),firstName, lastname, dOfB,teamNameDb, emaileDb,null,pass,
                                     "trainer",phoneDb,true, pathToFile);
 
                             User createdUser = userModel.createUser(user);
@@ -223,7 +223,7 @@ public class RegistrationFormFragment extends Fragment {
                             User user = new User(imageInByte,0,
                                     name.getText().toString(),
                                     surname.getText().toString(),
-                                    dOfB,teamName.getText().toString(),email.getText().toString(),password.getText().toString(),
+                                    dOfB,teamName.getText().toString(),email.getText().toString(),null,password.getText().toString(),
                                     "player",phone.getText().toString(),false,pathToFile);
 
                             Calendar c = Calendar.getInstance();

@@ -22,8 +22,19 @@
         android:layout_height="wrap_content"
         android:onClick="trainerReg"
         android:text="@string/register_trainer"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/register_supervisor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_player" />
+
+    <Button
+        android:id="@+id/register_supervisor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="supervisorReg"
+        android:text="@string/supervisor_acc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_trainer" />
 </androidx.constraintlayout.widget.ConstraintLayout>

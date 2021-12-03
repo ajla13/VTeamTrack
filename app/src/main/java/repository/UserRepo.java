@@ -28,7 +28,7 @@ public class UserRepo {
         userDao = db.userDao();
         teamName= PreferenceData.getTeam(application.getApplicationContext());
         allUsers = userDao.getPlayers(teamName, true);
-        unconfirmedUsers = userDao.usersByregistration(false, "player", teamName);
+        unconfirmedUsers = userDao.usersByregistration(false, "player", "supervisor",teamName);
         userList=getUserList();
     }
 
@@ -45,7 +45,7 @@ public class UserRepo {
     public LiveData<List<User>> getUnconfirmedUsers() {
         if(unconfirmedUsers==null) {
             AppDatabase.executor.execute(() -> {
-                unconfirmedUsers = userDao.usersByregistration(false, "player", teamName);
+                unconfirmedUsers = userDao.usersByregistration(false, "player","supervisor" ,teamName);
             });
         }
         return unconfirmedUsers;

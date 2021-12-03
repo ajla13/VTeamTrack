@@ -39,8 +39,8 @@ public interface UserDao {
             "lastname LIKE :last LIMIT 1")
     User findByName(String first, String last);
 
-    @Query("SELECT * FROM user WHERE registrationConfirmed LIKE :confirmation AND userRole LIKE :userRole AND teamName LIKE :teamName")
-    LiveData<List<User>>  usersByregistration(boolean confirmation, String userRole, String teamName);
+    @Query("SELECT * FROM user WHERE registrationConfirmed LIKE :confirmation AND userRole LIKE :userRole OR userRole LIKE :userRoleSecond AND teamName LIKE :teamName")
+    LiveData<List<User>>  usersByregistration(boolean confirmation, String userRole, String userRoleSecond, String teamName);
 
     @Insert
     void insert(User user);

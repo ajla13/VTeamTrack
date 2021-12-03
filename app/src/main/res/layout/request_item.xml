@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/item_req_surname"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,11 +32,22 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:paddingLeft="20dp"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_expand_req"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/item_req_supervisor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <TextView
+            android:id="@+id/item_req_supervisor"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="20dp"
+            android:text="@string/supervisor_req"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_expand_req"
+            app:layout_constraintStart_toEndOf="@id/item_req_surname"
+            app:layout_constraintTop_toTopOf="parent" />
         <ImageButton
             android:id="@+id/btn_expand_req"
             android:layout_width="wrap_content"
@@ -45,7 +56,7 @@
             android:src="@drawable/ic_expand"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/item_req_surname"
+            app:layout_constraintStart_toEndOf="@+id/item_req_supervisor"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -59,7 +70,16 @@
         android:animateLayoutChanges="true"
         android:orientation="vertical"
         android:visibility="gone">
-
+        <TextView
+            android:id="@+id/item_req_playerEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/item_req_dateOfBirth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
         <TextView
             android:id="@+id/item_req_dateOfBirth"
             android:layout_width="wrap_content"
@@ -69,7 +89,7 @@
             app:layout_constraintBottom_toTopOf="@+id/item_req_email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/item_req_playerEmail" />
 
         <TextView
             android:id="@+id/item_req_email"

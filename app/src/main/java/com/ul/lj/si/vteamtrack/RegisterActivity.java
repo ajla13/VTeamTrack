@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.ul.lj.si.vteamtrack.fragments.DatePickerFragment;
 import com.ul.lj.si.vteamtrack.fragments.RegistrationFormFragment;
 import com.ul.lj.si.vteamtrack.fragments.RegistrationInitialFragment;
+import com.ul.lj.si.vteamtrack.fragments.RegistrationSupervisorFragment;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -67,6 +68,10 @@ public class RegisterActivity extends AppCompatActivity {
         args.putString("registrationType", registrationType);
         RegistrationFormFragment fragment = new RegistrationFormFragment();
         fragment.setArguments(args);
+        replaceFragment(fragment);
+    }
+    public void supervisorReg(View v){
+        RegistrationSupervisorFragment fragment = new RegistrationSupervisorFragment();
         replaceFragment(fragment);
     }
     public void showDatePickerDialog(View v) {

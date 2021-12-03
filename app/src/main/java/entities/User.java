@@ -31,6 +31,8 @@ public class User {
 
     public String firstName;
 
+    private String playerEmail;
+
     public String lastName;
     public String teamName;
     public String email;
@@ -70,6 +72,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPlayerEmail() {
+        return playerEmail;
     }
 
     public String getLastName() {
@@ -120,6 +126,10 @@ public class User {
         this.id = id;
     }
 
+    public void setPlayerEmail(String playerEmail) {
+        this.playerEmail = playerEmail;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -156,10 +166,12 @@ public class User {
         this.teamId = teamId;
     }
     public User(){}
-    public User( byte[] imageInByte, int teamId, String firstName, String lastName, Date dateOfBirth, String teamName, String email, String password, String userRole, String phoneNumber, boolean registrationConfirmed, String imageUri) {
+
+    public User( byte[] imageInByte, int teamId, String firstName, String lastName, Date dateOfBirth, String teamName, String email, String playerEmail, String password, String userRole, String phoneNumber, boolean registrationConfirmed, String imageUri) {
 
         this.image = imageInByte;
         this.teamId = teamId;
+        this.playerEmail = playerEmail;
         this.firstName = firstName;
         this.lastName = lastName;
         this.teamName = teamName;
@@ -175,17 +187,17 @@ public class User {
     public static User[] populateData() throws ParseException {
 
         return new User[] {
-                new User(null,1,"Jane", "Doe", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT", "jane.doe@mail.com", "janedoe", "player", "00386725643", true, ""),
-                new User(null,1,"John", "Doe", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT","john.doe@mail.com", "johndoe", "player", "00386526781", true, "" ),
-                new User(null,1,"Emily", "Hart", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT", "emily.hart@mail.com", "emilyhart", "player", "00389782826", true,"" ),
-                new User(null,1,"Leona", "Martin", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT","leona.martin@mail.com", "leonamartin", "player", "00386543123", true,"" ),
-                new User(null,1,"Marin", "Samson",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT", "marin.samson@mail.com", "marinsamson", "player", "00389724563", true,"" ),
-                new User(null,1,"Kendall", "Murphy",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT","kendall.murphy@mail.com", "kendallmurphy", "admin", "00389825634", true,"" ),
-                new User(null,1,"Samuel", "Philips",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT","samuel.philips@mail.com", "samuelphilips", "admin", "00389176254", true,""),
-                new User(null,1,"Daniel", "Fanton", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT","daniel.fanton@mail.com", "danielfanton", "player", "00389165245", false,"" ),
-                new User(null,1,"Mirel", "Jackobs",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT", "mirel.jackbos@mail.com", "mireljackobs", "player", "00389172564", false,"" ),
-                new User(null,1,"Dana", "North",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT","dana.north@mail.com", "dananorth", "player", "00389726561", false,""),
-                new User(null,1,"Elsa", "Clarity",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT", "elsa.clarity@mail.com", "elsaclarity", "trainer", "00387123678", true,"" ),
+                new User(null,1,"Jane", "Doe", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT", "jane.doe@mail.com",null, "janedoe", "player", "00386725643", true, ""),
+                new User(null,1,"John", "Doe", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT","john.doe@mail.com", "johndoe",null, "player", "00386526781", true, "" ),
+                new User(null,1,"Emily", "Hart", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT", "emily.hart@mail.com",null ,"emilyhart", "player", "00389782826", true,"" ),
+                new User(null,1,"Leona", "Martin", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT","leona.martin@mail.com", null,"leonamartin", "player", "00386543123", true,"" ),
+                new User(null,1,"Marin", "Samson",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT", "marin.samson@mail.com",null, "marinsamson", "player", "00389724563", true,"" ),
+                new User(null,1,"Kendall", "Murphy",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT","kendall.murphy@mail.com", null,"kendallmurphy", "admin", "00389825634", true,"" ),
+                new User(null,1,"Samuel", "Philips",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"), "Coast VT","samuel.philips@mail.com", null,"samuelphilips", "admin", "00389176254", true,""),
+                new User(null,1,"Daniel", "Fanton", new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT","daniel.fanton@mail.com",null, "danielfanton", "player", "00389165245", false,"" ),
+                new User(null,1,"Mirel", "Jackobs",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT", "mirel.jackbos@mail.com",null, "mireljackobs", "player", "00389172564", false,"" ),
+                new User(null,1,"Dana", "North",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT","dana.north@mail.com", null,"dananorth", "player", "00389726561", false,""),
+                new User(null,1,"Elsa", "Clarity",new SimpleDateFormat("dd/MM/yyyy").parse("27/04/2021"),"Coast VT", "elsa.clarity@mail.com",null, "elsaclarity", "trainer", "00387123678", true,"" ),
 
         };
     }

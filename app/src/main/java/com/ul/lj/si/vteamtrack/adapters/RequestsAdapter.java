@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.ul.lj.si.vteamtrack.MainActivity;
 import com.ul.lj.si.vteamtrack.R;
 
@@ -63,6 +64,8 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
         private Button accept;
         private Button decline;
         private LinearLayout toggleLayout;
+        private TextView playerEmail;
+        private TextView supervisorReq;
 
         public ViewHolder(View itemView) {
 
@@ -77,6 +80,8 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
             accept = (Button) itemView.findViewById(R.id.btn_req_accept);
             decline = (Button) itemView.findViewById(R.id.btn_req_decline);
             toggleLayout = itemView.findViewById(R.id.item_req_secondlayout);
+            playerEmail = itemView.findViewById(R.id.item_req_playerEmail);
+            supervisorReq = itemView.findViewById(R.id.item_req_supervisor);
 
         }
     }
@@ -117,11 +122,19 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
         Button decline = holder.decline;
         ImageButton expand = holder.expand;
         LinearLayout toggleLayout = holder.toggleLayout;
+        TextView supervisorView = holder.supervisorReq;
+        TextView playerEmailView = holder.playerEmail;
 
-        sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date utilDate = new Date(user.getDateOfBirth().getTime());
-        dateOfBirth.setText(sdf.format(utilDate));
-
+        if(!user.getUserRole().equals("supervisor")) {
+            sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date utilDate = new Date(user.getDateOfBirth().getTime());
+            dateOfBirth.setText(sdf.format(utilDate));
+        }
+        else {
+            supervisorView.setVisibility(View.VISIBLE);
+            playerEmailView.setVisibility(View.VISIBLE);
+            playerEmailView.setText(user.getPlayerEmail().toString());
+        }
         userName.setText(user.getFirstName());
         userSurname.setText(user.getLastName());
         email.setText(user.getEmail());
@@ -131,12 +144,13 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 user.setRegistrationConfirmed(true);
-                Calendar cal = Calendar.getInstance();
-                String currentMonth= new SimpleDateFormat("MMM").format(cal.getTime());
-                FeeMonth feeMonth = feeMonthModel.getFeeMonthByMonth(currentMonth);
-                Fee userFee = new Fee(currentMonth, user.getId(), false, user.getTeamName(), "10", feeMonth.getId());
-                feeModel.insert(userFee);
-
+                if(!user.getUserRole().equals("supervisor")) {
+                    Calendar cal = Calendar.getInstance();
+                    String currentMonth = new SimpleDateFormat("MMM").format(cal.getTime());
+                    FeeMonth feeMonth = feeMonthModel.getFeeMonthByMonth(currentMonth);
+                    Fee userFee = new Fee(currentMonth, user.getId(), false, user.getTeamName(), "10", feeMonth.getId());
+                    feeModel.insert(userFee);
+                }
                 userModel.update(user);
                 Toast.makeText(activity.getApplicationContext(),
                         "User registration accepted", Toast.LENGTH_LONG).show();
@@ -173,6 +187,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                     phone.setVisibility((phone.getVisibility() == View.VISIBLE)
                             ? View.INVISIBLE
                             : View.VISIBLE);
+
 
                 }
                 else {

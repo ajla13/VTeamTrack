@@ -85,12 +85,13 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 teamDao.insertAll(Team.populateTeam());
-
                 try {
                     userDao.insertAll(User.populateData());
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+
                 try {
                     trainingDao.insertAll(Training.populateTraining());
                 } catch (ParseException e) {
@@ -163,6 +164,7 @@ public class Login extends AppCompatActivity {
     boolean creditentials(){
 
         user = userModel.checkUserCred(email.getText().toString(),teamName.getText().toString());
+
         if(user == null){
             return false;
         }
