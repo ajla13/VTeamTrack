@@ -19,11 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
+
     <Button
         android:id="@+id/btn_create_post"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_gravity="end"
+        android:layout_margin="10dp"
         android:text="@string/post"
         app:layout_constraintBottom_toTopOf="@+id/rvPosts"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +36,7 @@
         android:id="@+id/rvPosts"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:backgroundTint="@color/white_transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

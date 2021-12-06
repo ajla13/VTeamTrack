@@ -34,8 +34,10 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/drawable/tab.xml" value="0.10677083333333333" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/activity_chat.xml" value="0.1015625" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/activity_chat_initial.xml" value="0.1015625" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/comment_item.xml" value="0.11822916666666666" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/home_fragment.xml" value="0.4" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_game.xml" value="0.10364583333333334" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_post.xml" value="0.2" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_received_message.xml" value="0.1015625" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_received_photo.xml" value="0.1015625" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/item_sent_image.xml" value="0.1015625" />
@@ -49,6 +51,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/listview_training_schedule.xml" value="0.1598731884057971" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/login.xml" value="0.14010416666666667" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/main_activity.xml" value="0.1015625" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/posts_list.xml" value="0.1526268115942029" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/profile.xml" value="0.12291666666666666" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/public_games_item.xml" value="0.1" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/public_trainings_item.xml" value="0.11354166666666667" />
@@ -58,7 +61,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/request_item.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/simple_text.xml" value="0.1125" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/teams_main.xml" value="0.11354166666666667" />
-        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/training_list.xml" value="0.12083333333333333" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/training_list.xml" value="0.4" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/view_games.xml" value="0.1" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/layout/view_trainings.xml" value="0.11354166666666667" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/menu/bottom_nav.xml" value="0.184375" />
@@ -66,6 +69,7 @@
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/menu/bottom_nav_supervisor.xml" value="0.1" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/menu/supervisor_menu.xml" value="0.1" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/menu/trainer_menu.xml" value="0.1" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/VTeamTrack/app/src/main/res/xml/settings.xml" value="0.1526268115942029" />
       </map>
     </option>
   </component>

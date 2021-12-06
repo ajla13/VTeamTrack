@@ -125,7 +125,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
         }
 
         content.setText(post.getContent());
-        author.setText(authorUser.getFirstName());
+        author.setText(authorUser.getFirstName()+ " "+authorUser.getLastName());
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -193,31 +193,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder>{
 
             }
         });
-       /* commentModel.getCommentsByPost().observe
-                ((FragmentActivity) activity, new Observer<List<Comment>>() {
 
-                    @Override
-                    public void onChanged(List<Comment> commentsObserved) {
-                        System.out.println("comments in here");
-
-                        if (commentsObserved != null) {
-                            CommentAdapter commentAdapter = new CommentAdapter(commentsObserved, activity);
-                            rvComments.setAdapter(commentAdapter);
-                            rvComments.setLayoutManager(new LinearLayoutManager(activity));
-                            System.out.println("comments in here2");
-                            if(commentsObserved.size() > 0){
-                                System.out.println("content comm "+commentsObserved.get(1).getContent());
-
-                            }
-                        } else {
-                            System.out.println("comments in here3");
-                            Log.d("gwyd", "comments list was null");
-                            CommentAdapter commentAdapter = new CommentAdapter(new ArrayList<Comment>(), activity);
-                            rvComments.setAdapter(commentAdapter);
-                            rvComments.setLayoutManager(new LinearLayoutManager(activity));
-                        }
-                    }
-                });*/
 
     }
 

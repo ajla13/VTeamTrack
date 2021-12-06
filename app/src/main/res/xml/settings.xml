@@ -1,15 +1,18 @@
-<PreferenceScreen
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <SwitchPreferenceCompat
+        android:layout_height="wrap_content"
         app:defaultValue="false"
         app:key="trainingExpiration"
-        app:title="Delete training records older than one month" />
+        android:summary="Delete records older than one month"
+        app:title="Delete trainings" />
 
     <SwitchPreferenceCompat
         app:defaultValue="false"
         app:key="gameExpiration"
-        app:title="Delete game records older than one month" />
+        android:summary="Delete game records older than one month"
+        app:title="Delete games" />
     <SwitchPreferenceCompat
         app:defaultValue="false"
         app:key="publicTeam"

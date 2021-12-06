@@ -38,9 +38,9 @@
     <string name="view_profile">View profile</string>
     <string name="view_posts">View posts</string>
     <string name="view">View</string>
-    <string name="write_post">Write a new post...</string>
+    <string name="write_post"><font size="14">Write a new post...</font></string>
     <string name="post">Post</string>
-    <string name="write_comment">Write a comment...</string>
+    <string name="write_comment"><font size="14">Write a comment...</font></string>
     <string name="register_player">Player registration</string>
     <string name="register_trainer">Trainer registration</string>
     <string name="registrationLink">Click here for member registration.</string>
