@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ul.lj.si.vteamtrack.PreferenceData;
 import com.ul.lj.si.vteamtrack.R;
 import com.ul.lj.si.vteamtrack.adapters.GameAttendanceAdapter;
 
@@ -34,6 +35,7 @@ public class GameAttendanceFragment extends Fragment {
     private UserModel userModel;
     private GameAttendanceAdapter gameAttendanceAdapter;
     private Game game;
+    private ArrayList<User> arrayOfUsers;
 
     @Nullable
     @Override
@@ -50,9 +52,17 @@ public class GameAttendanceFragment extends Fragment {
         gameModel = new ViewModelProvider(this).get(GameModel.class);
 
         game = gameModel.getGame(gameId);
+        arrayOfUsers = new ArrayList<>();
+        if(PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("supervisor")){
+            User currentUser= userModel.getUser(PreferenceData.getLoggedInUser(getActivity().getApplicationContext()));
+            User playerUser = userModel.checkUserCred(currentUser.getPlayerEmail(),currentUser.getTeamName());
+            arrayOfUsers.add(playerUser);
 
-        ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
+        }
+        else {
+            ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
 
+        }
         RecyclerView rvUsers = (RecyclerView) view.findViewById(R.id.rvUsers);
 
 
@@ -71,6 +81,13 @@ public class GameAttendanceFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if (users != null) {
+                    if(PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("supervisor")){
+
+                        User currentUser= userModel.getUser(PreferenceData.getLoggedInUser(getActivity().getApplicationContext()));
+                        User playerUser = userModel.checkUserCred(currentUser.getPlayerEmail(),currentUser.getTeamName());
+                        users.clear();
+                        users.add(playerUser);
+                    }
                     gameAttendanceAdapter = new GameAttendanceAdapter(users, getActivity(), game);
                     rvUsers.setAdapter(gameAttendanceAdapter);
                     rvUsers.setLayoutManager(new LinearLayoutManager(getActivity()));

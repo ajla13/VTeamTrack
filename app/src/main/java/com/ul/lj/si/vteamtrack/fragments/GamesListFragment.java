@@ -145,7 +145,8 @@ public class GamesListFragment extends Fragment {
                 launchActivity.launch(intent);
             }
         });
-        if(PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("player")){
+        if(PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("player") ||
+                PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("supervisor")){
             createGame.setVisibility(View.GONE);
         }
         return view;

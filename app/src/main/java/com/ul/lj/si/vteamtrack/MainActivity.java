@@ -1,13 +1,18 @@
 package com.ul.lj.si.vteamtrack;
 
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.FragmentActivity;
@@ -20,6 +25,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.ul.lj.si.vteamtrack.fragments.FeeListFragment;
 
@@ -50,38 +56,69 @@ public class MainActivity extends AppCompatActivity {
   private UserModel userModel;
   private FeeModel feeModel;
   private TeamModel teamModel;
+  private Socket mSocket;
+  private Activity activity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        mSocket.connect();
+        activity=this;
 
         int currentUserId = PreferenceData.getLoggedInUser(getApplicationContext());
         feeMonthModel = new ViewModelProvider(this).get(FeeMonthModel.class);
         feeModel = new ViewModelProvider(this).get(FeeModel.class);
         userModel = new ViewModelProvider(this).get(UserModel.class);
         teamModel = new ViewModelProvider(this).get(TeamModel.class);
+        User currentUser = userModel.getUser(currentUserId);
         BottomNavigationView bottomNav = (BottomNavigationView) findViewById(R.id.bottom_navigatin_view);
         NavController navController = Navigation.findNavController(this,R.id.nav_fragment);
+        if(currentUser.getUserRole().equals("player")){
+            bottomNav.inflateMenu(R.menu.bottom_nav_player);
+
+        }
+        else if(currentUser.getUserRole().equals("supervisor")){
+            bottomNav.inflateMenu(R.menu.bottom_nav_supervisor);
+        }
+        else {
+            bottomNav.inflateMenu(R.menu.bottom_nav);
+        }
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.homeFragment, R.id.profileFragment, R.id.postsFragment)
                 .build();
 
+        bottomNav.setItemIconTintList(null);
+        //this.getSupportActionBar().setTitle("Home");
+        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         NavigationUI.setupWithNavController(bottomNav, navController);
 
-
         bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
+
                 switch (id) {
                     case R.id.profileFragment:
                         Bundle bundle = new Bundle();
-                        bundle.putInt("userId", currentUserId);
-                        navController.navigate(R.id.profileFragment,bundle);
+                        User playerUser;
+                        if(currentUser.getUserRole().equals("supervisor")){
+                           playerUser=userModel.checkUserCred(currentUser.getPlayerEmail(),
+                                   PreferenceData.getTeam(getApplicationContext()));
+                           if(playerUser!=null){
+                               bundle.putInt("userId", playerUser.getId());
+                               navController.navigate(R.id.profileFragment,bundle);
+                           }
+                        }
+                        else {
+                            bundle.putInt("userId", currentUserId);
+                            navController.navigate(R.id.profileFragment,bundle);
+                        }
                         break;
                     case R.id.homeFragment:
                         navController.navigate(R.id.homeFragment);
@@ -98,7 +135,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        FloatingActionButton fab = findViewById(R.id.fabMain);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatInitalActivity.class);
+                startActivity(intent);
+            }
+        });
         String teamName = PreferenceData.getTeam(getApplicationContext());
         Calendar calendar = Calendar.getInstance();
         String currentMonth= new SimpleDateFormat("MMM").format(calendar.getTime());
@@ -171,17 +215,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private Socket mSocket;
-    {
-        try {
-            mSocket = IO.socket("http://chat.socket.io");
-        } catch (URISyntaxException e) {}
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         String userRole=PreferenceData.getUserRole(getApplicationContext());
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        if(userRole.equals("supervisor")){
+            menu.getItem(2).setVisible(false);
+
+        }
         if(userRole.equals("trainer")){
             getMenuInflater().inflate(R.menu.trainer_menu, menu);
         }

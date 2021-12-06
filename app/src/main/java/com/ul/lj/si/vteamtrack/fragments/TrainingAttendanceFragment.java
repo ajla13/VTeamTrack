@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ul.lj.si.vteamtrack.PreferenceData;
 import com.ul.lj.si.vteamtrack.R;
 import com.ul.lj.si.vteamtrack.adapters.TrainingAttendanceAdapter;
 import com.ul.lj.si.vteamtrack.adapters.TrainingParticipationAdapter;
@@ -34,6 +35,7 @@ public class TrainingAttendanceFragment extends Fragment {
     private TrainingAttendanceAdapter trainingAttendanceAdapter;
     private TrainingParticipationAdapter trainingParticipationAdapter;
     private Training training;
+    private ArrayList<User> arrayOfUsers;
 
     @Nullable
     @Override
@@ -50,13 +52,23 @@ public class TrainingAttendanceFragment extends Fragment {
         trainingModel = new ViewModelProvider(this).get(TrainingModel.class);
 
         training = trainingModel.getTraining(trainerId);
+        arrayOfUsers = new ArrayList<>();
+        if(PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("supervisor")){
+            User currentUser= userModel.getUser(PreferenceData.getLoggedInUser(getActivity().getApplicationContext()));
+            User playerUser = userModel.checkUserCred(currentUser.getPlayerEmail(),currentUser.getTeamName());
+            arrayOfUsers.add(playerUser);
 
-        ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
+        }
+        else {
+            ArrayList<User> arrayOfUsers = (ArrayList<User>) userModel.getPlayers().getValue();
+
+        }
         RecyclerView rvUsers = (RecyclerView) view.findViewById(R.id.rvUsers);
         RecyclerView rvUsersParticipation = (RecyclerView) view.findViewById(R.id.rvUsersParticipation);
 
 
         if (arrayOfUsers != null){
+
             trainingParticipationAdapter=new TrainingParticipationAdapter(arrayOfUsers, getActivity(), training);
             rvUsersParticipation.setAdapter(trainingParticipationAdapter);
             rvUsersParticipation.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -79,6 +91,13 @@ public class TrainingAttendanceFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<User> users) {
                 if (users != null) {
+                    if(PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("supervisor")){
+                        User currentUser= userModel.getUser(PreferenceData.getLoggedInUser(getActivity().getApplicationContext()));
+                        User playerUser = userModel.checkUserCred(currentUser.getPlayerEmail(),currentUser.getTeamName());
+                        users.clear();
+                        users.add(playerUser);
+
+                    }
                     trainingParticipationAdapter=new TrainingParticipationAdapter(users, getActivity(), training);
                     rvUsersParticipation.setAdapter(trainingParticipationAdapter);
                     rvUsersParticipation.setLayoutManager(new LinearLayoutManager(getActivity()));

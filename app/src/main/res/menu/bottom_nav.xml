@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottomNavInitial"
+    >
 
     <item android:title="Home"
         android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_home"/>
+        android:icon="@drawable/nav_item_home"
+        android:checked="true"
+        />
+
     <item android:title="Profile"
          android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_profile"/>
+        android:icon="@drawable/nav_item_profile"/>
     <item android:title="Posts"
         android:id="@+id/postsFragment"
-        android:icon="@drawable/ic_posts"/>
+        android:icon="@drawable/nav_item_posts"/>
     <item android:title="Settings"
         android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings"/>
+        android:icon="@drawable/nav_item_settings"/>
 </menu>

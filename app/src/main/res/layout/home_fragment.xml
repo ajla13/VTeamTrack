@@ -10,24 +10,28 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
+        android:layout_margin="10dp"
+        android:elevation="10dp"
         app:layout_constraintBottom_toTopOf="@+id/simpleFrameLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/players_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF"
-            android:text="@string/players" />
+            android:text="@string/players"
+            android:textAlignment="center" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/trainings_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/trainings" />
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/games_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/games" />

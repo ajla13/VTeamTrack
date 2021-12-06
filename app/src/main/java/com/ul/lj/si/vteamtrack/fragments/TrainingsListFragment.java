@@ -159,7 +159,8 @@ public class TrainingsListFragment extends Fragment {
                 launchActivity.launch(intent);
             }
         });
-        if(PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("player")){
+        if(PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("player")||
+                PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("supervisor")){
             createTraining.setVisibility(View.GONE);
         }
         return view;

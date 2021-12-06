@@ -71,5 +71,6 @@
     <string name="supervisor_req">Supervisor request</string>
     <string name="done">Done</string>
     <string name="player_email">Player email</string>
+    <string name="socket_url">Socket Chat</string>
 
 </resources>

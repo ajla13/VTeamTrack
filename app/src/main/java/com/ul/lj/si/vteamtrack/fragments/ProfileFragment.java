@@ -201,7 +201,9 @@ public class ProfileFragment extends Fragment {
         }
         if(!user.getUserRole().equals("trainer") &&
                 !PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("player")
-                && user.getId()!=currentUserId){
+                && user.getId()!=currentUserId
+                && !PreferenceData.getUserRole(getActivity().getApplicationContext()).equals("supervisor")
+        ){
                 unregisterUser.setVisibility(View.VISIBLE);
         }
 
@@ -288,6 +290,7 @@ public class ProfileFragment extends Fragment {
         if(currentUserId == userId){
             toggleLayout = view.findViewById(R.id.layout_profile_third);
             toggleLayout.setVisibility(View.VISIBLE);
+            uploadImage.setVisibility(View.VISIBLE);
         }
         edit.setOnClickListener(new View.OnClickListener() {
             @Override

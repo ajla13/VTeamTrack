@@ -28,6 +28,7 @@ import java.util.Date;
 
 import entities.Fee;
 
+import entities.User;
 import viewModels.FeeModel;
 
 import viewModels.UserModel;
@@ -52,6 +53,7 @@ public class FeeListFragment extends Fragment {
     private ArrayList<Fee> feeList;
     private FeeAdapter feeAdapter;
     RecyclerView rvFee;
+    private int currentUser;
 
     @Nullable
     @Override
@@ -62,8 +64,15 @@ public class FeeListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fee_fragment, container, false);
         feeModel=new ViewModelProvider(getActivity()).get(FeeModel.class);
+        userModel = new ViewModelProvider(this).get(UserModel.class);
         String userRole = PreferenceData.getUserRole(getActivity().getApplicationContext());
-        int currentUser = PreferenceData.getLoggedInUser(getActivity().getApplicationContext());
+
+        currentUser = PreferenceData.getLoggedInUser(getActivity().getApplicationContext());
+        if(userRole.equals("supervisor")){
+             User supervisor = userModel.getUser(currentUser);
+             User player=userModel.checkUserCred(supervisor.getPlayerEmail(), supervisor.getTeamName());
+             currentUser = player.getId();
+        }
         if(userRole.equals("trainer")){
             feeList = (ArrayList<Fee>) feeModel.getFeeByMonth("Jan");
 
@@ -357,7 +366,7 @@ public class FeeListFragment extends Fragment {
                 else {
                     feeList=(ArrayList<Fee>)feeModel.getMonthlyPlayerFee(currentUser, "Dec");
                 }
-                c.set(Integer.parseInt(yearFormat.format(currentDate)), 11,30);
+                c.set(Integer.parseInt(yearFormat.format(currentDate)), 11,1);
 
                 if(new Date().compareTo(c.getTime())<0){
                     validationDate.setText("Membership for december "+(yearFormat.format(c2.getTime())).toString());
@@ -370,7 +379,6 @@ public class FeeListFragment extends Fragment {
             }
         });
 
-        userModel = new ViewModelProvider(this).get(UserModel.class);
 
         rvFee = (RecyclerView) view.findViewById(R.id.rvFee);
 

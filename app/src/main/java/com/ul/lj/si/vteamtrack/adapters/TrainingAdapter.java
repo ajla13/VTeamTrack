@@ -179,7 +179,8 @@ public class TrainingAdapter extends RecyclerView.Adapter<TrainingAdapter.ViewHo
                 activity.startActivity(intent);
             }
         });
-        if(PreferenceData.getUserRole(activity.getApplicationContext()).equals("player")){
+        if(PreferenceData.getUserRole(activity.getApplicationContext()).equals("player") ||
+        PreferenceData.getUserRole(activity.getApplicationContext()).equals("supervisor")){
             edit.setVisibility(View.GONE);
             delete.setVisibility(View.GONE);
         }

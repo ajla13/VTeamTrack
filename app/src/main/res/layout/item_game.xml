@@ -5,32 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingTop="20dp"
-    android:paddingRight="20dp"
-    android:paddingBottom="20dp">
+    android:layout_marginBottom="20dp"
+    android:layout_marginTop="20dp"
+    android:background="@drawable/shadow"
+   >
 
     <LinearLayout
         android:id="@+id/item_game_firstlayout"
         android:layout_width="match_parent"
+        android:padding="5dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/game_icon"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_weight="0.3"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/volleyball_player"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/item_game_oponent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_centerInParent="true"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/item_game_oponent"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
+            android:textColor="@color/blue_dark_100"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_attendance_game"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/game_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_attendance_game"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
             android:text="@string/attendancy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_expand"
@@ -39,10 +58,11 @@
 
         <ImageButton
             android:id="@+id/btn_expand"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:src="@drawable/ic_expand"
+            android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_edit"
             app:layout_constraintStart_toEndOf="@+id/btn_attendance_game"
@@ -51,9 +71,10 @@
 
         <ImageButton
             android:id="@+id/btn_edit"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
+            android:layout_gravity="center"
             android:src="@drawable/ic_edit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_delete"
@@ -63,8 +84,9 @@
 
         <ImageButton
             android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:backgroundTint="@color/white"
             android:gravity="end"
             android:src="@drawable/ic_delete"
@@ -82,6 +104,7 @@
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:orientation="vertical"
+        android:padding="10dp"
         android:visibility="gone">
 
         <TextView
@@ -89,6 +112,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:visibility="gone"
+            android:textColor="@color/blue_dark_100"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/item_game_time"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +125,8 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:visibility="gone"
+            android:textColor="@color/blue_dark_100"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/item_game_location"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,6 +138,8 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:visibility="gone"
+            android:textColor="@color/blue_dark_100"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

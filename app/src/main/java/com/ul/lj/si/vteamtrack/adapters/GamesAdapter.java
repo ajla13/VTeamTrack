@@ -189,7 +189,9 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder>{
                 activity.startActivity(intent);
             }
         });
-        if(PreferenceData.getUserRole(activity.getApplicationContext()).equals("player")){
+        if(PreferenceData.getUserRole(activity.getApplicationContext()).equals("player")||
+                PreferenceData.getUserRole(activity.getApplicationContext()).equals("supervisor")
+        ){
             edit.setVisibility(View.GONE);
             delete.setVisibility(View.GONE);
         }
